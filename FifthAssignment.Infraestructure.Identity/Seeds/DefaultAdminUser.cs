@@ -21,7 +21,7 @@ namespace FifthAssignment.Infraestructure.Identity.Seeds
 			};
 			if (userManager.Users.All(u => u.Id != DefaultUser.Id))
 			{
-				var user = await userManager.FindByEmailAsync(DefaultUser.Email);
+				var user = await userManager.FindByNameAsync(DefaultUser.UserName);
 
 				if (user is null) {
 					await userManager.CreateAsync(DefaultUser);
