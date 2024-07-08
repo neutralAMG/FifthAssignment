@@ -133,11 +133,6 @@ namespace FifthAssignment.Infraestructure.Identity.Services
 			throw new NotImplementedException();
 		}
 
-		public async Task EditUserAsync(RegisterRequest request)
-		{
-			throw new NotImplementedException();
-		}
-
 		public async Task ForgotPasswordAsync()
 		{
 			throw new NotImplementedException();
