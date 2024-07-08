@@ -9,6 +9,6 @@ namespace FifthAssignment.Core.Application.Core
 		Task<TEntity> GetByIdAsync(Guid id);
 		Task<TEntity> SaveAsync(TEntity entity);
 		Task<bool> UpdateAsync(TEntity entity);
-		Task<bool> DeleteAsync(Guid id);
+		Task<bool> DeleteAsync(TEntity entity);
 	}
 }

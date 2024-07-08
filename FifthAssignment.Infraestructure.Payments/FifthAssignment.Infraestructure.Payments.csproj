@@ -17,13 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Core\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\FifthAssignment.Core.Application\FifthAssignment.Core.Application.csproj" />
     <ProjectReference Include="..\FifthAssignment.Core.Domain\FifthAssignment.Core.Domain.csproj" />
-    <ProjectReference Include="..\FifthAssignment.Infraestructure.Identity\FifthAssignment.Infraestructure.Identity.csproj" />
   </ItemGroup>
 
 </Project>

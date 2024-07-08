@@ -1,4 +1,4 @@
-﻿using FifthAssignment.Core.Application.Interfaces.Repositories;
+﻿using FifthAssignment.Core.Application.Interfaces.Identity;
 using FifthAssignment.Infraestructure.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

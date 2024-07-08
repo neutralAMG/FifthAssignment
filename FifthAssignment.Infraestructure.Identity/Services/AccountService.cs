@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace FifthAssignment.Infraestructure.Identity.Services
 {
-	public class AccountService : IAccountService
+    public class AccountService : IAccountService
 	{
 		private readonly UserManager<ApplicationUser> _userManager;
 		private readonly RoleManager<IdentityRole> _roleManager;

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FifthAssignment.Presentation.WebApp", "FifthAssignment\FifthAssignment.Presentation.WebApp.csproj", "{85D85DA6-089A-40EB-8053-32E26DEE735B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FifthAssignment.Presentation.WebApp", "FifthAssignment\FifthAssignment.Presentation.WebApp.csproj", "{85D85DA6-089A-40EB-8053-32E26DEE735B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{27CA1287-2214-4B5A-BD1A-B8B5CDA1D86E}"
 EndProject
@@ -15,15 +15,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApp", "WebApp", "{83036C9D-5E2A-4A4E-B986-F685DA95F417}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FifthAssignment.Core.Application", "FifthAssignment.Core.Application\FifthAssignment.Core.Application.csproj", "{36C88347-4C4F-4E46-9BE1-595651C1849A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FifthAssignment.Core.Application", "FifthAssignment.Core.Application\FifthAssignment.Core.Application.csproj", "{36C88347-4C4F-4E46-9BE1-595651C1849A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FifthAssignment.Core.Domain", "FifthAssignment.Core.Domain\FifthAssignment.Core.Domain.csproj", "{614A88D4-67BE-4737-91E6-D0A6AF69E295}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FifthAssignment.Core.Domain", "FifthAssignment.Core.Domain\FifthAssignment.Core.Domain.csproj", "{614A88D4-67BE-4737-91E6-D0A6AF69E295}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FifthAssignment.Infraestructure.Persistence", "FifthAssignment.Infraestructure.Persistence\FifthAssignment.Infraestructure.Persistence.csproj", "{620866E6-D14A-4DAF-929B-6A151FAAF0D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FifthAssignment.Infraestructure.Persistence", "FifthAssignment.Infraestructure.Persistence\FifthAssignment.Infraestructure.Persistence.csproj", "{620866E6-D14A-4DAF-929B-6A151FAAF0D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FifthAssignment.Infraestructure.Identity", "FifthAssignment.Infraestructure.Identity\FifthAssignment.Infraestructure.Identity.csproj", "{EDBC6A9C-5EE6-4888-A795-6C54A1F8C6FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FifthAssignment.Infraestructure.Identity", "FifthAssignment.Infraestructure.Identity\FifthAssignment.Infraestructure.Identity.csproj", "{EDBC6A9C-5EE6-4888-A795-6C54A1F8C6FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FifthAssignment.Infraestructure.Share", "FifthAssignment.Infraestructure.Share\FifthAssignment.Infraestructure.Share.csproj", "{D856D15E-724F-47EB-8310-CE5F750DB250}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FifthAssignment.Infraestructure.Share", "FifthAssignment.Infraestructure.Share\FifthAssignment.Infraestructure.Share.csproj", "{D856D15E-724F-47EB-8310-CE5F750DB250}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FifthAssignment.Infraestructure.Payments", "FifthAssignment.Infraestructure.Payments\FifthAssignment.Infraestructure.Payments.csproj", "{5CEB0710-74DF-4D5B-B265-31C8A4B0F590}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{D856D15E-724F-47EB-8310-CE5F750DB250}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D856D15E-724F-47EB-8310-CE5F750DB250}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D856D15E-724F-47EB-8310-CE5F750DB250}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CEB0710-74DF-4D5B-B265-31C8A4B0F590}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CEB0710-74DF-4D5B-B265-31C8A4B0F590}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CEB0710-74DF-4D5B-B265-31C8A4B0F590}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CEB0710-74DF-4D5B-B265-31C8A4B0F590}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,6 +76,7 @@ Global
 		{620866E6-D14A-4DAF-929B-6A151FAAF0D7} = {D635EB20-2AF4-475A-BA46-BB91010E1683}
 		{EDBC6A9C-5EE6-4888-A795-6C54A1F8C6FC} = {D635EB20-2AF4-475A-BA46-BB91010E1683}
 		{D856D15E-724F-47EB-8310-CE5F750DB250} = {D635EB20-2AF4-475A-BA46-BB91010E1683}
+		{5CEB0710-74DF-4D5B-B265-31C8A4B0F590} = {D635EB20-2AF4-475A-BA46-BB91010E1683}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6B58BF0D-D4A6-4CB7-9C52-B825DB6D6982}

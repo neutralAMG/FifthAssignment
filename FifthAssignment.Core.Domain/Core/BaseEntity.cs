@@ -9,7 +9,6 @@ namespace FifthAssignment.Core.Domain.Core
 
 	public class BaseBankProductTypeEntity<TId> : BaseEntity<TId>
 	{
-	public string BankAccountNumber { get; set; }
 	public string Amount { get; set; }
 	}
 
