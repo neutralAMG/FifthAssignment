@@ -2,11 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace FifthAssignment.Infraestructure.Identity.Context
 {
@@ -29,6 +25,11 @@ namespace FifthAssignment.Infraestructure.Identity.Context
 			builder.Entity<ApplicationUser>(user =>
 			{
 				user.ToTable(name: "Users");
+
+				user.HasMany(u =>u.Beneficiaries).WithOne().HasForeignKey(b => b.UserBeneficiaryId);
+				user.HasMany(u =>u.Loans).WithOne().HasForeignKey(b => b.UserId);
+				user.HasMany(u =>u.CreditCards).WithOne().HasForeignKey(b => b.UserId);
+				user.HasMany(u =>u.BankAccoounts).WithOne().HasForeignKey(b => b.UserId);
 			});
 
 

@@ -13,7 +13,11 @@
 
   <ItemGroup>
     <Folder Include="Core\" />
-    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FifthAssignment.Core.Application\FifthAssignment.Core.Application.csproj" />
+    <ProjectReference Include="..\FifthAssignment.Core.Domain\FifthAssignment.Core.Domain.csproj" />
   </ItemGroup>
 
 </Project>

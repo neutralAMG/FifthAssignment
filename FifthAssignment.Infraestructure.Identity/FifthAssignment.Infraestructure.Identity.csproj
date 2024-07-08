@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="MailKit" Version="4.7.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.20" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.20" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.20">
@@ -20,7 +21,12 @@
 
   <ItemGroup>
     <Folder Include="Core\" />
-    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FifthAssignment.Core.Application\FifthAssignment.Core.Application.csproj" />
+    <ProjectReference Include="..\FifthAssignment.Core.Domain\FifthAssignment.Core.Domain.csproj" />
+    <ProjectReference Include="..\FifthAssignment.Infraestructure.Share\FifthAssignment.Infraestructure.Share.csproj" />
   </ItemGroup>
 
 </Project>
