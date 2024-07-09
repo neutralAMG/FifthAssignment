@@ -18,17 +18,17 @@ namespace FifthAssignment.Infraestructure.Persistence.Core
 			_context = context;
 			_entities = _context.Set<TEntity>();
 		}
-		public async Task<IList<TEntity>> GetAllAsync()
+		public virtual async Task<IList<TEntity>> GetAllAsync()
 		{
 			return await _entities.ToListAsync();
 		}
 
-		public async Task<TEntity> GetByIdAsync(Guid id)
+		public virtual async Task<TEntity> GetByIdAsync(Guid id)
 		{
 			return await _entities.FindAsync(id);
 		}
 
-		public async Task<TEntity> SaveAsync(TEntity entity)
+		public virtual async Task<TEntity> SaveAsync(TEntity entity)
 		{
 			try
 			{

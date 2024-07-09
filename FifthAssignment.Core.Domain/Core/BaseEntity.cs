@@ -12,4 +12,10 @@ namespace FifthAssignment.Core.Domain.Core
 	public string Amount { get; set; }
 	}
 
+	public class BaseDateCreatedEntity<TId> : BaseEntity<TId>
+	{
+	
+		public DateTime DateCreated = DateTime.Now;
+	}
+
 }

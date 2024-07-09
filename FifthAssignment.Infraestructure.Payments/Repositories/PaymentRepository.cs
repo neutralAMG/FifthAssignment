@@ -1,18 +1,23 @@
 ﻿using FifthAssignment.Core.Application.Interfaces.Payments;
 using FifthAssignment.Core.Domain.Entities.PaymentContext;
+using FifthAssignment.Infraestructure.Persistence.Context;
+using FifthAssignment.Infraestructure.Persistence.Core;
+using Microsoft.EntityFrameworkCore;
 
 namespace FifthAssignment.Infraestructure.Payments.Repositories
 {
-	public class PaymentRepository : IPaymentRepository
+	public class PaymentRepository : BasePaymentRepository<Payment>, IPaymentRepository
 	{
-		public Task<IList<Payment>> GetAllAsync()
+		private readonly PaymentContext _context;
+
+		public PaymentRepository(PaymentContext context) : base(context)
 		{
-			throw new NotImplementedException();
+			_context = context;
 		}
 
-		public Task<IList<Payment>> GetAllTodayPaymentsAsync()
+		public async Task<IList<Payment>> GetAllTodayPaymentsAsync()
 		{
-			throw new NotImplementedException();
+			return await _context.Payments.Where(p => p.DateCreated.Date == DateTime.UtcNow.Date).ToListAsync();
 		}
 	}
 }

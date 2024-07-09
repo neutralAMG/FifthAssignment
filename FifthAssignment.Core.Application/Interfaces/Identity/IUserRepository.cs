@@ -1,10 +1,13 @@
-﻿namespace FifthAssignment.Core.Application.Interfaces.Identity
+﻿using FifthAssignment.Core.Application.Dtos.AccountDtos;
+using FifthAssignment.Core.Application.Models;
+
+namespace FifthAssignment.Core.Application.Interfaces.Identity
 {
-    public interface IUserRepository<TUser> where TUser : class
+    public interface IUserRepository
     {
-        Task<List<TUser>> GetAllAsync();
-        Task<TUser> GetByIdAsync(string id);
-        Task<TUser> UpdateAsync(TUser user);
+        Task<List<UsserGetResponceDto>> GetAllAsync();
+        Task<UsserGetResponceDto> GetByIdAsync(string id);
+        Task<bool> UpdateAsync(UpdateUserDto user);
         Task<bool> DeleteAsync(string id);
         Task<bool> ActivateAsync(string id);
     }

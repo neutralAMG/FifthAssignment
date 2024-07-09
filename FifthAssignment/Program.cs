@@ -1,7 +1,17 @@
+
+using FifthAssignment.Infraestructure.Identity;
+using FifthAssignment.Infraestructure.Persistence;
+using FifthAssignment.Infraestructure.Payments;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddInfraestructureIdentityLayer(builder.Configuration);
+builder.Services.AddInfraestructurePercistanceLayer(builder.Configuration);
+builder.Services.AddInfraestructurePaymentsLayer(builder.Configuration);
 
 var app = builder.Build();
 

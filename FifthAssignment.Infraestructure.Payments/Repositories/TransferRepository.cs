@@ -3,6 +3,7 @@ using FifthAssignment.Core.Application.Interfaces.Payments;
 using FifthAssignment.Core.Domain.Entities.PaymentContext;
 using FifthAssignment.Infraestructure.Persistence.Context;
 using FifthAssignment.Infraestructure.Persistence.Core;
+using Microsoft.EntityFrameworkCore;
 
 namespace FifthAssignment.Infraestructure.Payments.Repositories
 {
@@ -15,9 +16,23 @@ namespace FifthAssignment.Infraestructure.Payments.Repositories
 			_context = context;
 		}
 
-		public Task<IList<Transfer>> GetAllTodayTransfersAsync()
+		public override async Task<IList<Transfer>> GetAllAsync()
 		{
-			throw new NotImplementedException();
+			return await base.GetAllAsync();
+		}
+
+		public override async Task<Transfer> GetByIdAsync(Guid id)
+		{
+			return await base.GetByIdAsync(id);
+		}
+
+		public override async Task<Transfer> SaveAsync(Transfer entity)
+		{
+			return await base.SaveAsync(entity);
+		}
+		public async Task<IList<Transfer>> GetAllTodayTransfersAsync()
+		{
+			return await _context.Transfers.Where(t => t.DateCreated.Date == DateTime.UtcNow.Date).ToListAsync();
 		}
 	}
 }

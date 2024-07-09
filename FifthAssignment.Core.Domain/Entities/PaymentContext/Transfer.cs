@@ -3,7 +3,7 @@ using FifthAssignment.Core.Domain.Entities.PersistanceContext;
 
 namespace FifthAssignment.Core.Domain.Entities.PaymentContext
 {
-    public class Transfer : BaseEntity<Guid>
+    public class Transfer : BaseDateCreatedEntity<Guid>
     {
         public Guid UserAccountFromId { get; set; }
         public Guid UserAccountToId { get; set; }

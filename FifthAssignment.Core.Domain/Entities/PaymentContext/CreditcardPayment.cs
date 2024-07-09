@@ -5,7 +5,8 @@ namespace FifthAssignment.Core.Domain.Entities.PaymentContext
 {
     public class CreditcardPayment : BaseEntity<Guid>
     {
-        public Guid UserBankAccountId { get; set; }
+		public double Amount { get; set; }
+		public Guid UserBankAccountId { get; set; }
         public Guid UserCreditCardId { get; set; }
         public Guid PaymentId { get; set; }
         public BankAccount UserBackAccoount { get; set; }
