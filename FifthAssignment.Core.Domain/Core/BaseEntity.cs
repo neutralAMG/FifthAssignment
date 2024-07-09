@@ -9,7 +9,8 @@ namespace FifthAssignment.Core.Domain.Core
 
 	public class BaseBankProductTypeEntity<TId> : BaseEntity<TId>
 	{
-	public string Amount { get; set; }
+	    public string Amount { get; set; }
+		public DateTime DateCreated = DateTime.Now;
 	}
 
 	public class BaseDateCreatedEntity<TId> : BaseEntity<TId>

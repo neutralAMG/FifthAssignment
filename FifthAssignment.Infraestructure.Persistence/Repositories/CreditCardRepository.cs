@@ -16,15 +16,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Repositories
 			_context = context;
 		}
 
-		public override async Task<IList<CreditCard>> GetAllAsync()
-		{
-			return await _context.CreditCards.ToListAsync();
-		}
-
-		public override async Task<CreditCard> GetByIdAsync(Guid id)
-		{
-			return await _context.CreditCards.FindAsync(id);
-		}
+	
 
 		public override async Task<CreditCard> SaveAsync(CreditCard entity)
 		{

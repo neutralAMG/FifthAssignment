@@ -16,16 +16,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Repositories
 		{
 			_context = context;
 		}
-		public override async Task<IList<Loan>> GetAllAsync()
-		{
-			return await _context.Loans.ToListAsync();
-		}
-
-		public override async Task<Loan> GetByIdAsync(Guid id)
-		{
-			return await _context.Loans.FindAsync(id);
-		}
-
+	
 		public override async Task<Loan> SaveAsync(Loan entity)
 		{
 			return await base.SaveAsync(entity);

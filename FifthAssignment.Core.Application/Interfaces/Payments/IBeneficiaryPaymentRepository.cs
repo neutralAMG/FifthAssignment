@@ -6,7 +6,7 @@ using FifthAssignment.Core.Domain.Entities.PersistanceContext;
 
 namespace FifthAssignment.Core.Application.Interfaces.Payments
 {
-	public interface IBeneficiaryPaymentRepository : IBasePaymentRepository<BeneficiaryPayment>
+	public interface IBeneficiaryPaymentRepository : IBaseRepository<BeneficiaryPayment>
 	{
 	}
 }

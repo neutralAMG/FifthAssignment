@@ -5,7 +5,7 @@ using FifthAssignment.Core.Domain.Entities.PersistanceContext;
 
 namespace FifthAssignment.Core.Application.Interfaces.Repositories
 {
-	public interface ICreditCardRepository  : IBaseRepository<CreditCard>
+	public interface ICreditCardRepository  : IBaseProductRepository<CreditCard>
 	{
 	}
 }

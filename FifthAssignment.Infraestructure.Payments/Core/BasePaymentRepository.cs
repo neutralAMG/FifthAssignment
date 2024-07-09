@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FifthAssignment.Infraestructure.Persistence.Core
 {
-	public class BasePaymentRepository<TEntity> : IBasePaymentRepository<TEntity> 
+	public class BasePaymentRepository<TEntity> : IBaseRepository<TEntity> 
 		where TEntity : class
 	{
 		private readonly PaymentContext _context;
@@ -18,7 +18,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Core
 			_context = context;
 			_entities = _context.Set<TEntity>();
 		}
-		public virtual async Task<IList<TEntity>> GetAllAsync()
+		public virtual async Task<List<TEntity>> GetAllAsync()
 		{
 			return await _entities.ToListAsync();
 		}

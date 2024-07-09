@@ -17,7 +17,7 @@ namespace FifthAssignment.Infraestructure.Payments.Repositories
 			_context = context;
 		}
 
-		public override async Task<IList<BeneficiaryPayment>> GetAllAsync()
+		public override async Task<List<BeneficiaryPayment>> GetAllAsync()
 		{
 			return await base.GetAllAsync();
 		}

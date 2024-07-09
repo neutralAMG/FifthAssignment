@@ -5,7 +5,7 @@ using FifthAssignment.Core.Domain.Entities.PersistanceContext;
 
 namespace FifthAssignment.Core.Application.Interfaces.Repositories
 {
-	public interface IBeneficiaryRepository : IBaseRepository<Beneficiary>
+	public interface IBeneficiaryRepository : IBaseProductRepository<Beneficiary>
 	{
 	}
 }

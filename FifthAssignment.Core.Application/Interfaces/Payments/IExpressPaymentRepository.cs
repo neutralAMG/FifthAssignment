@@ -6,7 +6,7 @@ using FifthAssignment.Core.Domain.Entities.PersistanceContext;
 
 namespace FifthAssignment.Core.Application.Interfaces.Payments
 {
-	public interface IExpressPaymentRepository : IBasePaymentRepository<ExpressPayment>
+	public interface IExpressPaymentRepository : IBaseRepository<ExpressPayment>
 	{
 	}
 }

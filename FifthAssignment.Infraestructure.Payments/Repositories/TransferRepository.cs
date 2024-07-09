@@ -16,7 +16,7 @@ namespace FifthAssignment.Infraestructure.Payments.Repositories
 			_context = context;
 		}
 
-		public override async Task<IList<Transfer>> GetAllAsync()
+		public override async Task<List<Transfer>> GetAllAsync()
 		{
 			return await base.GetAllAsync();
 		}

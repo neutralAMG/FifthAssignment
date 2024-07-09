@@ -17,16 +17,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Repositories
 			_context = context;
 		}
 
-		public override async Task<IList<Beneficiary>> GetAllAsync()
-		{
-			return await _context.Beneficiaries.ToListAsync();
-		}
-
-		public override async Task<Beneficiary> GetByIdAsync(Guid id)
-		{
-			return await _context.Beneficiaries.FindAsync(id);
-		}
-
+	
 		public override async Task<Beneficiary> SaveAsync(Beneficiary entity)
 		{
 			return await base.SaveAsync(entity);

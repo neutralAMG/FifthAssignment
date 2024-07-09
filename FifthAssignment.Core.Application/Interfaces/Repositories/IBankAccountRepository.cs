@@ -6,7 +6,7 @@ using FifthAssignment.Core.Domain.Entities.PersistanceContext;
 
 namespace FifthAssignment.Core.Application.Interfaces.Repositories
 {
-	public interface IBankAccountRepository : IBaseRepository<BankAccount>
+	public interface IBankAccountRepository : IBaseProductRepository<BankAccount>
 	{
 	}
 }

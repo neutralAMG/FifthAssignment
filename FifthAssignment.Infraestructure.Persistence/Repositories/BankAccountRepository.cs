@@ -17,15 +17,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Repositories
 			_context = context;
 		}
 
-		public override async Task<IList<BankAccount>> GetAllAsync()
-		{
-			return await _context.BankAccounts.ToListAsync();
-		}
 
-		public override async Task<BankAccount> GetByIdAsync(Guid id)
-		{
-			return await _context.BankAccounts.FindAsync(id);
-		}
 
 		public override async Task<BankAccount> SaveAsync(BankAccount entity)
 		{

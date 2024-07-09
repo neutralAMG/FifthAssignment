@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FifthAssignment.Infraestructure.Persistence.Core
 {
-	public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
+	public class BaseRepository<TEntity> : IBaseProductRepository<TEntity> where TEntity : class
 	{
 		private readonly fifthAssignmentContext _context;
 		private readonly DbSet<TEntity> _entities;
@@ -22,11 +22,14 @@ namespace FifthAssignment.Infraestructure.Persistence.Core
 			return await Task.FromResult(_entities.Any(filter));
 		}
 
-		public virtual async Task<IList<TEntity>> GetAllAsync()
+		public virtual async Task<List<TEntity>> GetAllAsync()
 		{
 			return await _entities.ToListAsync();
 		}
-
+        public async Task<List<TEntity>> GetAllAsync(Func<TEntity, bool> filter)
+		{
+			return await Task.FromResult( _entities.Where(filter).ToList());
+		}
 		public virtual async Task<TEntity> GetByIdAsync(Guid id)
 		{
 			return await _entities.FindAsync(id);
@@ -76,5 +79,6 @@ namespace FifthAssignment.Infraestructure.Persistence.Core
 			}
 		}
 
+		
 	}
 }
