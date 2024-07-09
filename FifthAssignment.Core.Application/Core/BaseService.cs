@@ -103,7 +103,7 @@ namespace FifthAssignment.Core.Application.Core
 			_mapper = mapper;
 		}
 
-		public async Task<Result<List<TGetModel>>> GetAllAsync(string id)
+		public virtual async Task<Result<List<TGetModel>>> GetAllWithUserIdAsync()
 		{
 			Result<List<TGetModel>> result = new();
 			try

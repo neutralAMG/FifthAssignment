@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FifthAssignment.Core.Application.Core;
+
 
 namespace FifthAssignment.Core.Application.Interfaces
 {
-	public interface IGetWithUserId
+	public interface IGetWithUserId<TGetModel> where TGetModel : class
 	{
+		Task<Result<List<TGetModel>>> GetAllWithUserIdAsync();
 	}
 
 }

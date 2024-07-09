@@ -1,6 +1,4 @@
-﻿
-
-using FifthAssignment.Core.Application.Interfaces.Contracts;
+﻿using FifthAssignment.Core.Application.Interfaces.Contracts;
 using FifthAssignment.Core.Application.Interfaces.Identity;
 using FifthAssignment.Core.Domain.Settings;
 using FifthAssignment.Infraestructure.Identity.Context;

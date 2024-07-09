@@ -18,7 +18,6 @@ namespace FifthAssignment.Core.Application.Core
 		where TSaveModel : class
 		where TEntity : class
 	{	
-		Task<Result<List<TGetModel>>> GetAllAsync(string id);
 		Task<Result<bool>> UpdateAsync(TSaveModel entity);
 		Task<Result<bool>> DeleteAsync(Guid id);
 	}
