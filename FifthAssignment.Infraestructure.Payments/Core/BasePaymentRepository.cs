@@ -8,9 +8,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FifthAssignment.Infraestructure.Persistence.Core
 {
-	public class BasePaymentRepository<TEntity, TEntityTo> : IBasePaymentRepository<TEntity, TEntityTo> 
+	public class BasePaymentRepository<TEntity> : IBasePaymentRepository<TEntity> 
 		where TEntity : class
-		where TEntityTo : class
 	{
 		private readonly PaymentContext _context;
 		private readonly DbSet<TEntity> _entities;

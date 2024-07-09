@@ -2,9 +2,8 @@
 
 namespace FifthAssignment.Core.Application.Core
 {
-	public interface IBasePaymentRepository<TEntity,  TEntityTo> 
+	public interface IBasePaymentRepository<TEntity> 
 		where TEntity : class
-		where TEntityTo : class
 	{
 		Task<IList<TEntity>> GetAllAsync();
 		Task<TEntity> GetByIdAsync(Guid id);
