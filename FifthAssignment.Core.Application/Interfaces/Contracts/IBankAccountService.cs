@@ -7,5 +7,6 @@ namespace FifthAssignment.Core.Application.Interfaces.Contracts
 {
 	public interface IBankAccountService : IBaseProductService<BankAccountModel, SaveBankAccountModel, BankAccount>, IGetWithUserId<BankAccountModel>
 	{
+		Task<Result<BankAccountModel>> GetByNumberIdentifierAsync(string id);
 	}
 }

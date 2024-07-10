@@ -6,7 +6,7 @@ using FifthAssignment.Core.Domain.Entities.PaymentContext;
 
 namespace FifthAssignment.Core.Application.Interfaces.Contracts
 {
-	public interface IMoneyAdvaceService : IBaseService<GetMoneyAdvanceDto, SaveMoneyAdvanceDto, MoneyAdvance>
+	public interface IMoneyAdvaceService : IBasePaymentService< MoneyAdvance>, IPay
 	{
 	}
 }

@@ -6,7 +6,7 @@ using FifthAssignment.Core.Domain.Entities.PaymentContext;
 
 namespace FifthAssignment.Core.Application.Interfaces.Contracts
 {
-	 interface ICreditCardPaymentService : IBaseService<GetCreditCardPaymentDto, SaveCreditCardPaymentDto, CreditcardPayment>
+	 interface ICreditCardPaymentService : IBasePaymentService<CreditcardPayment> , IPay
 	{
 	}
 }

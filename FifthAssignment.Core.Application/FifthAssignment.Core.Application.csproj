@@ -16,10 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\FifthAssignment.Core.Domain\FifthAssignment.Core.Domain.csproj" />
   </ItemGroup>
 

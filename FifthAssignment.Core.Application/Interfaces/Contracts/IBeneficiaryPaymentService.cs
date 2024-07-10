@@ -6,7 +6,8 @@ using FifthAssignment.Core.Domain.Entities.PaymentContext;
 
 namespace FifthAssignment.Core.Application.Interfaces.Contracts
 {
-	public interface IBeneficiaryPaymentService : IBaseService<GetBeneficiaryPaymentDto, SaveBeneficiaryPaymentDto, BeneficiaryPayment>
+	public interface IBeneficiaryPaymentService : IBasePaymentService<BeneficiaryPayment>, IPay
 	{
+		
 	}
 }
