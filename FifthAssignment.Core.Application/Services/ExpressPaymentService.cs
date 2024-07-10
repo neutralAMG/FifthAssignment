@@ -1,27 +1,25 @@
 ﻿
+
 using AutoMapper;
 using FifthAssignment.Core.Application.Core;
 using FifthAssignment.Core.Application.Interfaces.Contracts;
 using FifthAssignment.Core.Application.Interfaces.Payments;
 using FifthAssignment.Core.Application.Models.BankAccountsModels;
-using FifthAssignment.Core.Application.Models.CreditCardModels;
 using FifthAssignment.Core.Domain.Entities.PaymentContext;
 
 namespace FifthAssignment.Core.Application.Services
 {
-	internal class CreditCardPaymentService : BasePaymentService<CreditcardPayment>, ICreditCardPaymentService
+	public class ExpressPaymentService : BasePaymentService<ExpressPayment>, IExpressPaymentService
 	{
-		private readonly ICreditcardPaymentRepository _creditcardPaymentRepository;
+		private readonly IExpressPaymentRepository _expressPaymentRepository;
 		private readonly IMapper _mapper;
 		private readonly IBankAccountService _bankAccountService;
-		private readonly ICreditCardService _creditCardService;
 
-		public CreditCardPaymentService(ICreditcardPaymentRepository creditcardPaymentRepository, IMapper mapper, IBankAccountService bankAccountService, ICreditCardService creditCardService) : base(creditcardPaymentRepository, mapper)
+		public ExpressPaymentService(IExpressPaymentRepository expressPaymentRepository, IMapper mapper, IBankAccountService bankAccountService) : base(expressPaymentRepository, mapper)
 		{
-			_creditcardPaymentRepository = creditcardPaymentRepository;
+			_expressPaymentRepository = expressPaymentRepository;
 			_mapper = mapper;
 			_bankAccountService = bankAccountService;
-			_creditCardService = creditCardService;
 		}
 
 		public async Task<Result<SaveBasePaymentDto>> MakeTransaction(SaveBasePaymentDto paymentDto)
@@ -31,32 +29,33 @@ namespace FifthAssignment.Core.Application.Services
 			{
 				Result<BankAccountModel> Emisor = await _bankAccountService.GetByNumberIdentifierAsync(paymentDto.Emisor);
 
-				Result<CreditCardModel> Receiver = await _creditCardService.GetByNumberIdentifierAsync(paymentDto.Receiver);
+				Result<BankAccountModel> Receiver = await _bankAccountService.GetByNumberIdentifierAsync(paymentDto.Receiver);
 
+				Emisor.Data.Amount -= paymentDto.Amount;
 
-			    double operationResidue = Receiver.Data.Amount - paymentDto.Amount;
+				Receiver.Data.Amount += paymentDto.Amount;
 
-				if (operationResidue >= 0)
-				{
-					Emisor.Data.Amount += operationResidue;
-					Receiver.Data.Amount = operationResidue;
-				}else if(operationResidue < 0)
-				{
-					Emisor.Data.Amount += Math.Abs(operationResidue);
-					Receiver.Data.Amount = 0;
-				}
 				await _bankAccountService.UpdateAsync(_mapper.Map<SaveBankAccountModel>(Emisor));
-				await _creditCardService.UpdateAsync(_mapper.Map<SaveCreditCardModel>(Receiver));
+
+				await _bankAccountService.UpdateAsync(_mapper.Map<SaveBankAccountModel>(Receiver));
+
+
 
 				result = await base.SaveAsync(paymentDto);
-			
-				result.Message = "Payment successfull";
+
+				if (!result.IsSuccess)
+				{
+					result.IsSuccess = false;
+					result.Message = "Error while processing the payment";
+					return result;
+				}
+				result.Message = "Payment succesfull";
 				return result;
 			}
 			catch
 			{
 				result.IsSuccess = false;
-				result.Message = "Critical Error while processing the previous payment";
+				result.Message = "Critical error while processing the previous payment";
 				return result;
 			}
 		}
@@ -67,8 +66,23 @@ namespace FifthAssignment.Core.Application.Services
 			try
 			{
 				Result<BankAccountModel> Emisor = await _bankAccountService.GetByNumberIdentifierAsync(paymentDto.Emisor);
+				if (!Emisor.IsSuccess || Emisor.Data == null)
+				{
+					result.IsSuccess = false;
+					result.Message = Emisor.Message;
+					result.Data = false;
+					return result;
+				}
 
-			//	Result<BankAccountModel> Receiver = await _bankAccountService.GetByNumberIdentifierAsync(paymentDto.Receiver);
+				Result<BankAccountModel> Receiver = await _bankAccountService.GetByNumberIdentifierAsync(paymentDto.Receiver);
+
+				if (!Receiver.IsSuccess || Receiver.Data == null)
+				{
+					result.IsSuccess = false;
+					result.Message = Receiver.Message;
+					result.Data = false;
+					return result;
+				}
 
 				if (Emisor.Data.Amount < paymentDto.Amount)
 				{

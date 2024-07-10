@@ -22,7 +22,7 @@ namespace FifthAssignment.Core.Application.Services
 			_bankAccountService = bankAccountService;
 		}
 
-		public async Task<Result<SaveBasePaymentDto>> Pay(SaveBasePaymentDto paymentDto)
+		public async Task<Result<SaveBasePaymentDto>> MakeTransaction(SaveBasePaymentDto paymentDto)
 		{
 			Result<SaveBasePaymentDto> result = new();
 			try
@@ -60,7 +60,7 @@ namespace FifthAssignment.Core.Application.Services
 			}
 		}
 
-		public async Task<Result<bool>> ValidatePayment(SaveBasePaymentDto paymentDto)
+		public async Task<Result<bool>> ValidateTransaction(SaveBasePaymentDto paymentDto)
 		{
 	       Result<bool> result = new();
 			try

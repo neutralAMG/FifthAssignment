@@ -1,27 +1,30 @@
 ﻿
+
 using AutoMapper;
 using FifthAssignment.Core.Application.Core;
 using FifthAssignment.Core.Application.Interfaces.Contracts;
 using FifthAssignment.Core.Application.Interfaces.Payments;
+using FifthAssignment.Core.Application.Interfaces.Repositories;
 using FifthAssignment.Core.Application.Models.BankAccountsModels;
 using FifthAssignment.Core.Application.Models.CreditCardModels;
+using FifthAssignment.Core.Application.Models.LoanModels;
 using FifthAssignment.Core.Domain.Entities.PaymentContext;
 
 namespace FifthAssignment.Core.Application.Services
 {
-	internal class CreditCardPaymentService : BasePaymentService<CreditcardPayment>, ICreditCardPaymentService
+	public class LoanPaymentService : BasePaymentService<LoanPayment>, ILoanPaymentService
 	{
-		private readonly ICreditcardPaymentRepository _creditcardPaymentRepository;
+		private readonly ILoanPaymentRepository _loanPaymentRepository;
 		private readonly IMapper _mapper;
 		private readonly IBankAccountService _bankAccountService;
-		private readonly ICreditCardService _creditCardService;
+		private readonly ILoanService _loanService;
 
-		public CreditCardPaymentService(ICreditcardPaymentRepository creditcardPaymentRepository, IMapper mapper, IBankAccountService bankAccountService, ICreditCardService creditCardService) : base(creditcardPaymentRepository, mapper)
+		public LoanPaymentService(ILoanPaymentRepository loanPaymentRepository, IMapper mapper, IBankAccountService bankAccountService, ILoanService loanService) : base(loanPaymentRepository, mapper)
 		{
-			_creditcardPaymentRepository = creditcardPaymentRepository;
+			_loanPaymentRepository = loanPaymentRepository;
 			_mapper = mapper;
 			_bankAccountService = bankAccountService;
-			_creditCardService = creditCardService;
+			_loanService = loanService;
 		}
 
 		public async Task<Result<SaveBasePaymentDto>> MakeTransaction(SaveBasePaymentDto paymentDto)
@@ -31,32 +34,32 @@ namespace FifthAssignment.Core.Application.Services
 			{
 				Result<BankAccountModel> Emisor = await _bankAccountService.GetByNumberIdentifierAsync(paymentDto.Emisor);
 
-				Result<CreditCardModel> Receiver = await _creditCardService.GetByNumberIdentifierAsync(paymentDto.Receiver);
+				Result<LoanModel> Receiver = await _loanService.GetByNumberIdentifierAsync(paymentDto.Receiver);
 
-
-			    double operationResidue = Receiver.Data.Amount - paymentDto.Amount;
+				double operationResidue = Receiver.Data.Amount - paymentDto.Amount;
 
 				if (operationResidue >= 0)
 				{
 					Emisor.Data.Amount += operationResidue;
 					Receiver.Data.Amount = operationResidue;
-				}else if(operationResidue < 0)
+				}
+				else if (operationResidue < 0)
 				{
 					Emisor.Data.Amount += Math.Abs(operationResidue);
 					Receiver.Data.Amount = 0;
 				}
 				await _bankAccountService.UpdateAsync(_mapper.Map<SaveBankAccountModel>(Emisor));
-				await _creditCardService.UpdateAsync(_mapper.Map<SaveCreditCardModel>(Receiver));
+				await _loanService.UpdateAsync(_mapper.Map<SaveLoanModel>(Receiver));
 
 				result = await base.SaveAsync(paymentDto);
-			
+
 				result.Message = "Payment successfull";
 				return result;
 			}
 			catch
 			{
 				result.IsSuccess = false;
-				result.Message = "Critical Error while processing the previous payment";
+				result.Message = "Critical error while processing the previous payment";
 				return result;
 			}
 		}
@@ -68,7 +71,7 @@ namespace FifthAssignment.Core.Application.Services
 			{
 				Result<BankAccountModel> Emisor = await _bankAccountService.GetByNumberIdentifierAsync(paymentDto.Emisor);
 
-			//	Result<BankAccountModel> Receiver = await _bankAccountService.GetByNumberIdentifierAsync(paymentDto.Receiver);
+				Result<LoanModel> Receiver = await _loanService.GetByNumberIdentifierAsync(paymentDto.Receiver);
 
 				if (Emisor.Data.Amount < paymentDto.Amount)
 				{

@@ -6,7 +6,7 @@ namespace FifthAssignment.Core.Application.Interfaces
 {
 	public interface IPay
 	{
-		Task<Result<SaveBasePaymentDto>> Pay(SaveBasePaymentDto paymentDto);
-		Task<Result<bool>> ValidatePayment(SaveBasePaymentDto paymentDto);
+		Task<Result<SaveBasePaymentDto>>  MakeTransaction(SaveBasePaymentDto paymentDto);
+		Task<Result<bool>> ValidateTransaction(SaveBasePaymentDto paymentDto);
 	}
 }

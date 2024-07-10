@@ -56,6 +56,12 @@ namespace FifthAssignment.Core.Application.Services
 			Result<BankAccountModel> result = new();
 			try
 			{
+				if (!await _bankAccountRepository.Exits(b => b.IdentifierNumber == id))
+				{
+					result.IsSuccess = false;
+					result.Message = $"there's no banck account with this number: {id}";
+					return result;
+				}
 				BankAccount entityGetted = await _bankAccountRepository.GetByNumberIdentifierAsync(b => b.IdentifierNumber == id);
 
 				result.Data = _mapper.Map<BankAccountModel>(entityGetted);
