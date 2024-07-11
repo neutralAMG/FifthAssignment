@@ -18,7 +18,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Context
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer("", m => m.MigrationsAssembly(typeof(fifthAssignmentContext).Assembly.FullName));
+			optionsBuilder.UseSqlServer("Server=DESKTOP-LL4GL68; Database=fifthAssingnment; Integrated Security=true; TrustServerCertificate=true;", m => m.MigrationsAssembly(typeof(fifthAssignmentContext).Assembly.FullName));
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,13 +26,51 @@ namespace FifthAssignment.Infraestructure.Persistence.Context
 
 			modelBuilder.Entity<Beneficiary>(b =>
 			{
+				b.HasKey(b => b.Id);
 				b.HasOne<ApplicationUser>().WithMany( u => u.Beneficiaries).HasForeignKey(b => b.UserBeneficiaryId);
+
+				
+				b.HasIndex(b => b.UserId).IsClustered(false);
+				b.HasIndex(b => b.UserBeneficiaryId).IsClustered(false);
 			});
 
 			modelBuilder.Entity<Loan>(l =>
 			{
-				l.HasOne<ApplicationUser>().WithMany(u => u.Loans).HasForeignKey( l => l.UserId);
+				l.HasKey(l => l.Id);
+
+				l.HasOne<ApplicationUser>().WithMany(u => u.Loans).IsRequired().HasForeignKey( l => l.UserId);
+				l.HasIndex(l => l.UserId).IsClustered(false);
+
+				l.Property(l => l.IdentifierNumber).IsRequired();
+				l.Property(l => l.Amount).IsRequired();
+				l.Property(l => l.DateCreated).IsRequired();
+				
 			});
+			modelBuilder.Entity<CreditCard>(c =>
+			{
+				c.HasKey(c => c.Id);
+
+				c.HasOne<ApplicationUser>().WithMany(u => u.CreditCards).IsRequired().HasForeignKey(l => l.UserId);
+				c.HasIndex(c => c.UserId).IsClustered(false);
+
+				c.Property(c => c.Amount).IsRequired();
+				c.Property(c => c.IdentifierNumber).IsRequired();
+				c.Property(c => c.CVV).IsRequired();
+				c.Property(c => c.CreditLimit).IsRequired();
+			});
+
+			modelBuilder.Entity<BankAccount>(b =>
+			{
+				b.HasKey(b => b.Id);
+
+				b.HasOne<ApplicationUser>().WithMany(u => u.BankAccoounts).IsRequired().HasForeignKey(l => l.UserId);
+				b.HasIndex(b => b.UserId).IsClustered(false);
+
+				b.Property(b => b.Amount).IsRequired();
+				b.Property(b => b.IdentifierNumber).IsRequired();
+				b.Property(b => b.DateCreated).IsRequired();
+			});
+		
 		}
 	}
 }

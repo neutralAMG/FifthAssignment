@@ -10,12 +10,14 @@ namespace FifthAssignment.Core.Domain.Entities.PaymentContext
 		public Guid? BeneficiaryPaymentId { get; set; }
 		public Guid? CreditcardPaymentId { get; set; }
 		public Guid? LoanPaymentId { get; set; }
+		public Guid? MoneyAdvanceId { get; set; }
 
 	    public ExpressPayment? ExpressPayment { get; set; }
         public BeneficiaryPayment? BeneficiaryPayment { get; set; }
         public CreditcardPayment? CreditcardPayment { get; set; }
         public LoanPayment? LoanPayment { get; set; }
-        public PaymentType? PymentType { get; set; }
+        public MoneyAdvance? MoneyAdvance { get; set; }
+        public PaymentType? PaymentType { get; set; }
     }
 
 

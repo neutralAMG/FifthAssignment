@@ -1,10 +1,11 @@
 ﻿
 
+using FifthAssignment.Core.Domain.Core;
 using FifthAssignment.Core.Domain.Entities.PersistanceContext;
 
 namespace FifthAssignment.Core.Domain.Entities.PaymentContext
 {
-	public class MoneyAdvance
+	public class MoneyAdvance : BaseDateCreatedEntity<Guid>
 	{
 		public double Amount { get; set; }
 		public Guid UserCreditCardId { get; set; }

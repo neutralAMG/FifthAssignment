@@ -1,14 +1,9 @@
 ﻿using FifthAssignment.Core.Domain.Core;
 using FifthAssignment.Core.Domain.Entities.PersistanceContext;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FifthAssignment.Core.Domain.Entities.PaymentContext
 {
-    public class LoanPayment : BaseEntity<Guid>
+    public class LoanPayment : BaseDateCreatedEntity<Guid>
     {
 		public double Amount { get; set; }
 		public Guid UserBankAccountId { get; set; }

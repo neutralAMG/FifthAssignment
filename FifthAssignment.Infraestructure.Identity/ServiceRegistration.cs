@@ -16,7 +16,7 @@ namespace FifthAssignment.Infraestructure.Identity
 		{
 			services.AddDbContext<IdentityAppContext>(options =>
 			{
-				options.UseSqlServer(config.GetConnectionString("DefaultConnection"), m => m.MigrationsAssembly(typeof(IdentityAppContext).Assembly.FullName));
+				options.UseSqlServer(config.GetConnectionString("DefaultPaymentConnection"), m => m.MigrationsAssembly(typeof(IdentityAppContext).Assembly.FullName));
 			});
 
 			services.AddIdentity<ApplicationUser, IdentityRole>()

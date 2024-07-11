@@ -5,7 +5,8 @@ namespace FifthAssignment.Core.Domain.Entities.PaymentContext
 {
     public class Transfer : BaseDateCreatedEntity<Guid>
     {
-        public Guid UserAccountFromId { get; set; }
+		public double Amount { get; set; }
+		public Guid UserAccountFromId { get; set; }
         public Guid UserAccountToId { get; set; }
 
         public BankAccount UserAccountFrom { get; set; }

@@ -3,7 +3,7 @@ using FifthAssignment.Core.Domain.Entities.PersistanceContext;
 
 namespace FifthAssignment.Core.Domain.Entities.PaymentContext
 {
-    public class BeneficiaryPayment : BaseEntity<Guid>
+    public class BeneficiaryPayment : BaseDateCreatedEntity<Guid>
     {
 
 		public double Amount { get; set; }

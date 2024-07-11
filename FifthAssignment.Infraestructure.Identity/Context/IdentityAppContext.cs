@@ -15,7 +15,7 @@ namespace FifthAssignment.Infraestructure.Identity.Context
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer("", m => m.MigrationsAssembly(typeof(IdentityAppContext).Assembly.FullName));
+			optionsBuilder.UseSqlServer("Server=DESKTOP-LL4GL68; Database=fifthAssingnment; Integrated Security=true; TrustServerCertificate=true;", m => m.MigrationsAssembly(typeof(IdentityAppContext).Assembly.FullName));
 		}
 
 		protected override void OnModelCreating(ModelBuilder builder)
@@ -26,7 +26,7 @@ namespace FifthAssignment.Infraestructure.Identity.Context
 			{
 				user.ToTable(name: "Users");
 
-				user.HasMany(u =>u.Beneficiaries).WithOne().HasForeignKey(b => b.UserBeneficiaryId);
+				user.HasMany(u =>u.Beneficiaries).WithOne().HasForeignKey(b => b.UserId);
 				user.HasMany(u =>u.Loans).WithOne().HasForeignKey(b => b.UserId);
 				user.HasMany(u =>u.CreditCards).WithOne().HasForeignKey(b => b.UserId);
 				user.HasMany(u =>u.BankAccoounts).WithOne().HasForeignKey(b => b.UserId);
