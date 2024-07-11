@@ -3,10 +3,10 @@ using System.Text;
 
 namespace FifthAssignment.Core.Application.Utils.GenerateProductCodeString
 {
-	public static class GenerateProductCodeString
+	public class GenerateACodeString : ICodeGenerator
 	{
 		private readonly static string Characters = "1234567890";
-		public static string GenerateCode()
+		public string GenerateNumberIdentifierCode()
 		{
 			StringBuilder stringBuilder = new();
 			Random random = new();
@@ -16,5 +16,17 @@ namespace FifthAssignment.Core.Application.Utils.GenerateProductCodeString
 
 			return stringBuilder.ToString();
 		}
+		public string GenerateCreditCardCVVCode()
+		{
+			StringBuilder stringBuilder = new();
+			Random random = new();
+			for (int i = 0; i < 3; i++)
+			{
+				stringBuilder.Append(Characters[random.Next(Characters.Length)]);
+			}
+
+			return stringBuilder.ToString();
+		}
+	
 	}
 }

@@ -1,4 +1,5 @@
 ﻿
+using FifthAssignment.Core.Application.Utils.GenerateProductCodeString;
 using FifthAssignment.Core.Domain.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,8 @@ namespace FifthAssignment.Core.Application
 		{
 
 			services.Configure<SessionKeys>(confi.GetSection("SessionKeys"));
+
+			services.AddTransient<ICodeGenerator, GenerateACodeString>();
 		}
 	}
 }

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using FifthAssignment.Core.Application.Dtos.AccountDtos;
 using FifthAssignment.Core.Application.Interfaces.Identity;
-using FifthAssignment.Core.Domain.Entities.PersistanceContext;
 using FifthAssignment.Infraestructure.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

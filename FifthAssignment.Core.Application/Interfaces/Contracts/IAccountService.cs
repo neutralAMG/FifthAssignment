@@ -12,8 +12,5 @@ namespace FifthAssignment.Core.Application.Interfaces.Contracts
         Task<RegisterResponse> RegisterAdminAsync(RegisterRequest request);
 
         Task ForgotPasswordAsync();
-        Task ChangePasswordAsync();
-
-
     }
 }
