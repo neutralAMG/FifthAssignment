@@ -3,7 +3,7 @@ using FifthAssignment.Core.Domain.Entities.PaymentContext;
 
 namespace FifthAssignment.Core.Application.Interfaces.Contracts.Transactions
 {
-    public interface ILoanPaymentService : IBasePaymentService<LoanPayment>, IPay
+    public interface ILoanPaymentService : IBasePaymentService<LoanPayment>, ITransaction
     {
     }
 }

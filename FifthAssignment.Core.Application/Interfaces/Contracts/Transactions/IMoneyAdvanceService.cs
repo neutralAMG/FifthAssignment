@@ -4,7 +4,7 @@ using FifthAssignment.Core.Domain.Entities.PaymentContext;
 
 namespace FifthAssignment.Core.Application.Interfaces.Contracts.Transactions
 {
-    public interface IMoneyAdvaceService : IBasePaymentService<MoneyAdvance>, IPay
+    public interface IMoneyAdvanceService : IBasePaymentService<MoneyAdvance>, ITransaction
     {
     }
 }

@@ -13,9 +13,7 @@ namespace FifthAssignment.Core.Domain.Entities.PaymentContext
 		public double Amount { get; set; }
 		public Guid UserBankAccountId { get; set; }
         public Guid UserLoanId { get; set; }
-        public Guid PaymentId { get; set; }
         public BankAccount UserBackAccoount { get; set; }
         public Loan UserLoan { get; set; }
-        public Payment Payment { get; set; }
     }
 }

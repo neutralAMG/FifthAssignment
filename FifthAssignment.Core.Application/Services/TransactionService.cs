@@ -1,5 +1,6 @@
 ﻿
 using FifthAssignment.Core.Application.Core;
+using FifthAssignment.Core.Application.Enums;
 using FifthAssignment.Core.Application.Interfaces;
 using FifthAssignment.Core.Application.Interfaces.Contracts.Transactions;
 
@@ -11,7 +12,7 @@ namespace FifthAssignment.Core.Application.Services
 		private readonly IBeneficiaryPaymentService _beneficiaryPaymentService;
 		private readonly ICreditCardPaymentService _creditCardPaymentService;
 		private readonly ILoanPaymentService _loanPaymentService;
-		private readonly IMoneyAdvaceService _moneyAdvaceService;
+		private readonly IMoneyAdvanceService _moneyAdvaceService;
 		private readonly ITransferService _transferService;
 
 
@@ -22,7 +23,7 @@ namespace FifthAssignment.Core.Application.Services
 			ICreditCardPaymentService creditCardPaymentService,
 			ILoanPaymentService loanPaymentService,
 			ITransferService transferService,
-			IMoneyAdvaceService moneyAdvaceService)
+			IMoneyAdvanceService moneyAdvaceService)
 		{
 			_expressPaymentService = expressPaymentService;
 			_beneficiaryPaymentService = beneficiaryPaymentService;
@@ -32,17 +33,17 @@ namespace FifthAssignment.Core.Application.Services
 			_moneyAdvaceService = moneyAdvaceService;
 		}
 
-		private Dictionary<int, IPay> GetTransactionStrategies()
+		private Dictionary<int, ITransaction> GetTransactionStrategies()
 		{
 
-			Dictionary<int, IPay> transactionStrategys = new()
+			Dictionary<int, ITransaction> transactionStrategys = new()
 	        {
-		           {1, _expressPaymentService},
-		           {2, _beneficiaryPaymentService },
-		           {3, _creditCardPaymentService },
-		           {4, _loanPaymentService },
-		           {5, _transferService },
-		           {6, _moneyAdvaceService },
+		           {(int)TransactionTypes.ExpressPayment, _expressPaymentService},
+		           {(int)TransactionTypes.BeneficiaryPayment, _beneficiaryPaymentService },
+		           {(int)TransactionTypes.CreditCardPayment, _creditCardPaymentService },
+		           {(int)TransactionTypes.LoanPayment, _loanPaymentService },
+		           {(int)TransactionTypes.Transfer, _transferService },
+		           {(int)TransactionTypes.MoneyAdvance, _moneyAdvaceService },
 	        };
 
 			return transactionStrategys;

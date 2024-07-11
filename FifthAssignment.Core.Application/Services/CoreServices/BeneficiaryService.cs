@@ -16,7 +16,7 @@ using Microsoft.Extensions.Options;
 
 namespace FifthAssignment.Core.Application.Services.CoreServices
 {
-    public class BeneficiaryServices : BaseProductService<BeneficiaryModel, SaveBeneficiaryModel, Beneficiary>, IBeneficiaryService
+    public class BeneficiaryService : BaseProductService<BeneficiaryModel, SaveBeneficiaryModel, Beneficiary>, IBeneficiaryService
     {
         private readonly IBeneficiaryRepository _beneficiaryRepository;
         private readonly IMapper _mapper;
@@ -24,7 +24,7 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
         private readonly AuthenticationResponse _currentUser;
         private readonly SessionKeys _sessionkeys;
 
-        public BeneficiaryServices(IBeneficiaryRepository beneficiaryRepository, IMapper mapper, IHttpContextAccessor httpContext, IOptions<SessionKeys> sessionKeys) : base(beneficiaryRepository, mapper)
+        public BeneficiaryService(IBeneficiaryRepository beneficiaryRepository, IMapper mapper, IHttpContextAccessor httpContext, IOptions<SessionKeys> sessionKeys) : base(beneficiaryRepository, mapper)
         {
             _beneficiaryRepository = beneficiaryRepository;
             _mapper = mapper;

@@ -2,11 +2,15 @@
 
 using AutoMapper;
 using FifthAssignment.Core.Application.Core;
+using FifthAssignment.Core.Application.Dtos.Payments;
+using FifthAssignment.Core.Application.Enums;
+using FifthAssignment.Core.Application.Interfaces.Contracts;
 using FifthAssignment.Core.Application.Interfaces.Contracts.Core;
 using FifthAssignment.Core.Application.Interfaces.Contracts.Transactions;
 using FifthAssignment.Core.Application.Interfaces.Payments;
 using FifthAssignment.Core.Application.Models.BankAccountsModels;
 using FifthAssignment.Core.Domain.Entities.PaymentContext;
+
 
 namespace FifthAssignment.Core.Application.Services.PaymentServices
 {
@@ -15,13 +19,15 @@ namespace FifthAssignment.Core.Application.Services.PaymentServices
         private readonly IExpressPaymentRepository _expressPaymentRepository;
         private readonly IMapper _mapper;
         private readonly IBankAccountService _bankAccountService;
+		private readonly IPaymentService _paymentService;
 
-        public ExpressPaymentService(IExpressPaymentRepository expressPaymentRepository, IMapper mapper, IBankAccountService bankAccountService) : base(expressPaymentRepository, mapper)
+		public ExpressPaymentService(IExpressPaymentRepository expressPaymentRepository, IMapper mapper, IBankAccountService bankAccountService, IPaymentService paymentService) : base(expressPaymentRepository, mapper)
         {
             _expressPaymentRepository = expressPaymentRepository;
             _mapper = mapper;
             _bankAccountService = bankAccountService;
-        }
+			_paymentService = paymentService;
+		}
 
         public async Task<Result<SaveBasePaymentDto>> MakeTransaction(SaveBasePaymentDto paymentDto)
         {
@@ -99,5 +105,21 @@ namespace FifthAssignment.Core.Application.Services.PaymentServices
                 return result;
             }
         }
-    }
+
+		public override async Task<Result<SaveBasePaymentDto>> SaveAsync(SaveBasePaymentDto entity)
+		{
+			var result = await base.SaveAsync(entity);
+
+			if (result.IsSuccess)
+			{
+				await _paymentService.SaveAsync(new SavePaymentDto
+				{
+					Amount = entity.Amount,
+					BeneficiaryPaymentId = result.Data.Id,
+					PaymentTypeId = (int)TransactionTypes.ExpressPayment
+				});
+			}
+			return result;
+		}
+	}
 }

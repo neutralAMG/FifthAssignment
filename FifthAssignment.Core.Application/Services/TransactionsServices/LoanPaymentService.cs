@@ -2,14 +2,16 @@
 
 using AutoMapper;
 using FifthAssignment.Core.Application.Core;
+using FifthAssignment.Core.Application.Dtos.Payments;
+using FifthAssignment.Core.Application.Enums;
+using FifthAssignment.Core.Application.Interfaces.Contracts;
 using FifthAssignment.Core.Application.Interfaces.Contracts.Core;
 using FifthAssignment.Core.Application.Interfaces.Contracts.Transactions;
 using FifthAssignment.Core.Application.Interfaces.Payments;
-using FifthAssignment.Core.Application.Interfaces.Repositories;
 using FifthAssignment.Core.Application.Models.BankAccountsModels;
-using FifthAssignment.Core.Application.Models.CreditCardModels;
 using FifthAssignment.Core.Application.Models.LoanModels;
 using FifthAssignment.Core.Domain.Entities.PaymentContext;
+
 
 namespace FifthAssignment.Core.Application.Services.PaymentServices
 {
@@ -19,14 +21,16 @@ namespace FifthAssignment.Core.Application.Services.PaymentServices
         private readonly IMapper _mapper;
         private readonly IBankAccountService _bankAccountService;
         private readonly ILoanService _loanService;
+		private readonly IPaymentService _paymentService;
 
-        public LoanPaymentService(ILoanPaymentRepository loanPaymentRepository, IMapper mapper, IBankAccountService bankAccountService, ILoanService loanService) : base(loanPaymentRepository, mapper)
+		public LoanPaymentService(ILoanPaymentRepository loanPaymentRepository, IMapper mapper, IBankAccountService bankAccountService, ILoanService loanService, IPaymentService paymentService) : base(loanPaymentRepository, mapper)
         {
             _loanPaymentRepository = loanPaymentRepository;
             _mapper = mapper;
             _bankAccountService = bankAccountService;
             _loanService = loanService;
-        }
+			_paymentService = paymentService;
+		}
 
         public async Task<Result<SaveBasePaymentDto>> MakeTransaction(SaveBasePaymentDto paymentDto)
         {
@@ -90,5 +94,20 @@ namespace FifthAssignment.Core.Application.Services.PaymentServices
                 return result;
             }
         }
-    }
+		public override async Task<Result<SaveBasePaymentDto>> SaveAsync(SaveBasePaymentDto entity)
+		{
+			var result = await base.SaveAsync(entity);
+
+			if (result.IsSuccess)
+			{
+				await _paymentService.SaveAsync(new SavePaymentDto
+				{
+					Amount = entity.Amount,
+					BeneficiaryPaymentId = result.Data.Id,
+					PaymentTypeId = (int)TransactionTypes.LoanPayment
+				});
+			}
+			return result;
+		}
+	}
 }
