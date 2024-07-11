@@ -15,5 +15,6 @@ namespace FifthAssignment.Core.Application.Core
 		public string Emisor { get; set; }
 		public string Receiver { get; set; }
 		public double Amount { get; set; }
+		public int TransactionType { get; set; }
 	}
 }

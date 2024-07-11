@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FifthAssignment.Core.Application.Core;
-using FifthAssignment.Core.Application.Interfaces.Contracts;
+using FifthAssignment.Core.Application.Interfaces.Contracts.Core;
+using FifthAssignment.Core.Application.Interfaces.Contracts.Transactions;
 using FifthAssignment.Core.Application.Interfaces.Payments;
 using FifthAssignment.Core.Application.Models.BankAccountsModels;
 using FifthAssignment.Core.Application.Services.CoreServices;
@@ -9,7 +10,7 @@ using FifthAssignment.Core.Domain.Entities.PaymentContext;
 
 namespace FifthAssignment.Core.Application.Services.TransactionsServices
 {
-	public class TransferService : BasePaymentService<Transfer>, ITransferService
+    public class TransferService : BasePaymentService<Transfer>, ITransferService
 	{
 		private readonly ITransferRepository _transferRepository;
 		private readonly IMapper _mapper;

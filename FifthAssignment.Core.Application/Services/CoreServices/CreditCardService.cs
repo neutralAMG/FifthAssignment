@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FifthAssignment.Core.Application.Core;
-using FifthAssignment.Core.Application.Interfaces.Contracts;
+using FifthAssignment.Core.Application.Dtos.AccountDtos;
+using FifthAssignment.Core.Application.Interfaces.Contracts.Core;
 using FifthAssignment.Core.Application.Interfaces.Repositories;
 using FifthAssignment.Core.Application.Models.BankAccountsModels;
 using FifthAssignment.Core.Application.Models.CreditCardModels;
@@ -20,7 +21,7 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContext;
 		private readonly ICodeGenerator _codeGenerator;
-		private readonly UserModel _currentUser;
+		private readonly AuthenticationResponse _currentUser;
         private readonly SessionKeys _sessionkeys;
 
         public CreditCardService(ICreditCardRepository creditCardRepository, IMapper mapper, IHttpContextAccessor httpContext, IOptions<SessionKeys> sessionKeys, ICodeGenerator codeGenerator) : base(creditCardRepository, mapper)
@@ -30,7 +31,7 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
             _httpContext = httpContext;
 			_codeGenerator = codeGenerator;
 			_sessionkeys = sessionKeys.Value;
-            _currentUser = _httpContext.HttpContext.Session.Get<UserModel>(_sessionkeys.user);
+            _currentUser = _httpContext.HttpContext.Session.Get<AuthenticationResponse>(_sessionkeys.user);
         }
 
         public async Task<Result<List<CreditCardModel>>> GetAllWithUserIdAsync()

@@ -2,7 +2,7 @@
 
 namespace FifthAssignment.Core.Application.Dtos.AccountDtos
 {
-	public class UsserGetResponceDto
+	public class UserGetResponceDto
 	{
 		public string Id { get; set; }	
 	}

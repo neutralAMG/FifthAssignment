@@ -2,7 +2,8 @@
 
 using AutoMapper;
 using FifthAssignment.Core.Application.Core;
-using FifthAssignment.Core.Application.Interfaces.Contracts;
+using FifthAssignment.Core.Application.Interfaces.Contracts.Core;
+using FifthAssignment.Core.Application.Interfaces.Contracts.Transactions;
 using FifthAssignment.Core.Application.Interfaces.Payments;
 using FifthAssignment.Core.Application.Interfaces.Repositories;
 using FifthAssignment.Core.Application.Models.BankAccountsModels;

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FifthAssignment.Core.Application.Core;
-using FifthAssignment.Core.Application.Interfaces.Contracts;
+using FifthAssignment.Core.Application.Dtos.AccountDtos;
+using FifthAssignment.Core.Application.Interfaces.Contracts.Core;
 using FifthAssignment.Core.Application.Interfaces.Repositories;
 using FifthAssignment.Core.Application.Models.BankAccountsModels;
 using FifthAssignment.Core.Application.Models.BeneficiaryModels;
@@ -20,7 +21,7 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
         private readonly IBeneficiaryRepository _beneficiaryRepository;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContext;
-        private readonly UserModel _currentUser;
+        private readonly AuthenticationResponse _currentUser;
         private readonly SessionKeys _sessionkeys;
 
         public BeneficiaryServices(IBeneficiaryRepository beneficiaryRepository, IMapper mapper, IHttpContextAccessor httpContext, IOptions<SessionKeys> sessionKeys) : base(beneficiaryRepository, mapper)
@@ -29,7 +30,7 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
             _mapper = mapper;
             _httpContext = httpContext;
             _sessionkeys = sessionKeys.Value;
-            _currentUser = _httpContext.HttpContext.Session.Get<UserModel>(_sessionkeys.user);
+            _currentUser = _httpContext.HttpContext.Session.Get<AuthenticationResponse>(_sessionkeys.user);
         }
 
         public async Task<Result<List<BeneficiaryModel>>> GetAllWithUserIdAsync()

@@ -1,5 +1,4 @@
-﻿using FifthAssignment.Core.Application.Interfaces.Contracts;
-using FifthAssignment.Core.Application.Interfaces.Identity;
+﻿using FifthAssignment.Core.Application.Interfaces.Identity;
 using FifthAssignment.Core.Domain.Settings;
 using FifthAssignment.Infraestructure.Identity.Context;
 using FifthAssignment.Infraestructure.Identity.Entities;
@@ -27,7 +26,7 @@ namespace FifthAssignment.Infraestructure.Identity
 
 			services.Configure<ConnectionStrings>(config.GetSection("ConnectionStrings"));
 
-			services.AddTransient<IAccountService, AccountService>();
+			services.AddTransient<IAccountRepository, AccountService>();
 			services.AddTransient<IUserRepository, UserRepository>();
 		
 

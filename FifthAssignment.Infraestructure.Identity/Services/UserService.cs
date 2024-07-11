@@ -17,16 +17,16 @@ namespace FifthAssignment.Infraestructure.Identity.Services
 			_userManager = userManager;
 			_mapper = mapper;
 		}
-		public async Task<List<UsserGetResponceDto>> GetAllAsync()
+		public async Task<List<UserGetResponceDto>> GetAllAsync()
 		{
 			var users = await _userManager.Users.Include(u => u.BankAccoounts)
 				.Include(u => u.CreditCards)
 				.Include(u => u.Loans)
 				.Include(u => u.Beneficiaries).ToListAsync();
-			return _mapper.Map<List<UsserGetResponceDto>>(users);
+			return _mapper.Map<List<UserGetResponceDto>>(users);
 		}
 
-		public async Task<UsserGetResponceDto> GetByIdAsync(string id)
+		public async Task<UserGetResponceDto> GetByIdAsync(string id)
 		{
 			if (!await _userManager.Users.AnyAsync(u => u.Id == id)) return null;
 
@@ -35,10 +35,10 @@ namespace FifthAssignment.Infraestructure.Identity.Services
 				.Include(u => u.Loans)
 				.Include(u => u.Beneficiaries).Where(u => u.Id == id).FirstOrDefaultAsync();
 
-			return _mapper.Map<UsserGetResponceDto>(user);
+			return _mapper.Map<UserGetResponceDto>(user);
 		}
 
-		public async Task<List<UsserGetResponceDto>> GetUserBeneficiariesAsync(string id)
+		public async Task<List<UserGetResponceDto>> GetUserBeneficiariesAsync(string id)
 		{
 			if (!await _userManager.Users.AnyAsync(u => u.Id == id)) return null;
 
@@ -56,18 +56,22 @@ namespace FifthAssignment.Infraestructure.Identity.Services
 				Beneficiaries.Add(user);
 			}
 
-			return _mapper.Map<List<UsserGetResponceDto>>(Beneficiaries);
+			return _mapper.Map<List<UserGetResponceDto>>(Beneficiaries);
 		}
-		public async Task<UsserGetResponceDto> GetUserBeneficiarieAsync(string userid, string beneficiaryId)
+		public async Task<UserGetResponceDto> GetUserBeneficiaryAsync(string userid, string beneficiaryId)
 		{
+			var userBeneficiaryId = await _userManager.Users.SelectMany(u => u.Beneficiaries.Where(b => b.UserId == userid).Select(b => b.UserBeneficiaryId)).Where(b => b == beneficiaryId).FirstOrDefaultAsync();
 
-			List<UsserGetResponceDto> beneficiaries = await GetUserBeneficiariesAsync(userid);
+			
 
-			UsserGetResponceDto beneficiary = beneficiaries.Where(u => u.Id == beneficiaryId).FirstOrDefault();
+			ApplicationUser beneficiary =  await _userManager.Users.Include(u => u.BankAccoounts)
+				  .Include(u => u.CreditCards)
+				  .Include(u => u.Loans)
+				  .Include(u => u.Beneficiaries).Where(u => u.Id == userBeneficiaryId).FirstOrDefaultAsync();
 
 			if (beneficiary == null) return null;
 
-			return beneficiary;
+			return _mapper.Map<UserGetResponceDto>(beneficiary);
 		}
 
 		public async Task<bool> ActivateAsync(string id)

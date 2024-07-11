@@ -2,7 +2,8 @@
 
 using AutoMapper;
 using FifthAssignment.Core.Application.Core;
-using FifthAssignment.Core.Application.Interfaces.Contracts;
+using FifthAssignment.Core.Application.Interfaces.Contracts.Core;
+using FifthAssignment.Core.Application.Interfaces.Contracts.Transactions;
 using FifthAssignment.Core.Application.Interfaces.Payments;
 using FifthAssignment.Core.Application.Models.BankAccountsModels;
 using FifthAssignment.Core.Application.Models.CreditCardModels;
@@ -11,7 +12,7 @@ using FifthAssignment.Core.Domain.Entities.PaymentContext;
 
 namespace FifthAssignment.Core.Application.Services.TransactionsServices
 {
-	public class MoneyAdvanceService : BasePaymentService<MoneyAdvance>, IMoneyAdvaceService
+    public class MoneyAdvanceService : BasePaymentService<MoneyAdvance>, IMoneyAdvaceService
 	{
 		private readonly IMoneyAdvanceRepository _moneyAdvanceRepository;
 		private readonly IMapper _mapper;
@@ -39,6 +40,7 @@ namespace FifthAssignment.Core.Application.Services.TransactionsServices
 				Emisor.Data.Amount += paymentDto.Amount + 6.25;
 			
 				await _bankAccountService.UpdateAsync(_mapper.Map<SaveBankAccountModel>(Emisor));
+
 				await _creditCardService.UpdateAsync(_mapper.Map<SaveCreditCardModel>(Receiver));
 
 				result = await base.SaveAsync(paymentDto);
