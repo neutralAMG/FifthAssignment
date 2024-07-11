@@ -19,14 +19,14 @@ namespace FifthAssignment.Core.Application.Services.PaymentServices
         private readonly IExpressPaymentRepository _expressPaymentRepository;
         private readonly IMapper _mapper;
         private readonly IBankAccountService _bankAccountService;
-		private readonly IPaymentService _paymentService;
+		private readonly ITransactionService _transactionService;
 
-		public ExpressPaymentService(IExpressPaymentRepository expressPaymentRepository, IMapper mapper, IBankAccountService bankAccountService, IPaymentService paymentService) : base(expressPaymentRepository, mapper)
+		public ExpressPaymentService(IExpressPaymentRepository expressPaymentRepository, IMapper mapper, IBankAccountService bankAccountService, ITransactionService transactionService) : base(expressPaymentRepository, mapper)
         {
             _expressPaymentRepository = expressPaymentRepository;
             _mapper = mapper;
             _bankAccountService = bankAccountService;
-			_paymentService = paymentService;
+			_transactionService = transactionService;
 		}
 
         public async Task<Result<SaveBasePaymentDto>> MakeTransaction(SaveBasePaymentDto paymentDto)
@@ -112,11 +112,11 @@ namespace FifthAssignment.Core.Application.Services.PaymentServices
 
 			if (result.IsSuccess)
 			{
-				await _paymentService.SaveAsync(new SavePaymentDto
+				await _transactionService.SaveAsync(new SavePaymentDto
 				{
 					Amount = entity.Amount,
-					BeneficiaryPaymentId = result.Data.Id,
-					PaymentTypeId = (int)TransactionTypes.ExpressPayment
+					specificPaymentTosaveId = result.Data.Id,
+					TransactionTypeId = (int)TransactionTypes.ExpressPayment
 				});
 			}
 			return result;

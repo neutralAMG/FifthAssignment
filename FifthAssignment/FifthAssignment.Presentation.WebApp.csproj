@@ -11,6 +11,7 @@
     <ProjectReference Include="..\FifthAssignment.Core.Domain\FifthAssignment.Core.Domain.csproj" />
     <ProjectReference Include="..\FifthAssignment.Infraestructure.Identity\FifthAssignment.Infraestructure.Identity.csproj" />
     <ProjectReference Include="..\FifthAssignment.Infraestructure.Payments\FifthAssignment.Infraestructure.Payments.csproj" />
+    <ProjectReference Include="..\FifthAssignment.Infraestructure.Payments\FifthAssignment.Infraestructure.Transaction.csproj" />
     <ProjectReference Include="..\FifthAssignment.Infraestructure.Persistence\FifthAssignment.Infraestructure.Persistence.csproj" />
   </ItemGroup>
 

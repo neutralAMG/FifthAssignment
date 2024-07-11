@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FifthAssignment.Infraestructure.Payments.Repositories
 {
-	public class PaymentRepository : BasePaymentRepository<Payment>, IPaymentRepository
+	public class PaymentRepository : BasePaymentRepository<Transaction>, ITransactionRepository
 	{
 		private readonly PaymentContext _context;
 
@@ -15,7 +15,7 @@ namespace FifthAssignment.Infraestructure.Payments.Repositories
 			_context = context;
 		}
 
-		public async Task<IList<Payment>> GetAllTodayPaymentsAsync()
+		public async Task<IList<Transaction>> GetAllTodayPaymentsAsync()
 		{
 			return await _context.Payments.Where(p => p.DateCreated.Date == DateTime.UtcNow.Date).ToListAsync();
 		}

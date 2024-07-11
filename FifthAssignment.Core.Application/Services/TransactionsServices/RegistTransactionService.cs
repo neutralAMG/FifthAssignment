@@ -8,12 +8,12 @@ using FifthAssignment.Core.Domain.Entities.PaymentContext;
 
 namespace FifthAssignment.Core.Application.Services.TransactionsServices
 {
-	public class PaymentService : BasePaymentService<Payment>, IPaymentService
+	public class RegistTransactionService : BasePaymentService<Transaction>, ITransactionService
 	{
-		private readonly IPaymentRepository _paymentRepository;
+		private readonly ITransactionRepository _paymentRepository;
 		private readonly IMapper _mapper;
 
-		public PaymentService(IPaymentRepository paymentRepository, IMapper mapper) : base(paymentRepository, mapper)
+		public RegistTransactionService(ITransactionRepository paymentRepository, IMapper mapper) : base(paymentRepository, mapper)
 		{
 			_paymentRepository = paymentRepository;
 			_mapper = mapper;
@@ -24,9 +24,9 @@ namespace FifthAssignment.Core.Application.Services.TransactionsServices
 			Result<SavePaymentDto> result = new();
 			try
 			{
-				Payment entityToBeSave = _mapper.Map<Payment>(entity);
+				Transaction entityToBeSave = _mapper.Map<Transaction>(entity);
 
-				Payment entitySaved = await _paymentRepository.SaveAsync(entityToBeSave);
+				Transaction entitySaved = await _paymentRepository.SaveAsync(entityToBeSave);
 
 				if (entitySaved == null)
 				{

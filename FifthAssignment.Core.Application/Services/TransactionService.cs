@@ -6,7 +6,7 @@ using FifthAssignment.Core.Application.Interfaces.Contracts.Transactions;
 
 namespace FifthAssignment.Core.Application.Services
 {
-	public class TransactionService : ITransactionService
+	public class TransactionService : ITransactioStrategy
 	{
 		private readonly IExpressPaymentService _expressPaymentService;
 		private readonly IBeneficiaryPaymentService _beneficiaryPaymentService;

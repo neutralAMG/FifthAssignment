@@ -3,13 +3,13 @@ using FifthAssignment.Core.Domain.Core;
 
 namespace FifthAssignment.Core.Domain.Entities.PaymentContext
 {
-	public class PaymentDetail : BaseEntity<Guid>
+	public class TransactionDetail : BaseEntity<Guid>
 	{
 		public Guid PaymentId { get; set; }
 	
-		public Guid PaymentTypeId { get; set; }
+		public int TransactionTypeId { get; set; }
 		public Guid SpecificPaymentDetailId { get; set; }
-		public Payment Payment { get; set; }
-		public PaymentType PaymentType { get; set; }
+		public Transaction Payment { get; set; }
+		public TransactionType PaymentType { get; set; }
 	}
 }

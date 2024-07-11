@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FifthAssignment.Infraestruc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FifthAssignment.Infraestructure.Share", "FifthAssignment.Infraestructure.Share\FifthAssignment.Infraestructure.Share.csproj", "{D856D15E-724F-47EB-8310-CE5F750DB250}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FifthAssignment.Infraestructure.Payments", "FifthAssignment.Infraestructure.Payments\FifthAssignment.Infraestructure.Payments.csproj", "{5CEB0710-74DF-4D5B-B265-31C8A4B0F590}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FifthAssignment.Infraestructure.Transaction", "FifthAssignment.Infraestructure.Payments\FifthAssignment.Infraestructure.Transaction.csproj", "{5CEB0710-74DF-4D5B-B265-31C8A4B0F590}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -13,7 +13,7 @@ namespace FifthAssignment.Infraestructure.Payments
 {
 	public static class ServiceRegistration
 	{
-		public static void AddInfraestructurePaymentsLayer(this IServiceCollection services, IConfiguration config)
+		public static void AddInfraestructureTransactionLayer(this IServiceCollection services, IConfiguration config)
 		{
 			services.AddDbContext<PaymentContext>(options =>
 			{
@@ -26,7 +26,7 @@ namespace FifthAssignment.Infraestructure.Payments
 			services.AddTransient<ICreditcardPaymentRepository, CreditcardPaymentRepository>();
 			services.AddTransient<IExpressPaymentRepository, ExpressPaymentRepository>();
 			services.AddTransient<ILoanPaymentRepository, LoanPaymentRepository>();
-			services.AddTransient<IPaymentRepository, PaymentRepository>();
+			services.AddTransient<ITransactionRepository, PaymentRepository>();
 			services.AddTransient<ITransferRepository, TransferRepository>();
 
 		}

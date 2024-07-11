@@ -6,7 +6,7 @@ using FifthAssignment.Core.Domain.Entities.PaymentContext;
 
 namespace FifthAssignment.Core.Application.Interfaces.Contracts
 {
-	public interface IPaymentService : IBasePaymentService<Payment>
+	public interface ITransactionService : IBasePaymentService<Transaction>
 	{
 	   Task<Result<SavePaymentDto>> SaveAsync(SavePaymentDto entity);
 	}

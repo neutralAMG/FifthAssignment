@@ -3,8 +3,8 @@ using FifthAssignment.Core.Domain.Entities.PaymentContext;
 
 namespace FifthAssignment.Core.Application.Interfaces.Payments
 {
-	public interface IPaymentRepository : IBaseRepository<Payment>
+	public interface ITransactionRepository : IBaseRepository<Transaction>
 	{
-		Task<IList<Payment>> GetAllTodayPaymentsAsync();
+		Task<IList<Transaction>> GetAllTodayPaymentsAsync();
 	}
 }

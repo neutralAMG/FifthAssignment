@@ -32,7 +32,7 @@ namespace FifthAssignment.Core.Application
 			services.AddTransient<ILoanPaymentService, LoanPaymentService>();
 			services.AddTransient<ITransferService, TransferService>();
 			services.AddTransient<IMoneyAdvanceService, MoneyAdvanceService>();
-			services.AddTransient<ITransactionService, TransactionService>();
+			services.AddTransient<ITransactioStrategy, TransactionService>();
 
 			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 		}

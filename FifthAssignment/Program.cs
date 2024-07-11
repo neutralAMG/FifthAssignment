@@ -11,7 +11,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddInfraestructureIdentityLayer(builder.Configuration);
 builder.Services.AddInfraestructurePercistanceLayer(builder.Configuration);
-builder.Services.AddInfraestructurePaymentsLayer(builder.Configuration);
+builder.Services.AddInfraestructureTransactionLayer(builder.Configuration);
 
 var app = builder.Build();
 

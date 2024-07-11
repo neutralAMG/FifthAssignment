@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
 using FifthAssignment.Core.Application.Core;
+using FifthAssignment.Core.Application.Dtos.Payments;
+using FifthAssignment.Core.Application.Enums;
+using FifthAssignment.Core.Application.Interfaces.Contracts;
 using FifthAssignment.Core.Application.Interfaces.Contracts.Core;
 using FifthAssignment.Core.Application.Interfaces.Contracts.Transactions;
 using FifthAssignment.Core.Application.Interfaces.Payments;
@@ -15,12 +18,14 @@ namespace FifthAssignment.Core.Application.Services.TransactionsServices
 		private readonly ITransferRepository _transferRepository;
 		private readonly IMapper _mapper;
 		private readonly IBankAccountService _bankAccountService;
+		private readonly ITransactionService _transactionService;
 
-		public TransferService(ITransferRepository transferRepository, IMapper mapper, IBankAccountService bankAccountService) : base(transferRepository, mapper)
+		public TransferService(ITransferRepository transferRepository, IMapper mapper, IBankAccountService bankAccountService, ITransactionService transactionService ) : base(transferRepository, mapper)
 		{
 			_transferRepository = transferRepository;
 			_mapper = mapper;
 			_bankAccountService = bankAccountService;
+			_transactionService = transactionService;
 		}
 
 		public async Task<Result<SaveBasePaymentDto>> MakeTransaction(SaveBasePaymentDto paymentDto)
@@ -97,6 +102,22 @@ namespace FifthAssignment.Core.Application.Services.TransactionsServices
 				result.Message = "Critical error validating the transaction";
 				return result;
 			}
+		}
+
+		public override async Task<Result<SaveBasePaymentDto>> SaveAsync(SaveBasePaymentDto entity)
+		{
+			var result = await base.SaveAsync(entity);
+
+			if (result.IsSuccess)
+			{
+				await _transactionService.SaveAsync(new SavePaymentDto
+				{
+					Amount = entity.Amount,
+					specificPaymentTosaveId = result.Data.Id,
+					TransactionTypeId = (int)TransactionTypes.MoneyAdvance,
+				});
+			}
+			return result;
 		}
 	}
 
