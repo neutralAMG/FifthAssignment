@@ -13,11 +13,13 @@ namespace FifthAssignment.Infraestructure.Persistence.Context
 		public DbSet<Beneficiary> Beneficiaries { get; set; }
 		public DbSet<FifthAssignment.Core.Domain.Entities.PaymentContext.Transaction> Transactions { get; set; }
 		public DbSet<CreditcardPayment> CreditcardPayments { get; set; }
+		public DbSet<ExpressPayment> ExpressPayments { get; set; }
 		public DbSet<BeneficiaryPayment> BeneficiaryPayments { get; set; }
 		public DbSet<LoanPayment> LoanPayments { get; set; }
 		public DbSet<Transfer> Transfers { get; set; }
 		public DbSet<MoneyAdvance> MoneyAdvances { get; set; }
 		public DbSet<TransactionType> PaymentTypes { get; set; }
+		public DbSet<TransactionDetail> TransactionDetails { get; set; }
 
 		public fifthAssignmentContext()
         {
@@ -83,7 +85,10 @@ namespace FifthAssignment.Infraestructure.Persistence.Context
 				b.Property(b => b.IdentifierNumber).IsRequired();
 				b.Property(b => b.DateCreated).IsRequired();
 			});
+
+
 			modelBuilder.HasDefaultSchema("Transaction");
+
 
 			modelBuilder.Entity<Transaction>(t =>
 			{
@@ -94,6 +99,41 @@ namespace FifthAssignment.Infraestructure.Persistence.Context
 			{
 
 			});
+
+
+			modelBuilder.Entity<ExpressPayment>(c =>
+			{
+
+			});
+
+			modelBuilder.Entity<BeneficiaryPayment>(c =>
+			{
+
+			});
+
+
+			modelBuilder.Entity<LoanPayment>(c =>
+			{
+
+			});
+
+			modelBuilder.Entity<Transfer>(c =>
+			{
+
+			});
+			modelBuilder.Entity<MoneyAdvance>(c =>
+			{
+
+			});
+			modelBuilder.Entity<TransactionType>(c =>
+			{
+
+			});
+			modelBuilder.Entity<TransactionDetail>(c =>
+			{
+
+			});
+
 			base.OnModelCreating(modelBuilder);
 		}
 	}
