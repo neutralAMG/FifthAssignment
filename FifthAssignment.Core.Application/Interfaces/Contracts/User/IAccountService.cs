@@ -10,6 +10,6 @@ namespace FifthAssignment.Core.Application.Interfaces.Contracts.User
 	{
 		Task<Result<AuthenticationResponse>> LoginAsync(string email, string password);
 		Task LogoutAsync();
-		Task<Result<RegisterResponse>> RegisterAsync(SaveUserModel Model);
+		Task<Result<RegisterResponse>> RegisterAsync(SaveUserModel Model, bool IsClient = false);
 	}
 }

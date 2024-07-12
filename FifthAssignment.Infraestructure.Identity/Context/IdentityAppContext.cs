@@ -30,11 +30,6 @@ namespace FifthAssignment.Infraestructure.Identity.Context
 			builder.Entity<ApplicationUser>(user =>
 			{
 				user.ToTable(name: "Users");
-
-				user.HasMany(u =>u.Beneficiaries).WithOne().HasForeignKey(b => b.UserId);
-				user.HasMany(u =>u.Loans).WithOne().HasForeignKey(b => b.UserId);
-				user.HasMany(u =>u.CreditCards).WithOne().HasForeignKey(b => b.UserId);
-				user.HasMany(u =>u.BankAccoounts).WithOne().HasForeignKey(b => b.UserId);
 			});
 
 			builder.Entity<IdentityRole>(role =>

@@ -2,15 +2,22 @@
 
 using FifthAssignment.Core.Domain.Core;
 using FifthAssignment.Core.Domain.Entities.PersistanceContext;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FifthAssignment.Core.Domain.Entities.PaymentContext
 {
 	public class MoneyAdvance : BaseDateCreatedEntity<Guid>
 	{
+		public MoneyAdvance()
+		{
+			Id = Guid.NewGuid();
+		}
 		public double Amount { get; set; }
 		public Guid UserCreditCardId { get; set; }
 		public Guid UserBankAccountId { get; set; }
+		[ForeignKey("UserCreditCardId")]
 		public CreditCard UserCreditCard { get; set; }
-		public BankAccount UserBackAccoount { get; set; }
+		[ForeignKey("UserBankAccountId")]
+		public BankAccount UserBankAccount { get; set; }
 	}
 }

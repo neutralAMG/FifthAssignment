@@ -206,7 +206,7 @@ namespace FifthAssignment.Core.Application.Core
 
 				TEntity entityToBeDelete = _mapper.Map<TEntity>(entitygettedToBeDelete);
 
-				bool deleteOperationIsSuccess = await _baseProductRepository.UpdateAsync(entityToBeDelete);
+				bool deleteOperationIsSuccess = await _baseProductRepository.DeleteAsync(entityToBeDelete);
 
 				if (!deleteOperationIsSuccess)
 				{

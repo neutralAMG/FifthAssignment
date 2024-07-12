@@ -42,10 +42,10 @@ namespace FifthAssignment.Core.Application.Services.TransactionsServices
 					var saveTransactionDetail = await _transactionDetailRepository.SaveAsync(new TransactionDetail
 					{
 
-						PaymentId = result.Data.Id,
+						TransactionIdId = result.Data.Id,
 
 						TransactionTypeId = entity.TransactionTypeId,
-						SpecificPaymentDetailId = entity.specificPaymentTosaveId
+						SpecificTransactionDetailId = entity.specificPaymentTosaveId
 					});
 
 					entitySaved.TransactionDetailId = saveTransactionDetail.Id;

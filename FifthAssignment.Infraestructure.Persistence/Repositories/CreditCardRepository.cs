@@ -35,6 +35,8 @@ namespace FifthAssignment.Infraestructure.Persistence.Repositories
 		}
 		public override async Task<bool> DeleteAsync(CreditCard entity)
 		{
+			if (entity.Amount > 0) return false;
+
 			return await base.DeleteAsync(entity);
 		}
 	}

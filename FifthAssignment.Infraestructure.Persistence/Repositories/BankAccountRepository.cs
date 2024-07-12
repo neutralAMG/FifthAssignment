@@ -35,6 +35,14 @@ namespace FifthAssignment.Infraestructure.Persistence.Repositories
 		}
 		public override async Task<bool> DeleteAsync(BankAccount entity)
 		{
+			if (entity.IsMain == true) return false;
+
+			BankAccount MainBankAccount = await _context.BankAccounts.Where(b => b.UserId == entity.UserId && b.IsMain == true).FirstOrDefaultAsync();
+
+			MainBankAccount.Amount += entity.Amount;
+
+		    await UpdateAsync(MainBankAccount);
+
 			return await base.DeleteAsync(entity);
 		}
 	}

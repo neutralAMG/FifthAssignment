@@ -4,6 +4,7 @@ using FifthAssignment.Core.Application.Interfaces.Identity;
 using FifthAssignment.Infraestructure.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace FifthAssignment.Infraestructure.Identity.Services
 {
@@ -19,10 +20,7 @@ namespace FifthAssignment.Infraestructure.Identity.Services
 		}
 		public async Task<List<UserGetResponceDto>> GetAllAsync()
 		{
-			var users = await _userManager.Users.Include(u => u.BankAccoounts)
-				.Include(u => u.CreditCards)
-				.Include(u => u.Loans)
-				.Include(u => u.Beneficiaries).ToListAsync();
+			var users = await _userManager.Users.ToListAsync();
 			return _mapper.Map<List<UserGetResponceDto>>(users);
 		}
 
@@ -30,44 +28,30 @@ namespace FifthAssignment.Infraestructure.Identity.Services
 		{
 			if (!await _userManager.Users.AnyAsync(u => u.Id == id)) return null;
 
-			var user = await _userManager.Users.Include(u => u.BankAccoounts)
-				.Include(u => u.CreditCards)
-				.Include(u => u.Loans)
-				.Include(u => u.Beneficiaries).Where(u => u.Id == id).FirstOrDefaultAsync();
+			var user = await _userManager.Users.Where(u => u.Id == id).FirstOrDefaultAsync();
 
 			return _mapper.Map<UserGetResponceDto>(user);
 		}
 
-		public async Task<List<UserGetResponceDto>> GetUserBeneficiariesAsync(string id)
+		public async Task<List<UserGetResponceDto>> GetUserBeneficiariesAsync(List<string> beneficiariesIds)
 		{
-			if (!await _userManager.Users.AnyAsync(u => u.Id == id)) return null;
+			var userBeneficiaries = await _userManager.Users.Select(u => beneficiariesIds.Contains(u.Id)).ToListAsync();
 
-			var userBeneficiariesIds = await _userManager.Users.SelectMany(u => u.Beneficiaries.Where(b => b.UserId == id).Select(b => b.UserBeneficiaryId)).ToListAsync();
+			//List<ApplicationUser> Beneficiaries = new();
 
-			List<ApplicationUser> Beneficiaries = new();
+			//foreach (var be in userBeneficiariesIds)
+			//{
+			//	var user = await _userManager.Users.Where(u => u.Id == be).FirstOrDefaultAsync();
 
-			foreach (var be in userBeneficiariesIds)
-			{
-				var user = await _userManager.Users.Include(u => u.BankAccoounts)
-				  .Include(u => u.CreditCards)
-				  .Include(u => u.Loans)
-				  .Include(u => u.Beneficiaries).Where(u => u.Id == be).FirstOrDefaultAsync();
+			//	Beneficiaries.Add(user);
+			//}
 
-				Beneficiaries.Add(user);
-			}
-
-			return _mapper.Map<List<UserGetResponceDto>>(Beneficiaries);
+			return _mapper.Map<List<UserGetResponceDto>>(userBeneficiaries);
 		}
-		public async Task<UserGetResponceDto> GetUserBeneficiaryAsync(string userid, string beneficiaryId)
+		public async Task<UserGetResponceDto> GetUserBeneficiaryAsync( string beneficiaryId)
 		{
-			var userBeneficiaryId = await _userManager.Users.SelectMany(u => u.Beneficiaries.Where(b => b.UserId == userid).Select(b => b.UserBeneficiaryId)).Where(b => b == beneficiaryId).FirstOrDefaultAsync();
 
-			
-
-			ApplicationUser beneficiary =  await _userManager.Users.Include(u => u.BankAccoounts)
-				  .Include(u => u.CreditCards)
-				  .Include(u => u.Loans)
-				  .Include(u => u.Beneficiaries).Where(u => u.Id == userBeneficiaryId).FirstOrDefaultAsync();
+			ApplicationUser beneficiary =  await _userManager.Users.Where(u => u.Id == beneficiaryId).FirstOrDefaultAsync();
 
 			if (beneficiary == null) return null;
 

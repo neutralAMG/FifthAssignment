@@ -7,8 +7,8 @@ namespace FifthAssignment.Core.Application.Interfaces.Identity
     {
         Task<List<UserGetResponceDto>> GetAllAsync();
         Task<UserGetResponceDto> GetByIdAsync(string id);
-        Task<List<UserGetResponceDto>> GetUserBeneficiariesAsync(string id);
-        Task<UserGetResponceDto> GetUserBeneficiaryAsync(string userid, string beneficiaryId);
+        Task<List<UserGetResponceDto>> GetUserBeneficiariesAsync(List<string> ids);
+        Task<UserGetResponceDto> GetUserBeneficiaryAsync(string beneficiaryId);
         Task<bool> UpdateAsync(UpdateUserDto user);
         Task<bool> DeleteAsync(string id);
         Task<bool> ActivateAsync(string id);

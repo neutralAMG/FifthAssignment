@@ -2,6 +2,7 @@
 using AutoMapper;
 using FifthAssignment.Core.Application.Core;
 using FifthAssignment.Core.Application.Dtos.AccountDtos;
+using FifthAssignment.Core.Application.Interfaces.Contracts.Core;
 using FifthAssignment.Core.Application.Interfaces.Contracts.User;
 using FifthAssignment.Core.Application.Interfaces.Identity;
 using FifthAssignment.Core.Application.Models.UserModels;
@@ -17,13 +18,16 @@ namespace FifthAssignment.Core.Application.Services.UserServices
 		private readonly IAccountRepository _accountRepository;
 		private readonly IMapper _mapper;
 		private readonly IHttpContextAccessor _httpContext;
+		private readonly IBankAccountService _bankAccountService;
+
 		private SessionKeys _sessionKeys { get; set; }
 
-		public AccountService(IAccountRepository accountRepository, IMapper mapper, IHttpContextAccessor httpContext, IOptions<SessionKeys> sessionKeys)
+		public AccountService(IAccountRepository accountRepository, IMapper mapper, IHttpContextAccessor httpContext, IOptions<SessionKeys> sessionKeys, IBankAccountService bankAccountService)
         {
 			_accountRepository = accountRepository;
 			_mapper = mapper;
 			_httpContext = httpContext;
+			_bankAccountService = bankAccountService;
 			_sessionKeys = sessionKeys.Value;
 		}
         public async Task<Result<AuthenticationResponse>> LoginAsync(string email, string password)
@@ -66,7 +70,7 @@ namespace FifthAssignment.Core.Application.Services.UserServices
 			}
 		}
 
-		public async Task<Result<RegisterResponse>> RegisterAsync(SaveUserModel saveModel)
+		public async Task<Result<RegisterResponse>> RegisterAsync(SaveUserModel saveModel, bool IsClient = false)
 		{
 			Result<RegisterResponse> result = new();
 			try
@@ -75,6 +79,10 @@ namespace FifthAssignment.Core.Application.Services.UserServices
 
 				result.Data = await _accountRepository.RegisterAsync(request);
 
+				if (IsClient)
+				{
+					await _bankAccountService.SaveAsync(new Models.BankAccountsModels.SaveBankAccountModel { UserId = result.Data.Id, Amount = saveModel.Amount, IsMain = true});
+				}
 				result.Message = "User was created succesfully";
 				return result;
 

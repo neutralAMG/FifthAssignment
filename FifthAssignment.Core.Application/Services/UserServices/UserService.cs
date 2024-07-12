@@ -2,6 +2,7 @@
 using AutoMapper;
 using FifthAssignment.Core.Application.Core;
 using FifthAssignment.Core.Application.Dtos.AccountDtos;
+using FifthAssignment.Core.Application.Interfaces.Contracts.Core;
 using FifthAssignment.Core.Application.Interfaces.Contracts.User;
 using FifthAssignment.Core.Application.Interfaces.Identity;
 using FifthAssignment.Core.Application.Models.UserModel;
@@ -18,14 +19,17 @@ namespace FifthAssignment.Core.Application.Services.UserServices
 		private readonly IUserRepository _userRepository;
 		private readonly IMapper _mapper;
 		private readonly IHttpContextAccessor _httpContext;
+		private readonly IBeneficiaryService _beneficiaryService;
+
 		private UserModel _currentUser { get; set; }
 		private SessionKeys _sessionKeys { get; set; }
 
-		public UserService(IUserRepository userRepository, IMapper mapper, IHttpContextAccessor httpContext, IOptions<SessionKeys> sessionKeys)
+		public UserService(IUserRepository userRepository, IMapper mapper, IHttpContextAccessor httpContext, IOptions<SessionKeys> sessionKeys, IBeneficiaryService beneficiaryService)
 		{
 			_userRepository = userRepository;
 			_mapper = mapper;
 			_httpContext = httpContext;
+			_beneficiaryService = beneficiaryService;
 			_sessionKeys = sessionKeys.Value;
 			_currentUser = _httpContext.HttpContext.Session.Get<UserModel>(_sessionKeys.user);
 		}
@@ -73,7 +77,11 @@ namespace FifthAssignment.Core.Application.Services.UserServices
 			Result<List<UserModel>> result = new();
 			try
 			{
-				List<UserGetResponceDto> usersGeted = await _userRepository.GetUserBeneficiariesAsync(_currentUser.Id);
+				var beneficiaryId = await _beneficiaryService.GetAllWithUserIdAsync();
+
+				List<string> beneficiaryIds = beneficiaryId.Data.Select(b => b.UserBeneficiaryId).ToList();
+
+				List<UserGetResponceDto> usersGeted = await _userRepository.GetUserBeneficiariesAsync(beneficiaryIds);
 
 				result.Data = _mapper.Map<List<UserModel>>(usersGeted);
 				result.Message = "Beneficiarie's get was succesfull";
@@ -91,7 +99,7 @@ namespace FifthAssignment.Core.Application.Services.UserServices
 			Result<UserModel> result = new();
 			try
 			{
-				UserGetResponceDto userGeted = await _userRepository.GetUserBeneficiaryAsync(_currentUser.Id, beneficiaryId);
+				UserGetResponceDto userGeted = await _userRepository.GetUserBeneficiaryAsync(beneficiaryId);
 
 				result.Data = _mapper.Map<UserModel>(userGeted);
 				result.Message = "Beneficiary get was succesfull";

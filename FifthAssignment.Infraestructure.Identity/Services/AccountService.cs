@@ -96,8 +96,13 @@ namespace FifthAssignment.Infraestructure.Identity.Services
 				await _userManager.AddToRoleAsync(userToBeSave, Roles.Admim.ToString());
 				return response;
 			}
-
+			
 			await _userManager.AddToRoleAsync(userToBeSave, Roles.client.ToString());
+
+            ApplicationUser userSaved = await _userManager.FindByNameAsync(request.UserName);
+
+			response.Id = userSaved.Id;
+
 			return response;
 		}
 
