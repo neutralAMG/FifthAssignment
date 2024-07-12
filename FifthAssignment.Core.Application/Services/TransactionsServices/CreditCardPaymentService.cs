@@ -36,9 +36,9 @@ namespace FifthAssignment.Core.Application.Services.PaymentServices
             Result<SaveBasePaymentDto> result = new();
             try
             {
-                Result<BankAccountModel> Emisor = await _bankAccountService.GetByNumberIdentifierAsync(paymentDto.Emisor);
+                Result<BankAccountModel> Emisor = await _bankAccountService.GetByIdAsync(paymentDto.Emisor);
 
-                Result<CreditCardModel> Receiver = await _creditCardService.GetByNumberIdentifierAsync(paymentDto.Receiver);
+                Result<CreditCardModel> Receiver = await _creditCardService.GetByIdAsync(paymentDto.Receiver);
 
 
                 double operationResidue = Receiver.Data.Amount - paymentDto.Amount;
@@ -74,7 +74,7 @@ namespace FifthAssignment.Core.Application.Services.PaymentServices
             Result<bool> result = new();
             try
             {
-                Result<BankAccountModel> Emisor = await _bankAccountService.GetByNumberIdentifierAsync(paymentDto.Emisor);
+                Result<BankAccountModel> Emisor = await _bankAccountService.GetByIdAsync(paymentDto.Emisor);
 
                 //	Result<BankAccountModel> Receiver = await _bankAccountService.GetByNumberIdentifierAsync(paymentDto.Receiver);
 

@@ -8,7 +8,7 @@ namespace FifthAssignment.Infraestructure.Identity.Seeds
 	public static class DefaultsRoles
 	{
 
-		public static async void AddDefaultRolesAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+		public static async Task AddDefaultRolesAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
 		{
 			await roleManager.CreateAsync(new IdentityRole(Enums.Roles.Admim.ToString()));
 

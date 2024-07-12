@@ -9,7 +9,7 @@ namespace FifthAssignment.Core.Application.Dtos.AccountDtos
 		public string LastName { get; set; }
 		public string Cedula { get; set; }
 		public string Email {  get; set; }
-		public string	UserName {  get; set; }
+		public string UserName {  get; set; }
 		public string PasswordHash { get; set; }	
 	}
 }

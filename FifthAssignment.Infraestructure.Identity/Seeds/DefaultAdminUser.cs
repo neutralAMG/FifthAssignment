@@ -13,18 +13,17 @@ namespace FifthAssignment.Infraestructure.Identity.Seeds
 			
 				FirstName = "Test",	
 				LastName = "Test",
-				Email = "",
+				Email = "Email@gmail.com",
 				UserName = "TestAdminUser",
-				PasswordHash = "Test",
-				EmailConfirmed = true,
-				PhoneNumberConfirmed = true,
+				EmailConfirmed = false,
+				LockoutEnabled = false,	
 			};
 			if (userManager.Users.All(u => u.Id != DefaultUser.Id))
 			{
 				var user = await userManager.FindByNameAsync(DefaultUser.UserName);
 
 				if (user is null) {
-					await userManager.CreateAsync(DefaultUser);
+					await userManager.CreateAsync(DefaultUser, "123Test!");
 
 					userManager.AddToRoleAsync(DefaultUser, Enums.Roles.Admim.ToString());
 				}

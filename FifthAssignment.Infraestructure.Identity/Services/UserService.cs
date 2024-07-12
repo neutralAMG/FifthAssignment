@@ -1,27 +1,36 @@
-﻿using AutoMapper;
+﻿
 using FifthAssignment.Core.Application.Dtos.AccountDtos;
 using FifthAssignment.Core.Application.Interfaces.Identity;
 using FifthAssignment.Infraestructure.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
+
 
 namespace FifthAssignment.Infraestructure.Identity.Services
 {
 	public class UserRepository : IUserRepository
 	{
 		private readonly UserManager<ApplicationUser> _userManager;
-		private readonly IMapper _mapper;
-
-		public UserRepository(UserManager<ApplicationUser> userManager, IMapper mapper)
+		public UserRepository(UserManager<ApplicationUser> userManager)
 		{
 			_userManager = userManager;
-			_mapper = mapper;
 		}
 		public async Task<List<UserGetResponceDto>> GetAllAsync()
 		{
 			var users = await _userManager.Users.ToListAsync();
-			return _mapper.Map<List<UserGetResponceDto>>(users);
+			return users.Select(user => new UserGetResponceDto()
+			{
+				Id = user.Id,
+				FirstName = user.FirstName,
+				LastName = user.LastName,
+				Cedula = user.Cedula,
+				Email = user.Email,
+				IsActive = user.EmailConfirmed,
+				Password = user.PasswordHash,
+				UserName = user.UserName
+
+
+			}).ToList();
 		}
 
 		public async Task<UserGetResponceDto> GetByIdAsync(string id)
@@ -30,23 +39,37 @@ namespace FifthAssignment.Infraestructure.Identity.Services
 
 			var user = await _userManager.Users.Where(u => u.Id == id).FirstOrDefaultAsync();
 
-			return _mapper.Map<UserGetResponceDto>(user);
+			UserGetResponceDto responce = new()
+			{
+				Id = user.Id,
+				FirstName = user.FirstName,
+				LastName = user.LastName,
+				Cedula = user.Cedula,
+				Email = user.Email,
+				IsActive = user.EmailConfirmed,
+				Password = user.PasswordHash,
+				UserName = user.UserName
+
+
+			};
+			return responce;
 		}
 
 		public async Task<List<UserGetResponceDto>> GetUserBeneficiariesAsync(List<string> beneficiariesIds)
 		{
-			var userBeneficiaries = await _userManager.Users.Select(u => beneficiariesIds.Contains(u.Id)).ToListAsync();
+			List<ApplicationUser> userBeneficiaries = await _userManager.Users.Where(u => beneficiariesIds.Contains(u.Id)).ToListAsync();
 
-			//List<ApplicationUser> Beneficiaries = new();
-
-			//foreach (var be in userBeneficiariesIds)
-			//{
-			//	var user = await _userManager.Users.Where(u => u.Id == be).FirstOrDefaultAsync();
-
-			//	Beneficiaries.Add(user);
-			//}
-
-			return _mapper.Map<List<UserGetResponceDto>>(userBeneficiaries);
+			return userBeneficiaries.Select(b => new UserGetResponceDto()
+			{
+				Id = b.Id,
+				FirstName = b.FirstName,
+				LastName = b.LastName,
+				Cedula = b.Cedula,
+				Email = b.Email,
+				IsActive = b.EmailConfirmed,
+				Password = b.PasswordHash,
+				UserName = b.UserName
+			}).ToList();
 		}
 		public async Task<UserGetResponceDto> GetUserBeneficiaryAsync( string beneficiaryId)
 		{
@@ -54,8 +77,20 @@ namespace FifthAssignment.Infraestructure.Identity.Services
 			ApplicationUser beneficiary =  await _userManager.Users.Where(u => u.Id == beneficiaryId).FirstOrDefaultAsync();
 
 			if (beneficiary == null) return null;
+			UserGetResponceDto responce = new()
+			{
+				Id = beneficiary.Id,
+				FirstName = beneficiary.FirstName,
+				LastName = beneficiary.LastName,
+				Cedula = beneficiary.Cedula,
+				Email = beneficiary.Email,
+				IsActive = beneficiary.EmailConfirmed,
+				Password = beneficiary.PasswordHash,
+				UserName = beneficiary.UserName
 
-			return _mapper.Map<UserGetResponceDto>(beneficiary);
+			};
+
+			return responce;
 		}
 
 		public async Task<bool> ActivateAsync(string id)

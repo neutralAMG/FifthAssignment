@@ -3,8 +3,12 @@ namespace FifthAssignment.Core.Application.Models.CreditCardModels
 {
 	public class CreditCardModel
 	{
+		public Guid Id { get; set; }	
 		public double Amount { get; set; }
 		public string IdentifierNumber { get; set; }
 		public int CreditLimit { get; set; }
+		public string UserId { get; set; }
+		public string CVV { get; set; }
+		public DateTime ExpirationDate { get; set; }
 	}
 }

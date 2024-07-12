@@ -37,9 +37,9 @@ namespace FifthAssignment.Core.Application.Services.TransactionsServices
 			Result<SaveBasePaymentDto> result = new();
 			try
 			{
-				Result<CreditCardModel> Emisor = await _creditCardService.GetByNumberIdentifierAsync(paymentDto.Receiver);
+				Result<CreditCardModel> Emisor = await _creditCardService.GetByIdAsync(paymentDto.Receiver);
 
-				Result<BankAccountModel> Receiver = await _bankAccountService.GetByNumberIdentifierAsync(paymentDto.Emisor);
+				Result<BankAccountModel> Receiver = await _bankAccountService.GetByIdAsync(paymentDto.Emisor);
 
 				Receiver.Data.Amount += paymentDto.Amount;
 				Emisor.Data.Amount += paymentDto.Amount + 6.25;
@@ -66,9 +66,9 @@ namespace FifthAssignment.Core.Application.Services.TransactionsServices
 			Result<bool> result = new();
 			try
 			{
-				Result<CreditCardModel> Emisor = await _creditCardService.GetByNumberIdentifierAsync(paymentDto.Receiver);
+				Result<CreditCardModel> Emisor = await _creditCardService.GetByIdAsync(paymentDto.Receiver);
 
-				Result<BankAccountModel> Receiver = await _bankAccountService.GetByNumberIdentifierAsync(paymentDto.Emisor);
+				Result<BankAccountModel> Receiver = await _bankAccountService.GetByIdAsync(paymentDto.Emisor);
 
 
 				if (Emisor.Data.CreditLimit < paymentDto.Amount)

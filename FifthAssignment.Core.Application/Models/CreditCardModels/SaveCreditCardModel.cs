@@ -8,5 +8,7 @@ namespace FifthAssignment.Core.Application.Models.CreditCardModels
 		public int CreditLimit { get; set; }
 		public string UserId { get; set; }
 		public string CVV { get; set; }
+
+		public DateTime ExpirationDate { get; set; }
 	}
 }

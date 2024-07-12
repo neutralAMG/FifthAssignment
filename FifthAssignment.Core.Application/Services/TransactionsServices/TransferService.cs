@@ -33,9 +33,9 @@ namespace FifthAssignment.Core.Application.Services.TransactionsServices
 			Result<SaveBasePaymentDto> result = new();
 			try
 			{
-				Result<BankAccountModel> Emisor = await _bankAccountService.GetByNumberIdentifierAsync(paymentDto.Emisor);
+				Result<BankAccountModel> Emisor = await _bankAccountService.GetByIdAsync(paymentDto.Emisor);
 
-				Result<BankAccountModel> Receiver = await _bankAccountService.GetByNumberIdentifierAsync(paymentDto.Receiver);
+				Result<BankAccountModel> Receiver = await _bankAccountService.GetByIdAsync(paymentDto.Receiver);
 				Emisor.Data.Amount -= paymentDto.Amount;
 
 				Receiver.Data.Amount += paymentDto.Amount;
@@ -68,7 +68,7 @@ namespace FifthAssignment.Core.Application.Services.TransactionsServices
 			Result<bool> result = new();
 			try
 			{
-				Result<BankAccountModel> Emisor = await _bankAccountService.GetByNumberIdentifierAsync(paymentDto.Emisor);
+				Result<BankAccountModel> Emisor = await _bankAccountService.GetByIdAsync(paymentDto.Emisor);
 				if (!Emisor.IsSuccess || Emisor.Data == null)
 				{
 					result.IsSuccess = false;
@@ -77,7 +77,7 @@ namespace FifthAssignment.Core.Application.Services.TransactionsServices
 					return result;
 				}
 
-				Result<BankAccountModel> Receiver = await _bankAccountService.GetByNumberIdentifierAsync(paymentDto.Receiver);
+				Result<BankAccountModel> Receiver = await _bankAccountService.GetByIdAsync(paymentDto.Receiver);
 
 				if (!Receiver.IsSuccess || Receiver.Data == null)
 				{

@@ -1,6 +1,9 @@
 
 using FifthAssignment.Infraestructure.Identity;
+using FifthAssignment.Infraestructure.Identity.Entities;
+using FifthAssignment.Infraestructure.Identity.Seeds;
 using FifthAssignment.Infraestructure.Persistence;
+using Microsoft.AspNetCore.Identity;
 
 
 
@@ -27,11 +30,31 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
+using (var scope = app.Services.CreateScope())
+{
+	var services = scope.ServiceProvider;
+	try
+	{
+		var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+		var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+		await DefaultsRoles.AddDefaultRolesAsync(userManager, roleManager);
+		await DefaultAdminUser.AddAdminUser(userManager, roleManager);
+		await DefaultClientUser.AddDefaultClientUser(userManager, roleManager);
+
+	}
+	catch
+	{
+
+	}
+}
 
 app.Run();
