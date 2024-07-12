@@ -7,7 +7,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Context
 {
     public class PaymentContext : DbContext
 	{
-		public DbSet<Transaction> Payments { get; set; }
+		public DbSet<FifthAssignment.Core.Domain.Entities.PaymentContext.Transaction> Transactions { get; set; }
 		public DbSet<CreditcardPayment> CreditcardPayments { get; set; }
 		public DbSet<BeneficiaryPayment> BeneficiaryPayments { get; set; }
 		public DbSet<LoanPayment> LoanPayments { get; set; }
@@ -28,7 +28,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Context
 		{
 			modelBuilder.HasDefaultSchema("Payment_Transactions");
 
-			modelBuilder.Entity<Transaction>(p =>
+			modelBuilder.Entity<FifthAssignment.Core.Domain.Entities.PaymentContext.Transaction>(p =>
 			{
 				p.HasKey(p => p.Id);
 

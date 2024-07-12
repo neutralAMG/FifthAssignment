@@ -1,6 +1,7 @@
 ﻿
 
 using FifthAssignment.Core.Application.Core;
+using FifthAssignment.Core.Application.Dtos.Payments;
 
 namespace FifthAssignment.Core.Application.Interfaces.Contracts.Transactions
 {
@@ -8,5 +9,6 @@ namespace FifthAssignment.Core.Application.Interfaces.Contracts.Transactions
 	{
 		Task<Result<SaveBasePaymentDto>> MakeTransaction(SaveBasePaymentDto saveBasePaymentDto);
 		Task<Result<bool>> MakeValidation(SaveBasePaymentDto saveBasePaymentDto);
+		
 	}
 }

@@ -1,5 +1,5 @@
-﻿using FifthAssignment.Core.Domain.Entities.PersistanceContext;
-using FifthAssignment.Infraestructure.Identity.Entities;
+﻿using FifthAssignment.Core.Domain.Entities.PaymentContext;
+using FifthAssignment.Core.Domain.Entities.PersistanceContext;
 using Microsoft.EntityFrameworkCore;
 
 namespace FifthAssignment.Infraestructure.Persistence.Context
@@ -11,6 +11,18 @@ namespace FifthAssignment.Infraestructure.Persistence.Context
 		public DbSet<Loan> Loans { get; set; }
 		public DbSet<CreditCard> CreditCards { get; set; }
 		public DbSet<Beneficiary> Beneficiaries { get; set; }
+		public DbSet<FifthAssignment.Core.Domain.Entities.PaymentContext.Transaction> Transactions { get; set; }
+		public DbSet<CreditcardPayment> CreditcardPayments { get; set; }
+		public DbSet<BeneficiaryPayment> BeneficiaryPayments { get; set; }
+		public DbSet<LoanPayment> LoanPayments { get; set; }
+		public DbSet<Transfer> Transfers { get; set; }
+		public DbSet<MoneyAdvance> MoneyAdvances { get; set; }
+		public DbSet<TransactionType> PaymentTypes { get; set; }
+
+		public fifthAssignmentContext()
+        {
+            
+        }
         public fifthAssignmentContext(DbContextOptions<fifthAssignmentContext> options) : base(options) 
         {
            
@@ -23,11 +35,12 @@ namespace FifthAssignment.Infraestructure.Persistence.Context
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-
+			modelBuilder.HasDefaultSchema("dbo");
+			
 			modelBuilder.Entity<Beneficiary>(b =>
 			{
 				b.HasKey(b => b.Id);
-				b.HasOne<ApplicationUser>().WithMany( u => u.Beneficiaries).HasForeignKey(b => b.UserBeneficiaryId);
+			//	b.HasOne<ApplicationUser>().WithMany( u => u.Beneficiaries).HasForeignKey(b => b.UserBeneficiaryId);
 
 				
 				b.HasIndex(b => b.UserId).IsClustered(false);
@@ -38,7 +51,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Context
 			{
 				l.HasKey(l => l.Id);
 
-				l.HasOne<ApplicationUser>().WithMany(u => u.Loans).IsRequired().HasForeignKey( l => l.UserId);
+				//l.HasOne().WithMany(u => u.Loans).IsRequired().HasForeignKey( l => l.UserId);
 				l.HasIndex(l => l.UserId).IsClustered(false);
 
 				l.Property(l => l.IdentifierNumber).IsRequired();
@@ -50,7 +63,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Context
 			{
 				c.HasKey(c => c.Id);
 
-				c.HasOne<ApplicationUser>().WithMany(u => u.CreditCards).IsRequired().HasForeignKey(l => l.UserId);
+				//c.HasOne().WithMany(u => u.CreditCards).IsRequired().HasForeignKey(l => l.UserId);
 				c.HasIndex(c => c.UserId).IsClustered(false);
 
 				c.Property(c => c.Amount).IsRequired();
@@ -63,14 +76,25 @@ namespace FifthAssignment.Infraestructure.Persistence.Context
 			{
 				b.HasKey(b => b.Id);
 
-				b.HasOne<ApplicationUser>().WithMany(u => u.BankAccoounts).IsRequired().HasForeignKey(l => l.UserId);
+			//	b.HasOne().WithMany(u => u.BankAccoounts).IsRequired().HasForeignKey(l => l.UserId);
 				b.HasIndex(b => b.UserId).IsClustered(false);
 
 				b.Property(b => b.Amount).IsRequired();
 				b.Property(b => b.IdentifierNumber).IsRequired();
 				b.Property(b => b.DateCreated).IsRequired();
 			});
-		
+			modelBuilder.HasDefaultSchema("Transaction");
+
+			modelBuilder.Entity<Transaction>(t =>
+			{
+
+			});
+
+			modelBuilder.Entity<CreditcardPayment>(c =>
+			{
+
+			});
+			base.OnModelCreating(modelBuilder);
 		}
 	}
 }

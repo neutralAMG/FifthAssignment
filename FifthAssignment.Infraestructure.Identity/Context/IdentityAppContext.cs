@@ -8,6 +8,10 @@ namespace FifthAssignment.Infraestructure.Identity.Context
 {
 	public class IdentityAppContext : IdentityDbContext<ApplicationUser>
 	{
+        public IdentityAppContext()
+        {
+            
+        }
         public IdentityAppContext(DbContextOptions<IdentityAppContext> options) : base(options)
         {
             
@@ -20,6 +24,7 @@ namespace FifthAssignment.Infraestructure.Identity.Context
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
+			base.OnModelCreating(builder);
 			builder.HasDefaultSchema("Identity");
 
 			builder.Entity<ApplicationUser>(user =>
@@ -32,7 +37,10 @@ namespace FifthAssignment.Infraestructure.Identity.Context
 				user.HasMany(u =>u.BankAccoounts).WithOne().HasForeignKey(b => b.UserId);
 			});
 
-
+			builder.Entity<IdentityRole>(role =>
+			{
+				role.ToTable(name: "Rolls");
+			});
 			builder.Entity<IdentityUserRole<string>>(role =>
 			{
 				role.ToTable(name: "Roles");
@@ -42,6 +50,8 @@ namespace FifthAssignment.Infraestructure.Identity.Context
 			{
 				login.ToTable(name: "UserLogins");
 			});
+
+			
 		}
 	}
 }

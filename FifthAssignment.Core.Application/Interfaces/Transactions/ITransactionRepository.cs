@@ -6,5 +6,6 @@ namespace FifthAssignment.Core.Application.Interfaces.Payments
 	public interface ITransactionRepository : IBaseRepository<Transaction>
 	{
 		Task<IList<Transaction>> GetAllTodayPaymentsAsync();
+		Task<bool> UpdateAsync(Transaction transaction);
 	}
 }

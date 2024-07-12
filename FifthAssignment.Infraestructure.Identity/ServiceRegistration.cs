@@ -1,5 +1,4 @@
 ﻿using FifthAssignment.Core.Application.Interfaces.Identity;
-using FifthAssignment.Core.Domain.Settings;
 using FifthAssignment.Infraestructure.Identity.Context;
 using FifthAssignment.Infraestructure.Identity.Entities;
 using FifthAssignment.Infraestructure.Identity.Services;
@@ -16,7 +15,7 @@ namespace FifthAssignment.Infraestructure.Identity
 		{
 			services.AddDbContext<IdentityAppContext>(options =>
 			{
-				options.UseSqlServer(config.GetConnectionString("DefaultPaymentConnection"), m => m.MigrationsAssembly(typeof(IdentityAppContext).Assembly.FullName));
+				options.UseSqlServer(config.GetConnectionString("DefaultIdentityConnection"), m => m.MigrationsAssembly(typeof(IdentityAppContext).Assembly.FullName));
 			});
 
 			services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -24,7 +23,7 @@ namespace FifthAssignment.Infraestructure.Identity
 
 			services.AddAuthentication();
 
-			services.Configure<ConnectionStrings>(config.GetSection("ConnectionStrings"));
+		//	services.Configure<ConnectionStrings>(config.GetSection("ConnectionStrings"));
 
 			services.AddTransient<IAccountRepository, AccountService>();
 			services.AddTransient<IUserRepository, UserRepository>();

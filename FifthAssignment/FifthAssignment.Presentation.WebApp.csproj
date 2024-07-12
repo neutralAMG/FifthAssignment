@@ -7,10 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.20">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\FifthAssignment.Core.Application\FifthAssignment.Core.Application.csproj" />
     <ProjectReference Include="..\FifthAssignment.Core.Domain\FifthAssignment.Core.Domain.csproj" />
     <ProjectReference Include="..\FifthAssignment.Infraestructure.Identity\FifthAssignment.Infraestructure.Identity.csproj" />
-    <ProjectReference Include="..\FifthAssignment.Infraestructure.Payments\FifthAssignment.Infraestructure.Payments.csproj" />
     <ProjectReference Include="..\FifthAssignment.Infraestructure.Payments\FifthAssignment.Infraestructure.Transaction.csproj" />
     <ProjectReference Include="..\FifthAssignment.Infraestructure.Persistence\FifthAssignment.Infraestructure.Persistence.csproj" />
   </ItemGroup>

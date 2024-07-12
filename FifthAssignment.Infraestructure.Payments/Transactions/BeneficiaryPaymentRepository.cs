@@ -6,7 +6,7 @@ using FifthAssignment.Infraestructure.Persistence.Context;
 using FifthAssignment.Infraestructure.Persistence.Core;
 using Microsoft.EntityFrameworkCore;
 
-namespace FifthAssignment.Infraestructure.Payments.Repositories
+namespace FifthAssignment.Infraestructure.Transaction.Repositories
 {
 	internal class BeneficiaryPaymentRepository : BasePaymentRepository<BeneficiaryPayment>, IBeneficiaryPaymentRepository
 	{

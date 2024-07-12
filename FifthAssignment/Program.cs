@@ -1,7 +1,7 @@
 
 using FifthAssignment.Infraestructure.Identity;
 using FifthAssignment.Infraestructure.Persistence;
-using FifthAssignment.Infraestructure.Payments;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +11,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddInfraestructureIdentityLayer(builder.Configuration);
 builder.Services.AddInfraestructurePercistanceLayer(builder.Configuration);
-builder.Services.AddInfraestructureTransactionLayer(builder.Configuration);
+
 
 var app = builder.Build();
 

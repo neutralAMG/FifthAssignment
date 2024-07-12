@@ -4,13 +4,13 @@ using FifthAssignment.Core.Domain.Entities.PaymentContext;
 using FifthAssignment.Infraestructure.Persistence.Context;
 using FifthAssignment.Infraestructure.Persistence.Core;
 
-namespace FifthAssignment.Infraestructure.Payments.Repositories
+namespace FifthAssignment.Infraestructure.Persistence.Repositories
 {
 	public class MoneyAdvanceRepository : BasePaymentRepository<MoneyAdvance>, IMoneyAdvanceRepository
 	{
-		private readonly PaymentContext _context;
+		private readonly fifthAssignmentContext _context;
 
-		public MoneyAdvanceRepository(PaymentContext context) : base(context)
+		public MoneyAdvanceRepository(fifthAssignmentContext context) : base(context)
 		{
 			_context = context;
 		}

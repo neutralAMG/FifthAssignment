@@ -1,7 +1,7 @@
 ﻿
 
+using FifthAssignment.Core.Application.Interfaces.Payments;
 using FifthAssignment.Core.Application.Interfaces.Repositories;
-using FifthAssignment.Core.Domain.Settings;
 using FifthAssignment.Infraestructure.Persistence.Context;
 using FifthAssignment.Infraestructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -18,12 +18,18 @@ namespace FifthAssignment.Infraestructure.Persistence
 			{
 				options.UseSqlServer(config.GetConnectionString("DefaultConnection"), m => m.MigrationsAssembly(typeof(fifthAssignmentContext).Assembly.FullName));
 			});
-			services.Configure<ConnectionStrings>(config.GetSection("ConnectionStrings"));
+			//services.Configure<ConnectionStrings>(config.GetSection("ConnectionStrings"));
 			services.AddTransient<IBankAccountRepository, BankAccountRepository>();
 			services.AddTransient<IBeneficiaryRepository, BeneficiaryRepository>();
 			services.AddTransient<ILoanRepository, LoanRepository>();
 			services.AddTransient<ICreditCardRepository, CreditCardRepository>();
-			
+
+			services.AddTransient<IBeneficiaryPaymentRepository, BeneficiaryPaymentRepository>();
+			services.AddTransient<ICreditcardPaymentRepository, CreditcardPaymentRepository>();
+			services.AddTransient<IExpressPaymentRepository, ExpressPaymentRepository>();
+			services.AddTransient<ILoanPaymentRepository, LoanPaymentRepository>();
+			services.AddTransient<ITransactionRepository, TransactionRepository>();
+			services.AddTransient<ITransferRepository, TransferRepository>();
 		}
 	}
 }

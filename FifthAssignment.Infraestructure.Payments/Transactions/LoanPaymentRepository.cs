@@ -4,7 +4,7 @@ using FifthAssignment.Infraestructure.Persistence.Context;
 using FifthAssignment.Infraestructure.Persistence.Core;
 
 
-namespace FifthAssignment.Infraestructure.Payments.Repositories
+namespace FifthAssignment.Infraestructure.Transaction.Repositories
 {
 	public class LoanPaymentRepository : BasePaymentRepository<LoanPayment>, ILoanPaymentRepository
 	{

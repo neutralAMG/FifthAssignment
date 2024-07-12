@@ -9,5 +9,6 @@ namespace FifthAssignment.Core.Application.Interfaces.Contracts
 	public interface ITransactionService : IBasePaymentService<Transaction>
 	{
 	   Task<Result<SavePaymentDto>> SaveAsync(SavePaymentDto entity);
+		Task<Result<bool>> UpdateAsync(SavePaymentDto saveDto);
 	}
 }
