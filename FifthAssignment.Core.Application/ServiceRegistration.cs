@@ -1,4 +1,5 @@
 ﻿
+using FifthAssignment.Core.Application.Interfaces.Contracts;
 using FifthAssignment.Core.Application.Interfaces.Contracts.Core;
 using FifthAssignment.Core.Application.Interfaces.Contracts.Transactions;
 using FifthAssignment.Core.Application.Services;
@@ -33,7 +34,7 @@ namespace FifthAssignment.Core.Application
 			services.AddTransient<ITransferService, TransferService>();
 			services.AddTransient<IMoneyAdvanceService, MoneyAdvanceService>();
 			services.AddTransient<ITransactioStrategy, TransactionService>();
-
+			services.AddTransient<IHomeService, HomeService>();
 			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 		}
 	}

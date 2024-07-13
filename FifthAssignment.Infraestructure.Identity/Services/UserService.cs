@@ -161,6 +161,12 @@ namespace FifthAssignment.Infraestructure.Identity.Services
 			return false;
 		}
 
-
+		public async Task<List<int>> AmountOfActiveAndInactiveUsersAsync()
+		{
+			int AmountOfActiveUsers = _userManager.Users.Where(u => u.EmailConfirmed == true).Count();
+			int AmountOfUnActiveUsers = _userManager.Users.Where(u => u.EmailConfirmed == false).Count();
+			List<int> ints = new() { AmountOfActiveUsers, AmountOfUnActiveUsers };
+			return ints;
+		}
 	}
 }

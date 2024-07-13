@@ -3,12 +3,14 @@
 using AutoMapper;
 using FifthAssignment.Core.Application.Core;
 using FifthAssignment.Core.Application.Dtos.AccountDtos;
+using FifthAssignment.Core.Application.Models;
 using FifthAssignment.Core.Application.Models.BankAccountsModels;
 using FifthAssignment.Core.Application.Models.BeneficiaryModels;
 using FifthAssignment.Core.Application.Models.CreditCardModels;
 using FifthAssignment.Core.Application.Models.LoanModels;
 using FifthAssignment.Core.Application.Models.UserModel;
 using FifthAssignment.Core.Application.Models.UserModels;
+using FifthAssignment.Core.Domain.Core;
 using FifthAssignment.Core.Domain.Entities.PaymentContext;
 using FifthAssignment.Core.Domain.Entities.PersistanceContext;
 
@@ -144,6 +146,12 @@ namespace FifthAssignment.Core.Application.Utils.Mapper
 				  .ForMember(dest => dest.UserBankAccountId, opt => opt.MapFrom(ot => ot.Receiver))
 				  .ForMember(dest => dest.UserCreditCard, opt => opt.Ignore())
 		          .ForMember(dest => dest.UserBankAccount, opt => opt.Ignore());
+
+			#endregion
+
+			#region HomeInformation mapping configuration setup
+
+			CreateMap<HomeInformation, HomeInformationGetModel>();
 
 			#endregion
 		}

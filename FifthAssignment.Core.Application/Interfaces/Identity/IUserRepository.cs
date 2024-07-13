@@ -13,6 +13,8 @@ namespace FifthAssignment.Core.Application.Interfaces.Identity
         Task<bool> DeleteAsync(string id);
         Task<bool> ActivateAsync(string id);
 		Task<bool> DeActivateAsync(string id);
+        Task<List<int>> AmountOfActiveAndInactiveUsersAsync();
+
 
 	}
 }

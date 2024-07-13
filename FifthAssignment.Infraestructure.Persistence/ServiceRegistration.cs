@@ -1,5 +1,6 @@
 ﻿
 
+using FifthAssignment.Core.Application.Interfaces.Identity;
 using FifthAssignment.Core.Application.Interfaces.Payments;
 using FifthAssignment.Core.Application.Interfaces.Repositories;
 using FifthAssignment.Infraestructure.Persistence.Context;
@@ -30,6 +31,8 @@ namespace FifthAssignment.Infraestructure.Persistence
 			services.AddTransient<ILoanPaymentRepository, LoanPaymentRepository>();
 			services.AddTransient<ITransactionRepository, TransactionRepository>();
 			services.AddTransient<ITransferRepository, TransferRepository>();
+
+			services.AddTransient<IHomeRepository, HomeRepository>();
 		}
 	}
 }
