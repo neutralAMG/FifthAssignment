@@ -16,45 +16,6 @@ namespace FifthAssignment.Core.Application.Core
 			_baseRepository = baseRepository;
 			_mapper = mapper;
 		}
-        public virtual async Task<Result<List<GetBasePaymentDto>>> GetAllAsync()
-		{
-			Result<List<GetBasePaymentDto>> result = new();
-			try
-			{
-				List<TEntity> entitiesGetted = await _baseRepository.GetAllAsync();
-
-				result.Data = _mapper.Map<List<GetBasePaymentDto>>(entitiesGetted);
-
-				result.Message = "Entities get was a success";
-				return result;
-			}
-			catch
-			{
-				result.IsSuccess = false;
-				result.Message = "Criitical error getting the entities";
-				return result;
-			}
-		}
-
-		public virtual async Task<Result<GetBasePaymentDto>> GetByIdAsync(Guid id)
-		{
-			Result<GetBasePaymentDto> result = new();
-			try
-			{
-				TEntity entityGetted = await _baseRepository.GetByIdAsync(id);
-
-				result.Data = _mapper.Map<GetBasePaymentDto>(entityGetted);
-
-				result.Message = "Entity get was a success";
-				return result;
-			}
-			catch
-			{
-				result.IsSuccess = false;
-				result.Message = "Criitical error getting the entity";
-				return result;
-			}
-		}
 
 		public virtual async Task<Result<SaveBasePaymentDto>> SaveAsync(SaveBasePaymentDto entity)
 		{

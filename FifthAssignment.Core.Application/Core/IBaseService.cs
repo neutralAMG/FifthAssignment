@@ -5,8 +5,7 @@ namespace FifthAssignment.Core.Application.Core
 	public interface IBasePaymentService<TEntity>
 		where TEntity : class
 	{
-		Task<Result<List<GetBasePaymentDto>>> GetAllAsync();
-		Task<Result<GetBasePaymentDto>> GetByIdAsync(Guid id);
+
 	    Task<Result<SaveBasePaymentDto>> SaveAsync(SaveBasePaymentDto entity);
 
 	}

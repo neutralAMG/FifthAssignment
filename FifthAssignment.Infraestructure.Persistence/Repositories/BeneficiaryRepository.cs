@@ -4,7 +4,7 @@ using FifthAssignment.Core.Application.Interfaces.Repositories;
 using FifthAssignment.Core.Domain.Entities.PersistanceContext;
 using FifthAssignment.Infraestructure.Persistence.Context;
 using FifthAssignment.Infraestructure.Persistence.Core;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace FifthAssignment.Infraestructure.Persistence.Repositories
 {

@@ -1,4 +1,5 @@
-﻿using FifthAssignment.Models;
+﻿using FifthAssignment.Core.Application.Interfaces.Contracts;
+using FifthAssignment.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,10 +8,12 @@ namespace FifthAssignment.Controllers
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
+		private readonly IHomeService _homeService;
 
-		public HomeController(ILogger<HomeController> logger)
+		public HomeController(ILogger<HomeController> logger, IHomeService homeService)
 		{
 			_logger = logger;
+			_homeService = homeService;
 		}
 
 		public IActionResult Index()

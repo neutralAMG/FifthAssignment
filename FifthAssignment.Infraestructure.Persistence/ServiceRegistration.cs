@@ -3,6 +3,7 @@
 using FifthAssignment.Core.Application.Interfaces.Identity;
 using FifthAssignment.Core.Application.Interfaces.Payments;
 using FifthAssignment.Core.Application.Interfaces.Repositories;
+using FifthAssignment.Core.Application.Utils.GenerateProductCodeString;
 using FifthAssignment.Infraestructure.Persistence.Context;
 using FifthAssignment.Infraestructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,7 @@ namespace FifthAssignment.Infraestructure.Persistence
 			services.AddTransient<ITransactionRepository, TransactionRepository>();
 			services.AddTransient<ITransferRepository, TransferRepository>();
 
+			services.AddTransient<ICodeGenerator, GenerateACodeString>();
 			services.AddTransient<IHomeRepository, HomeRepository>();
 		}
 	}

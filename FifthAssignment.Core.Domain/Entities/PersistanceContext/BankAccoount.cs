@@ -11,7 +11,7 @@ namespace FifthAssignment.Core.Domain.Entities.PersistanceContext
 		}
         //	public User user {  get; set; }  
         public bool IsMain {  get; set; }
-		public IList<BeneficiaryPayment> BeneficiaryPayments { get; set; }
+		//public IList<BeneficiaryPayment> BeneficiaryPayments { get; set; }
 		public IList<BeneficiaryPayment> UserPayments { get; set; }
 		public IList<ExpressPayment> ExpressPaymentsFrom { get; set; }
 		public IList<ExpressPayment> ExpressPaymentsTo { get; set; }

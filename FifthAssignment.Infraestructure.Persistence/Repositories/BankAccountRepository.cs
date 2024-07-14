@@ -45,5 +45,12 @@ namespace FifthAssignment.Infraestructure.Persistence.Repositories
 
 			return await base.DeleteAsync(entity);
 		}
+
+		public async Task<BankAccount> GetBeneficiaryMainBankAccountAsync(string Id)
+		{
+			BankAccount beneficiaryBankAccount = await _context.BankAccounts.Where(b => b.IsMain == true && b.UserId == Id).FirstOrDefaultAsync();
+
+			return beneficiaryBankAccount;
+		}
 	}
 }

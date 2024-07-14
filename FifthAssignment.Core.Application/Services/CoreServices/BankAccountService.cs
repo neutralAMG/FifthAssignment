@@ -54,7 +54,28 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
             }
         }
 
-        public async Task<Result<BankAccountModel>> GetByNumberIdentifierAsync(string id)
+		public async Task<Result<BankAccountModel>> GetBeneficiaryMainBankAccountAsync(string id)
+		{
+			Result<BankAccountModel> result = new();
+			try
+			{
+
+				BankAccount entityGetted = await _bankAccountRepository.GetBeneficiaryMainBankAccountAsync(id);
+
+				result.Data = _mapper.Map<BankAccountModel>(entityGetted);
+
+				result.Message = "BankAccount get was a success";
+				return result;
+			}
+			catch
+			{
+				result.IsSuccess = false;
+				result.Message = "Criitical error getting the BankAccount";
+				return result;
+			}
+		}
+
+		public async Task<Result<BankAccountModel>> GetByNumberIdentifierAsync(string id)
         {
             Result<BankAccountModel> result = new();
             try

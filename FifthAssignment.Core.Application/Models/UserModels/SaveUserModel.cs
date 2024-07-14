@@ -3,6 +3,7 @@ namespace FifthAssignment.Core.Application.Models.UserModels
 {
 	public class SaveUserModel
 	{
+		public string Id { get; set; }
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 		public string Cedula { get; set; }

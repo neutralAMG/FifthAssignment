@@ -33,19 +33,24 @@ namespace FifthAssignment.Core.Application.Utils.Mapper
 			#endregion
 
 			#region Beneficiary mapping configuration setup
-			CreateMap<Beneficiary, BeneficiaryModel>();
+			CreateMap<Beneficiary, BeneficiaryModel>()
+				 .ForMember(dest => dest.UserBeneficiaryBankAccount, opt => opt.MapFrom(opt => opt.UserBeneficiaryBankAccount))
+				 .ReverseMap()
+				 .ForMember(dest => dest.UserBeneficiaryBankAccount, opt => opt.Ignore())
+				 .ForMember(dest => dest.BeneficiaryPayments, opt => opt.Ignore());
 
 			CreateMap<Beneficiary, SaveBeneficiaryModel>()
 				  .ForMember(dest => dest.UserId, opt => opt.Ignore())
 				  .ReverseMap()
-				   .ForMember(dest => dest.Id, opt => opt.Ignore());
+				  .ForMember(dest => dest.UserBeneficiaryBankAccount, opt => opt.Ignore())
+				  .ForMember(dest => dest.Id, opt => opt.Ignore());
 
 			#endregion
 
 			#region BankAccount mapping configuration setup
 			CreateMap<BankAccount, BankAccountModel>()
 				  .ReverseMap()
-				   .ForMember(dest => dest.BeneficiaryPayments, opt => opt.Ignore())
+				  // .ForMember(dest => dest.BeneficiaryPayments, opt => opt.Ignore())
 				   .ForMember(dest => dest.CreditCardPayments, opt => opt.Ignore())
 				   .ForMember(dest => dest.LoansPayments, opt => opt.Ignore())
 				   .ForMember(dest => dest.MoneyAdvances, opt => opt.Ignore())
@@ -57,7 +62,7 @@ namespace FifthAssignment.Core.Application.Utils.Mapper
 
 			CreateMap<BankAccount, SaveBankAccountModel>()
 				  .ReverseMap()
-				   .ForMember(dest => dest.BeneficiaryPayments, opt => opt.Ignore())
+				//   .ForMember(dest => dest.BeneficiaryPayments, opt => opt.Ignore())
 				   .ForMember(dest => dest.CreditCardPayments, opt => opt.Ignore())
 				   .ForMember(dest => dest.LoansPayments, opt => opt.Ignore())
 				   .ForMember(dest => dest.MoneyAdvances, opt => opt.Ignore())

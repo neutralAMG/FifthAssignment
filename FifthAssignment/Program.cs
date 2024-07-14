@@ -3,6 +3,8 @@ using FifthAssignment.Infraestructure.Identity;
 using FifthAssignment.Infraestructure.Identity.Entities;
 using FifthAssignment.Infraestructure.Identity.Seeds;
 using FifthAssignment.Infraestructure.Persistence;
+using FifthAssignment.Core.Application;
+using FifthAssignment.Presentation.WebApp;
 using Microsoft.AspNetCore.Identity;
 
 
@@ -14,7 +16,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddInfraestructureIdentityLayer(builder.Configuration);
 builder.Services.AddInfraestructurePercistanceLayer(builder.Configuration);
-
+builder.Services.AddCoreAplicationLayer(builder.Configuration);
+builder.Services.AddPresentationLayer();
 
 var app = builder.Build();
 

@@ -10,7 +10,7 @@ namespace FifthAssignment.Core.Application.Utils.GenerateProductCodeString
 		{
 			StringBuilder stringBuilder = new();
 			Random random = new();
-			for (int i = 0; i< 7;i++) {
+			for (int i = 0; i< 9;i++) {
 				stringBuilder.Append(Characters[random.Next(Characters.Length)]);
 			}
 
