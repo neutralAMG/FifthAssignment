@@ -2,6 +2,7 @@
 using FifthAssignment.Core.Application.Dtos.AccountDtos;
 using FifthAssignment.Core.Application.Interfaces.Contracts.User;
 using FifthAssignment.Core.Application.Models.UserModels;
+using FifthAssignment.Presentation.WebApp.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,7 +48,7 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 				result = await _accountService.LoginAsync(Email, Password);
 				if (!result.IsSuccess)
 				{
-					ViewBag.ErrorMessage = result.Message;
+					ViewBag[MessageType.MessageError.ToString()] = result.Message;
 					return View();
 				}
 
@@ -87,11 +88,12 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 
 				if (!result.IsSuccess) 
 				{
-					ViewBag.ErrorMessage = result.Message;
+					ViewBag[MessageType.MessageError.ToString()] = result.Message;
 					return View();
 				}
+				ViewBag[MessageType.MessageSuccess.ToString()] = "User was created succesfully";
 
-				return RedirectToAction(nameof(Index));
+				return RedirectToAction("Index", "User");
 			}
 			catch
 			{

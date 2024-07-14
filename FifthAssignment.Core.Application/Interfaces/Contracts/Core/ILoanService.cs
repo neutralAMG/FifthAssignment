@@ -7,6 +7,6 @@ namespace FifthAssignment.Core.Application.Interfaces.Contracts.Core
 {
     public interface ILoanService : IBaseProductService<LoanModel, SaveLoanModel, Loan>, IGetWithUserId<LoanModel>
     {
-        Task<Result<LoanModel>> GetByNumberIdentifierAsync(string id);
+     //   Task<Result<LoanModel>> GetByNumberIdentifierAsync(string id);
     }
 }

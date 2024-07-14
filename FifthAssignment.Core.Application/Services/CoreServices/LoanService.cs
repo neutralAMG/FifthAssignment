@@ -56,25 +56,25 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
             }
         }
 
-        public async Task<Result<LoanModel>> GetByNumberIdentifierAsync(string id)
-        {
-            Result<LoanModel> result = new();
-            try
-            {
-                Loan LoanGetted = await _loanRepository.GetByNumberIdentifierAsync(b => b.IdentifierNumber == id);
+        //public async Task<Result<LoanModel>> GetByNumberIdentifierAsync(string id)
+        //{
+        //    Result<LoanModel> result = new();
+        //    try
+        //    {
+        //        Loan LoanGetted = await _loanRepository.GetByNumberIdentifierAsync(b => b.IdentifierNumber == id);
 
-                result.Data = _mapper.Map<LoanModel>(LoanGetted);
+        //        result.Data = _mapper.Map<LoanModel>(LoanGetted);
 
-                result.Message = "Loan get was a success";
-                return result;
-            }
-            catch
-            {
-                result.IsSuccess = false;
-                result.Message = "Criitical error getting the Loan";
-                return result;
-            }
-        }
+        //        result.Message = "Loan get was a success";
+        //        return result;
+        //    }
+        //    catch
+        //    {
+        //        result.IsSuccess = false;
+        //        result.Message = "Criitical error getting the Loan";
+        //        return result;
+        //    }
+        //}
 
         public virtual async Task<Result<SaveLoanModel>> SaveAsync(SaveLoanModel entity)
         {

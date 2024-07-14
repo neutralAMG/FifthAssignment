@@ -11,12 +11,11 @@ namespace FifthAssignment.Core.Domain.Entities.PersistanceContext
 			Id = Guid.NewGuid();
 			
 		}
-		public string UserId { get; set; }
-        public string UserBeneficiaryId { get; set; }
+        public string UserId { get; set; }
 		public Guid  UserBeneficiaryBankAccountId { get; set; }
 		[ForeignKey("UserBeneficiaryBankAccountId")]
 		public BankAccount UserBeneficiaryBankAccount { get; set; }
-		public IList<BeneficiaryPayment> BeneficiaryPayments { get; set; }
+	//	public IList<BeneficiaryPayment> BeneficiaryPayments { get; set; }
 
 	}
 }

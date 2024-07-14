@@ -34,10 +34,10 @@ namespace FifthAssignment.Infraestructure.Persistence.Core
 		{
 			return await _entities.FindAsync(id);
 		}
-	     public async Task<TEntity> GetByNumberIdentifierAsync(Func<TEntity, bool> filter)
-		{
-			return await Task.FromResult( _entities.Where(filter).FirstOrDefault());
-		}
+	 //    public async Task<TEntity> GetByNumberIdentifierAsync(Func<TEntity, bool> filter)
+		//{
+		//	return await Task.FromResult( _entities.Where(filter).FirstOrDefault());
+		//}
 		public virtual async Task<TEntity> SaveAsync(TEntity entity)
 		{
 			try

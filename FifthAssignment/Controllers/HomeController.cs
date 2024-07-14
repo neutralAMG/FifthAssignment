@@ -1,5 +1,6 @@
 ﻿using FifthAssignment.Core.Application.Interfaces.Contracts;
 using FifthAssignment.Models;
+using FifthAssignment.Presentation.WebApp.Enums;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -18,6 +19,14 @@ namespace FifthAssignment.Controllers
 
 		public IActionResult Index()
 		{
+			if (TempData[MessageType.MessageError.ToString()] != null)
+			{
+				ViewBag[MessageType.MessageError.ToString()] = TempData[MessageType.MessageError.ToString()];
+			}
+			if (TempData[MessageType.MessageSuccess.ToString()] != null)
+			{
+				ViewBag[MessageType.MessageSuccess.ToString()] = TempData[MessageType.MessageSuccess.ToString()];
+			}
 			return View();
 		}
 

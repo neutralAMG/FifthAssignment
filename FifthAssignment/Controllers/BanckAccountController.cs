@@ -1,20 +1,21 @@
-﻿using FifthAssignment.Core.Application.Interfaces.Contracts.Core;
+﻿using FifthAssignment.Core.Application.Core;
+using FifthAssignment.Core.Application.Interfaces.Contracts.Core;
 using FifthAssignment.Core.Application.Models.BankAccountsModels;
-using Microsoft.AspNetCore.Http;
+using FifthAssignment.Presentation.WebApp.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FifthAssignment.Presentation.WebApp.Controllers
 {
 	public class BanckAccountController : Controller
 	{
-		private readonly IBankAccountService bankAccountService;
+		private readonly IBankAccountService _bankAccountService;
 
 		public BanckAccountController(IBankAccountService bankAccountService)
-        {
-			this.bankAccountService = bankAccountService;
+		{
+			_bankAccountService = bankAccountService;
 		}
-        // GET: BanckAccountController
-        public ActionResult Index()
+		// GET: BanckAccountController
+		public ActionResult Index()
 		{
 			return View();
 		}
@@ -36,9 +37,19 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> CreateBankAccount(SaveBankAccountModel saveModel)
 		{
+			Result<SaveBankAccountModel> result = new();
 			try
 			{
-				return RedirectToAction(nameof(Index));
+				result = await _bankAccountService.SaveAsync(saveModel);
+
+				if (!result.IsSuccess)
+				{
+					TempData[MessageType.MessageError.ToString()] = result.Message;
+					return RedirectToAction("Index", "User");
+				}
+
+				TempData[MessageType.MessageSuccess.ToString()] = result.Message;
+				return RedirectToAction("Index", "User");
 			}
 			catch
 			{
@@ -49,7 +60,23 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		// GET: BanckAccountController/Delete/5
 		public async Task<IActionResult> DeleteBankAccount(Guid id)
 		{
-			return View();
+			Result<BankAccountModel> result = new();
+			try
+			{
+				result = await _bankAccountService.GetByIdAsync(id);
+				if (!result.IsSuccess)
+				{
+					TempData[MessageType.MessageError.ToString()] = result.Message;
+					return RedirectToAction("Index", "User");
+
+				}
+				return View(result.Data);
+			}
+			catch
+			{
+				throw;
+			}
+			
 		}
 
 		// POST: BanckAccountController/Delete/5
@@ -57,13 +84,21 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteBankAccount(Guid id, IFormCollection collection)
 		{
+			Result<bool> result = new();
 			try
 			{
-				return RedirectToAction(nameof(Index));
+				result = await _bankAccountService.DeleteAsync(id);
+				if (!result.IsSuccess)
+				{
+					TempData[MessageType.MessageError.ToString()] = result.Message;
+					return RedirectToAction("Index", "User");
+				}
+				TempData[MessageType.MessageSuccess.ToString()] = result.Message;
+				return RedirectToAction("Index", "User");
 			}
 			catch
 			{
-				return View();
+				throw;
 			}
 		}
 	}

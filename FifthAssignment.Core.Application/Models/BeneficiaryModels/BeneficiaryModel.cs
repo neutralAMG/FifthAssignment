@@ -1,5 +1,6 @@
 ﻿
 using FifthAssignment.Core.Application.Models.BankAccountsModels;
+using FifthAssignment.Core.Application.Models.UserModel;
 using FifthAssignment.Core.Domain.Entities.PersistanceContext;
 
 namespace FifthAssignment.Core.Application.Models.BeneficiaryModels
@@ -12,6 +13,7 @@ namespace FifthAssignment.Core.Application.Models.BeneficiaryModels
 		public string UserBeneficiaryId { get; set; }
 		public Guid UserBeneficiaryBankAccountId { get; set; }
 		public BankAccountModel UserBeneficiaryBankAccount { get; set; }
+		public FifthAssignment.Core.Application.Models.UserModel.UserModel UserBeneficiary { get; set; }
 
 	}
 }

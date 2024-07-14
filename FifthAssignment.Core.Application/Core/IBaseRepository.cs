@@ -14,7 +14,7 @@ namespace FifthAssignment.Core.Application.Core
 	{
 		Task<bool> Exits(Func<TEntity, bool> filter);
 		Task<List<TEntity>> GetAllAsync(Func<TEntity, bool> filter);
-		Task<TEntity> GetByNumberIdentifierAsync(Func<TEntity, bool> filter);
+	//	Task<TEntity> GetByNumberIdentifierAsync(Func<TEntity, bool> filter);
 		Task<bool> UpdateAsync(TEntity entity);
 		Task<bool> DeleteAsync(TEntity entity);
 	}

@@ -36,8 +36,7 @@ namespace FifthAssignment.Core.Application.Utils.Mapper
 			CreateMap<Beneficiary, BeneficiaryModel>()
 				 .ForMember(dest => dest.UserBeneficiaryBankAccount, opt => opt.MapFrom(opt => opt.UserBeneficiaryBankAccount))
 				 .ReverseMap()
-				 .ForMember(dest => dest.UserBeneficiaryBankAccount, opt => opt.Ignore())
-				 .ForMember(dest => dest.BeneficiaryPayments, opt => opt.Ignore());
+				 .ForMember(dest => dest.UserBeneficiaryBankAccount, opt => opt.Ignore());
 
 			CreateMap<Beneficiary, SaveBeneficiaryModel>()
 				  .ForMember(dest => dest.UserId, opt => opt.Ignore())
@@ -123,7 +122,7 @@ namespace FifthAssignment.Core.Application.Utils.Mapper
 				 .ForMember(dest => dest.UserBankAccountId, opt => opt.MapFrom(ot => ot.Emisor))
 				   .ForMember(dest => dest.BeneficiaryBankAccountId, opt => opt.MapFrom(ot => ot.Receiver))
 				 .ForMember(dest => dest.UserBankAccount, opt => opt.Ignore())
-				 .ForMember(dest => dest.BeneficiaryAccount, opt => opt.Ignore());
+				 .ForMember(dest => dest.UserBeneficiaryBankAccount, opt => opt.Ignore());
 
 			CreateMap<LoanPayment, SaveBasePaymentDto>()
 				   .ForMember(dest => dest.Emisor, opt => opt.MapFrom(ot => ot.UserBankAccountId))

@@ -39,13 +39,13 @@ namespace FifthAssignment.Presentation.WebApp.Utils.GenerateAppSelectList
 
 		public List<SelectListItem> GenerateUserBeneficiarySelectList()
 		{
-			List<UserModel> beneficiaries = _userService.GetUserBeneficiariesAsync().Result.Data;
+			List<BeneficiaryModel> beneficiaries = _beneficiaryService.GetAllWithUserIdAsync().Result.Data;
 		
 			return beneficiaries.Select(b => new SelectListItem
 			{
 				Selected = false,
-				Text = b.UserName,
-				Value =  _bankAccountService.GetBeneficiaryMainBankAccountAsync(b.Id).Result.Data.Id.ToString() ?? default,
+				Text = _userService.GetUserBeneficiarieAsync(b.UserBeneficiaryBankAccount.UserId).Result.Data.UserName,
+				Value =  b.UserBeneficiaryBankAccountId.ToString()
 			}).ToList();
 		}
 

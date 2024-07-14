@@ -7,6 +7,6 @@ namespace FifthAssignment.Core.Application.Interfaces.Contracts.Core
 {
     public interface ICreditCardService : IBaseProductService<CreditCardModel, SaveCreditCardModel, CreditCard>, IGetWithUserId<CreditCardModel>
     {
-        Task<Result<CreditCardModel>> GetByNumberIdentifierAsync(string id);
+      //  Task<Result<CreditCardModel>> GetByNumberIdentifierAsync(string id);
     }
 }

@@ -17,6 +17,6 @@ namespace FifthAssignment.Core.Domain.Entities.PaymentContext
 		[ForeignKey("UserBankAccountId")]
 		public BankAccount UserBankAccount { get; set; }
 		[ForeignKey("BeneficiaryBankAccountId")]
-		public BankAccount BeneficiaryAccount { get; set; }
+		public BankAccount UserBeneficiaryBankAccount { get; set; }
     }
 }

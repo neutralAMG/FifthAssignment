@@ -72,28 +72,6 @@ namespace FifthAssignment.Core.Application.Services.UserServices
 
 			}
 		}
-		public async Task<Result<List<UserModel>>> GetUserBeneficiariesAsync()
-		{
-			Result<List<UserModel>> result = new();
-			try
-			{
-				var beneficiaryId = await _beneficiaryService.GetAllWithUserIdAsync();
-
-				List<string> beneficiaryIds = beneficiaryId.Data.Select(b => b.UserBeneficiaryId).ToList();
-
-				List<UserGetResponceDto> usersGeted = await _userRepository.GetUserBeneficiariesAsync(beneficiaryIds);
-
-				result.Data = _mapper.Map<List<UserModel>>(usersGeted);
-				result.Message = "Beneficiarie's get was succesfull";
-				return result;
-			}
-			catch
-			{
-				result.IsSuccess = false;
-				result.Message = "Critical error getting the Beneficiarie's";
-				return result;
-			}
-		}
 		public async Task<Result<UserModel>> GetUserBeneficiarieAsync(string beneficiaryId)
 		{
 			Result<UserModel> result = new();

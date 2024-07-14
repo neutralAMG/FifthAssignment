@@ -54,25 +54,25 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
             }
         }
 
-        public async Task<Result<CreditCardModel>> GetByNumberIdentifierAsync(string id)
-        {
-            Result<CreditCardModel> result = new();
-            try
-            {
-                CreditCard creditCardGetted = await _creditCardRepository.GetByNumberIdentifierAsync(b => b.IdentifierNumber == id);
+        //public async Task<Result<CreditCardModel>> GetByNumberIdentifierAsync(string id)
+        //{
+        //    Result<CreditCardModel> result = new();
+        //    try
+        //    {
+        //        CreditCard creditCardGetted = await _creditCardRepository.GetByNumberIdentifierAsync(b => b.IdentifierNumber == id);
 
-                result.Data = _mapper.Map<CreditCardModel>(creditCardGetted);
+        //        result.Data = _mapper.Map<CreditCardModel>(creditCardGetted);
 
-                result.Message = "CreditCard get was a success";
-                return result;
-            }
-            catch
-            {
-                result.IsSuccess = false;
-                result.Message = "Criitical error getting the CreditCard";
-                return result;
-            }
-        }
+        //        result.Message = "CreditCard get was a success";
+        //        return result;
+        //    }
+        //    catch
+        //    {
+        //        result.IsSuccess = false;
+        //        result.Message = "Criitical error getting the CreditCard";
+        //        return result;
+        //    }
+        //}
 
         public override async Task<Result<SaveCreditCardModel>> SaveAsync(SaveCreditCardModel entity)
         {

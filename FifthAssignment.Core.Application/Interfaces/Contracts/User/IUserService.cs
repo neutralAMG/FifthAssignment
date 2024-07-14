@@ -9,7 +9,7 @@ namespace FifthAssignment.Core.Application.Interfaces.Contracts.User
 	{
 		Task<Result<List<UserModel>>> GetAllAsync();
 		Task<Result<UserModel>> GetByIdAsync(string id);
-		Task<Result<List<UserModel>>> GetUserBeneficiariesAsync();
+	//	Task<Result<List<UserModel>>> GetUserBeneficiariesAsync();
 		Task<Result<UserModel>> GetUserBeneficiarieAsync(string beneficiaryId);
 		Task<Result<SaveUserModel>> UpdateAsync(SaveUserModel user);
 		Task<Result<UserModel>> DeleteAsync(string id);

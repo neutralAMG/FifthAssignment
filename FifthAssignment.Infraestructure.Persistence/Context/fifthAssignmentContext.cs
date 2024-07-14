@@ -43,9 +43,10 @@ namespace FifthAssignment.Infraestructure.Persistence.Context
 			{
 				b.HasKey(b => b.Id);
 				//	b.HasOne<ApplicationUser>().WithMany( u => u.Beneficiaries).HasForeignKey(b => b.UserBeneficiaryId);
+				b.HasOne(t => t.UserBeneficiaryBankAccount).WithMany(b => b.Beneficiarys).HasForeignKey(t => t.UserBeneficiaryBankAccountId);
 
+				b.HasIndex(b => b.UserBeneficiaryBankAccountId).IsClustered(false);
 				b.HasIndex(b => b.UserId).IsClustered(false);
-				b.HasIndex(b => b.UserBeneficiaryId).IsClustered(false);
 			});
 
 			modelBuilder.Entity<Loan>(l =>
@@ -94,7 +95,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Context
 				b.HasMany(b => b.TransfersTo).WithOne(b => b.UserAccountTo).HasForeignKey(b => b.UserAccountToId);
 
 				b.HasMany(b => b.UserPayments).WithOne(b => b.UserBankAccount).HasForeignKey(b => b.UserBankAccountId).OnDelete(DeleteBehavior.ClientCascade);
-			//	b.HasMany(b => b.BeneficiaryPayments).WithOne(b => b.BeneficiaryAccount).HasForeignKey(b => b.BeneficiaryBankAccountId).OnDelete(DeleteBehavior.ClientCascade);
+				b.HasMany(b => b.BeneficiaryPayments).WithOne(b => b.UserBeneficiaryBankAccount).HasForeignKey(b => b.BeneficiaryBankAccountId).OnDelete(DeleteBehavior.ClientCascade);
 	
 				b.HasIndex(b => b.UserId).IsClustered(false);
 
@@ -155,7 +156,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Context
 				c.HasKey(c => c.Id);
 
 				c.HasOne(t => t.UserBankAccount).WithMany(u => u.UserPayments).HasForeignKey(c => c.UserBankAccountId).OnDelete(DeleteBehavior.NoAction);
-			//	c.HasOne(t => t.BeneficiaryAccount).WithMany(u => u.BeneficiaryPayments).HasForeignKey(t => t.BeneficiaryBankAccountId).OnDelete(DeleteBehavior.NoAction); 
+				c.HasOne(t => t.UserBeneficiaryBankAccount).WithMany(u => u.BeneficiaryPayments).HasForeignKey(t => t.BeneficiaryBankAccountId).OnDelete(DeleteBehavior.NoAction); 
 
 				c.HasIndex(b => b.UserBankAccountId).IsClustered(false);
 				c.HasIndex(b => b.BeneficiaryBankAccountId).IsClustered(false);

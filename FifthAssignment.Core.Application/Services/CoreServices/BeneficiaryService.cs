@@ -2,6 +2,7 @@
 using FifthAssignment.Core.Application.Core;
 using FifthAssignment.Core.Application.Dtos.AccountDtos;
 using FifthAssignment.Core.Application.Interfaces.Contracts.Core;
+using FifthAssignment.Core.Application.Interfaces.Contracts.User;
 using FifthAssignment.Core.Application.Interfaces.Repositories;
 using FifthAssignment.Core.Application.Models.BankAccountsModels;
 using FifthAssignment.Core.Application.Models.BeneficiaryModels;
@@ -21,15 +22,17 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
         private readonly IBeneficiaryRepository _beneficiaryRepository;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContext;
-        private readonly AuthenticationResponse _currentUser;
+		private readonly IUserService _userService;
+		private readonly AuthenticationResponse _currentUser;
         private readonly SessionKeys _sessionkeys;
 
-        public BeneficiaryService(IBeneficiaryRepository beneficiaryRepository, IMapper mapper, IHttpContextAccessor httpContext, IOptions<SessionKeys> sessionKeys) : base(beneficiaryRepository, mapper)
+        public BeneficiaryService(IBeneficiaryRepository beneficiaryRepository, IMapper mapper, IHttpContextAccessor httpContext, IOptions<SessionKeys> sessionKeys, IUserService userService) : base(beneficiaryRepository, mapper)
         {
             _beneficiaryRepository = beneficiaryRepository;
             _mapper = mapper;
             _httpContext = httpContext;
-            _sessionkeys = sessionKeys.Value;
+			_userService = userService;
+			_sessionkeys = sessionKeys.Value;
             _currentUser = _httpContext.HttpContext.Session.Get<AuthenticationResponse>(_sessionkeys.user);
         }
 
@@ -42,6 +45,9 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
 
                 result.Data = _mapper.Map<List<BeneficiaryModel>>(beneficiaries);
 
+                result.Data.ForEach(b => b.UserBeneficiary = _userService.GetUserBeneficiarieAsync(b.UserBeneficiaryBankAccount.UserId).Result.Data);
+
+              
                 result.Message = "Beneficiaries get was a success";
                 return result;
             }

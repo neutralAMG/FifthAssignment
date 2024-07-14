@@ -24,6 +24,22 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			{
 				result = await _userService.GetAllAsync();
 
+				if (!result.IsSuccess)
+				{
+					TempData[MessageType.MessageError.ToString()] = result.Message;
+					return RedirectToAction("Index", "Home");
+				}
+
+				if (TempData[MessageType.MessageError.ToString()] != null)
+				{
+					ViewBag[MessageType.MessageError.ToString()] = TempData[MessageType.MessageError.ToString()];
+				}
+				if (TempData[MessageType.MessageSuccess.ToString()] != null)
+				{
+					ViewBag[MessageType.MessageSuccess.ToString()] = TempData[MessageType.MessageSuccess.ToString()];
+				}
+
+
 				return View(result.Data);
 			}
 			catch
@@ -34,31 +50,33 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		}
 
 		// GET: UserController/Create
-		public async Task<IActionResult> HandelUserActivationState(int operation)
+		public async Task<IActionResult> HandelUserActivationState(UserActivationStateOperation operation)
 		{
 			return View();
 		}
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> HandelUserActivationState(string id, int operation)
+		public async Task<IActionResult> HandelUserActivationState(string id, UserActivationStateOperation operation)
 		{
 			Result<UserModel> result = new();
 			try
 			{
-				if (operation == (int)UserActivationStateOperation.Activate)
+				if (operation == UserActivationStateOperation.Activate)
 				{
 					result = await _userService.ActivateAsync(id);
 				}
-				if (operation == (int)UserActivationStateOperation.Deactivate)
+				if (operation == UserActivationStateOperation.Deactivate)
 				{
 					result = await _userService.DeActivateAsync(id);
 				}
 
 				if (!result.IsSuccess)
 				{
-					ViewBag.ErrorMessage = result.Message;
+					TempData[MessageType.MessageError.ToString()] = result.Message;
 					return View("Index");
 				}
+
+				TempData[MessageType.MessageSuccess.ToString()] = result.Message;
 
 				return View("Index");
 			}
@@ -98,8 +116,8 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 
 				if (result.IsSuccess)
 				{
-					ViewBag.ErrorMessage = result.Message;
-
+			
+					TempData[MessageType.MessageError.ToString()] = result.Message;
 					return View("Index");
 				}
 
@@ -126,11 +144,12 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 
 				if (result.IsSuccess)
 				{
-					ViewBag.ErrorMessage = result.Message;
+					TempData[MessageType.MessageError.ToString()] = result.Message;
 					resultInner = await _userService.GetByIdAsync(saveModel.Id);
 					return View(resultInner.Data);
 				}
 
+				TempData[MessageType.MessageSuccess.ToString()] = result.Message;
 				return View("Index");
 			}
 			catch
@@ -139,6 +158,6 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			}
 		}
 
-	
+
 	}
 }
