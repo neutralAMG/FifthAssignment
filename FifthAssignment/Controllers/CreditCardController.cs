@@ -54,7 +54,7 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			}
 			catch
 			{
-				return View();
+				throw;
 			}
 		}
 
@@ -76,9 +76,9 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			}
 			catch
 			{
-
+				throw;
 			}
-			return View();
+			
 		}
 
 		// POST: CreditCardController/Delete/5
@@ -102,7 +102,7 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			}
 			catch
 			{
-				return View();
+				throw;
 			}
 		}
 	}

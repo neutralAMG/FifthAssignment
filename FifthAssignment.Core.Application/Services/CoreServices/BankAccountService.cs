@@ -107,5 +107,12 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
             entity.UserId = _currentUser.Id;
             return await base.SaveAsync(entity);
         }
-    }
+
+		public override async Task<Result<bool>> DeleteAsync(Guid id)
+        {
+            Result<bool> result = new();
+            return await base.DeleteAsync(id);
+        }
+
+	}
 }

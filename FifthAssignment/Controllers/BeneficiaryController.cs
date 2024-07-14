@@ -83,7 +83,7 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			}
 			catch
 			{
-				return View();
+				throw;
 			}
 		}
 

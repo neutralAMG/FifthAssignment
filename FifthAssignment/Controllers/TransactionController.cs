@@ -1,36 +1,60 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FifthAssignment.Core.Application.Core;
+using FifthAssignment.Core.Application.Enums;
+using FifthAssignment.Core.Application.Interfaces.Contracts.Transactions;
+using FifthAssignment.Presentation.WebApp.Enums;
+using FifthAssignment.Presentation.WebApp.Utils.GenerateAppSelectList;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FifthAssignment.Presentation.WebApp.Controllers
 {
 	public class TransactionController : Controller
 	{
-		// GET: TransactionController
-		public ActionResult Index()
+		private readonly ITransactionStrategy _transactionStrategy;
+		private readonly IGenerateAppSelectList _generateAppSelectList;
+
+		public TransactionController(ITransactionStrategy transactionStrategy, IGenerateAppSelectList generateAppSelectList)
+        {
+			_transactionStrategy = transactionStrategy;
+			_generateAppSelectList = generateAppSelectList;
+		}
+        // GET: TransactionController
+        public ActionResult Index()
 		{
+			if (TempData[MessageType.MessageError.ToString()] != null)
+			{
+				ViewBag[MessageType.MessageError.ToString()] = TempData[MessageType.MessageError.ToString()];
+			}
+			if (TempData[MessageType.MessageSuccess.ToString()] != null)
+			{
+				ViewBag[MessageType.MessageSuccess.ToString()] = TempData[MessageType.MessageSuccess.ToString()];
+			}
+
 			return View();
 		}
 
-		// GET: TransactionController/Details/5
-		public ActionResult Details(int id)
-		{
-			return View();
-		}
-
+	
 		// GET: TransactionController/Create
-		public ActionResult Create()
+		public async Task<IActionResult> MakeTransaction(TransactionTypes type)
 		{
-			return View();
+			return View(new SaveBasePaymentDto { TransactionType = (int)type });
 		}
 
 		// POST: TransactionController/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Create(IFormCollection collection)
+		public async Task<IActionResult> MakeTransaction(SaveBasePaymentDto saveModel)
 		{
+			Result<SaveBasePaymentDto> result = new();
 			try
 			{
-				return RedirectToAction(nameof(Index));
+				result = await _transactionStrategy.MakeTransaction(saveModel);
+				if (!result.IsSuccess)
+				{
+					TempData[MessageType.MessageError.ToString()] = result.Message;
+					return View(result);
+
+				}
+				return RedirectToAction("Index");
 			}
 			catch
 			{
@@ -39,7 +63,7 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		}
 
 		// GET: TransactionController/Edit/5
-		public ActionResult Edit(int id)
+		public async Task<IActionResult> ConfirmTransaction()
 		{
 			return View();
 		}
@@ -47,11 +71,20 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		// POST: TransactionController/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Edit(int id, IFormCollection collection)
+		public async Task<IActionResult> ValidateTransaction(SaveBasePaymentDto saveModel)
 		{
+			Result<bool> result = new();
 			try
 			{
-				return RedirectToAction(nameof(Index));
+				result = await _transactionStrategy.MakeValidation(saveModel);
+
+				if (!result.IsSuccess)
+				{
+					TempData[MessageType.MessageError.ToString()] = result.Message;
+					return View("Index");
+
+				}
+				return RedirectToAction("ConfirmTransaction", saveModel);
 			}
 			catch
 			{
@@ -59,25 +92,5 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			}
 		}
 
-		// GET: TransactionController/Delete/5
-		public ActionResult Delete(int id)
-		{
-			return View();
-		}
-
-		// POST: TransactionController/Delete/5
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult Delete(int id, IFormCollection collection)
-		{
-			try
-			{
-				return RedirectToAction(nameof(Index));
-			}
-			catch
-			{
-				return View();
-			}
-		}
 	}
 }
