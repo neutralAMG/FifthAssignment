@@ -1,0 +1,72 @@
+﻿@model FifthAssignment.Core.Application.Models.HomeInformationGetModel
+
+<div class="container">
+    <h1 class="mt-4 mb-4">Home Information</h1>
+
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Transaction Metrics</h2>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">All Time: @Model.AmountOfTransactionAllTime</li>
+                    <li class="list-group-item">Today: @Model.AmountOfTransactionToday</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-12 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Payment Metrics</h2>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">All Time: @Model.AmountOfPaymentsAllTime</li>
+                    <li class="list-group-item">Today: @Model.AmountOfPaymentsToday</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-12 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Other Metrics</h2>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Products: @Model.AmountOfProducts</li>
+                    <li class="list-group-item">Active Users: @Model.AmountOfActiveUsers</li>
+                    <li class="list-group-item">Inactive Users: @Model.AmountOfUnActive</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .container {
+        margin-top: 50px;
+    }
+
+    .card {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+    }
+
+    .card-header {
+        background-color: #007bff;
+        color: #fff;
+        border-bottom: none;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .card-title {
+        margin-bottom: 0;
+    }
+
+    .list-group-item {
+        border: none;
+    }
+</style>

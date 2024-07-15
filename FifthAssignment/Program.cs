@@ -19,6 +19,9 @@ builder.Services.AddInfraestructurePercistanceLayer(builder.Configuration);
 builder.Services.AddCoreAplicationLayer(builder.Configuration);
 builder.Services.AddPresentationLayer();
 
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
+builder.Services.AddSession();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -33,12 +36,13 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
 	name: "default",
-	pattern: "{controller=Home}/{action=Index}/{id?}");
+	pattern: "{controller=Account}/{action=LogIn}/{id?}");
 
 
 using (var scope = app.Services.CreateScope())

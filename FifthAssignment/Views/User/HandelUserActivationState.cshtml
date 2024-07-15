@@ -1,0 +1,22 @@
+﻿
+
+@{
+    string operation = "";
+    @if (ViewBag.Operation is not null)
+    {
+        operation = ViewBag.Operation == FifthAssignment.Presentation.WebApp.Enums.UserActivationStateOperation.Activate ? "Activate" : "Deactivate";
+    }
+
+}
+<div>
+    <form method="post" asp-controller="User" asp-action="HandelUserActivationState">
+        @if (ViewBag.id is not null)
+        {
+            <input type="hidden" name="id" value="@ViewBag.id" />
+            <input type="hidden" name="operation" value="@ViewBag.Operation" />
+        }
+        <h1>Are you sure you want to @operation this user?</h1>
+        <button type="submit" class="btn btn-primary float-end p-2">@operation</button>
+        <a asp-controller="User" asp-action="index" class="btn btn-outline-warning float-end p-2 mx-2">Go Back</a>
+    </form>
+</div>

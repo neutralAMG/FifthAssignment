@@ -18,11 +18,13 @@ namespace FifthAssignment.Infraestructure.Identity.Seeds
 			{
 				FirstName = "Test",
 				LastName = "Test",
-				Email = "Email@gmail.com",
-				UserName = "TestAdminUser",
-				EmailConfirmed = false,
-				LockoutEnabled = false,
-			};
+				Email = "EmailClient@gmail.com",
+				UserName = "TestClienntUser",
+				Cedula = "2345678531",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true
+
+            };
 			if (!userManager.Users.Any(u => u.Id == user.Id))
 			{
 				ApplicationUser userWithSameUserUserName = await userManager.FindByNameAsync(user.UserName);

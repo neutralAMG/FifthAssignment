@@ -2,10 +2,12 @@
 using FifthAssignment.Core.Application.Interfaces.Contracts;
 using FifthAssignment.Core.Application.Interfaces.Contracts.Core;
 using FifthAssignment.Core.Application.Interfaces.Contracts.Transactions;
+using FifthAssignment.Core.Application.Interfaces.Contracts.User;
 using FifthAssignment.Core.Application.Services;
 using FifthAssignment.Core.Application.Services.CoreServices;
 using FifthAssignment.Core.Application.Services.PaymentServices;
 using FifthAssignment.Core.Application.Services.TransactionsServices;
+using FifthAssignment.Core.Application.Services.UserServices;
 using FifthAssignment.Core.Application.Utils.GenerateProductCodeString;
 using FifthAssignment.Core.Domain.Settings;
 using Microsoft.Extensions.Configuration;
@@ -33,8 +35,11 @@ namespace FifthAssignment.Core.Application
 			services.AddTransient<ILoanPaymentService, LoanPaymentService>();
 			services.AddTransient<ITransferService, TransferService>();
 			services.AddTransient<IMoneyAdvanceService, MoneyAdvanceService>();
-			services.AddTransient<ITransactioStrategy, TransactionService>();
+			services.AddTransient<ITransactionStrategy, TransactionService>();
+			services.AddTransient<ITransactionService, RegistTransactionService>();
 			services.AddTransient<IHomeService, HomeService>();
+			services.AddTransient<IUserService, UserService>();
+			services.AddTransient<IAccountService, AccountService>();
 			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 		}
 	}

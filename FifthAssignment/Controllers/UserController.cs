@@ -32,11 +32,11 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 
 				if (TempData[MessageType.MessageError.ToString()] != null)
 				{
-					ViewBag[MessageType.MessageError.ToString()] = TempData[MessageType.MessageError.ToString()];
+					ViewBag.MessageError = TempData[MessageType.MessageError.ToString()];
 				}
 				if (TempData[MessageType.MessageSuccess.ToString()] != null)
 				{
-					ViewBag[MessageType.MessageSuccess.ToString()] = TempData[MessageType.MessageSuccess.ToString()];
+					ViewBag.MessageSuccess = TempData[MessageType.MessageSuccess.ToString()];
 				}
 
 
@@ -50,8 +50,10 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		}
 
 		// GET: UserController/Create
-		public async Task<IActionResult> HandelUserActivationState(UserActivationStateOperation operation)
+		public async Task<IActionResult> HandelUserActivationState(string name, string id, UserActivationStateOperation operation)
 		{
+			ViewBag.Operation = operation;
+			ViewBag.id = id;
 			return View();
 		}
 		[HttpPost]
@@ -73,12 +75,12 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 				if (!result.IsSuccess)
 				{
 					TempData[MessageType.MessageError.ToString()] = result.Message;
-					return View("Index");
+					return RedirectToAction("Index", "User");
 				}
 
 				TempData[MessageType.MessageSuccess.ToString()] = result.Message;
 
-				return View("Index");
+				return RedirectToAction("Index", "User");
 			}
 			catch
 			{

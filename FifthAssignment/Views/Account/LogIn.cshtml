@@ -1,0 +1,36 @@
+﻿﻿﻿﻿
+@if (ViewBag.MessageError is not null)
+{
+    <p class="alert-danger d-block text-center">@ViewBag.MessageError</p>
+}
+@if (ViewBag.MessageSuccess is not null)
+{
+    <p class=" alert alert-success d-block text-center" role="alert">@ViewBag.MessageSuccess</p>
+}
+<div class="row">
+    <div class="col-8 offset-2">
+
+        <div class=" bg-dark text-light">
+            <h1 class="text-center"> Login </h1>
+        </div>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <section>
+                    <form method="post" asp-controller="Account" asp-action="LogIn">
+                        <div class="mb-3">
+                            <label for="Email" class="form-label"> Email</label>
+                            <input type="text" name="Email" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="Password" class="form-label"> Password</label>
+                            <input type="password" name="Password" class="form-control" />
+                        </div>
+                        <div class="p-2">
+                            <button type="submit" class="btn btn-primary  float-end  p-2 "> Login </button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

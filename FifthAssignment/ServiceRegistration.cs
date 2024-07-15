@@ -1,4 +1,5 @@
-﻿using FifthAssignment.Presentation.WebApp.Utils.GenerateAppSelectList;
+﻿using FifthAssignment.Presentation.WebApp.Middelware;
+using FifthAssignment.Presentation.WebApp.Utils.GenerateAppSelectList;
 
 namespace FifthAssignment.Presentation.WebApp
 {
@@ -13,6 +14,8 @@ namespace FifthAssignment.Presentation.WebApp
 				options.LoginPath = "/Account/LogIn";
 				options.AccessDeniedPath = "";
 			});
+
+			services.AddSingleton<IUserVerification, UserVerification>();
 		}
 	}
 }

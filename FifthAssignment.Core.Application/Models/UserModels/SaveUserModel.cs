@@ -14,5 +14,6 @@ namespace FifthAssignment.Core.Application.Models.UserModels
 		public List<string> Roles { get; set; }
 		public double Amount { get; set; }
 		public bool IsAdMin { get; set; }
+
 	}
 }

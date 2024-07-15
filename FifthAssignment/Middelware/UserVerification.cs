@@ -1,9 +1,10 @@
 ﻿using FifthAssignment.Core.Application.Dtos.AccountDtos;
 using FifthAssignment.Core.Application.Utils.SessionHandler;
+using Microsoft.AspNetCore.Http;
 
 namespace FifthAssignment.Presentation.WebApp.Middelware
 {
-	public  class UserVerification
+	public  class UserVerification : IUserVerification
 	{
 		private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -14,7 +15,13 @@ namespace FifthAssignment.Presentation.WebApp.Middelware
 		}
         public  bool UserRoleIsAdminVerification()
 		{
-			return _httpContextAccessor.HttpContext.Session.Get<UserGetResponceDto>("user").Roles.Contains("Admin");
+			if (_httpContextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user") is null) return false;
+			return _httpContextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user").Roles.Contains("Admim");
+		}
+
+		public bool IsLogIn()
+		{
+			return _httpContextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user") is null ? false : true;
 		}
 	}
 }

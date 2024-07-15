@@ -13,10 +13,11 @@ namespace FifthAssignment.Infraestructure.Identity.Seeds
 			
 				FirstName = "Test",	
 				LastName = "Test",
-				Email = "Email@gmail.com",
+				Email = "EmailAdmin@gmail.com",
 				UserName = "TestAdminUser",
-				EmailConfirmed = false,
-				LockoutEnabled = false,	
+				Cedula = "2345678531",
+				EmailConfirmed = true,
+				PhoneNumberConfirmed = true
 			};
 			if (userManager.Users.All(u => u.Id != DefaultUser.Id))
 			{
@@ -25,7 +26,7 @@ namespace FifthAssignment.Infraestructure.Identity.Seeds
 				if (user is null) {
 					await userManager.CreateAsync(DefaultUser, "123Test!");
 
-					userManager.AddToRoleAsync(DefaultUser, Enums.Roles.Admim.ToString());
+				 await	userManager.AddToRoleAsync(DefaultUser, Enums.Roles.Admim.ToString());
 				}
 			}
 

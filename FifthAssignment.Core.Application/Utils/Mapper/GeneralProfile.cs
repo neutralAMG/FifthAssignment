@@ -21,7 +21,8 @@ namespace FifthAssignment.Core.Application.Utils.Mapper
 		public GeneralProfile()
 		{
 			#region User mapping configuration setup
-			CreateMap<UserGetResponceDto, UserModel>();
+			CreateMap<UserGetResponceDto, UserModel>()
+                  .ForMember(dest => dest.Roles, opt => opt.MapFrom( opt => opt.Roles));
 
 			CreateMap<RegisterRequest, SaveUserModel>()
 				  .ForMember(dest => dest.ComfirmPassword, opt => opt.Ignore())

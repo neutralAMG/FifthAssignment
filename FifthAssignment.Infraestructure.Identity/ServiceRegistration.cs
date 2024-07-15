@@ -2,6 +2,7 @@
 using FifthAssignment.Infraestructure.Identity.Context;
 using FifthAssignment.Infraestructure.Identity.Entities;
 using FifthAssignment.Infraestructure.Identity.Services;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -22,10 +23,9 @@ namespace FifthAssignment.Infraestructure.Identity
 				.AddEntityFrameworkStores<IdentityAppContext>().AddDefaultTokenProviders();
 
 			services.AddAuthentication();
+            //	services.Configure<ConnectionStrings>(config.GetSection("ConnectionStrings"));
 
-		//	services.Configure<ConnectionStrings>(config.GetSection("ConnectionStrings"));
-
-			services.AddTransient<IAccountRepository, AccountService>();
+            services.AddTransient<IAccountRepository, AccountService>();
 			services.AddTransient<IUserRepository, UserRepository>();
 		
 

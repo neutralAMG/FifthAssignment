@@ -1,6 +1,9 @@
-﻿using FifthAssignment.Core.Application.Interfaces.Contracts;
+﻿using FifthAssignment.Core.Application.Core;
+using FifthAssignment.Core.Application.Interfaces.Contracts;
+using FifthAssignment.Core.Application.Models;
 using FifthAssignment.Models;
 using FifthAssignment.Presentation.WebApp.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -28,6 +31,25 @@ namespace FifthAssignment.Controllers
 				ViewBag[MessageType.MessageSuccess.ToString()] = TempData[MessageType.MessageSuccess.ToString()];
 			}
 			return View();
+		}
+		[Authorize(Roles ="Admim")]
+		public async Task<IActionResult> AdminHomePage()
+		{
+			Result<HomeInformationGetModel> result = new();
+			try
+			{
+				result = await _homeService.GetHomeInformationAsync();
+				return View(result.Data);
+			}
+			catch
+			{
+				return View();
+			}
+		}
+		[Authorize(Roles = "Client")]
+		public async Task<IActionResult> ClientHomePage()
+		{
+				return View();	
 		}
 
 		public IActionResult Privacy()

@@ -1,8 +1,21 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@inject FifthAssignment.Presentation.WebApp.Middelware.IUserVerification userVerification;
+@using FifthAssignment.Core.Application.Dtos.AccountDtos
+@using FifthAssignment.Core.Application.Utils.SessionHandler
+@inject IHttpContextAccessor httpContext;
+@{
+	var User = httpContext.HttpContext.Session.Get<AuthenticationResponse>("user");
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
+@inject FifthAssignment.Presentation.WebApp.Middelware.IUserVerification userVerification
+
+@using FifthAssignment.Core.Application.Dtos.AccountDtos
+@using FifthAssignment.Core.Application.Utils.SessionHandler
+@inject IHttpContextAccessor httpContext
+
+@{
+	var user = httpContext.HttpContext.Session.Get<AuthenticationResponse>("user");
+}
+@await Html.PartialAsync("AdminHomePage")
+
+@await Html.PartialAsync("ClientHomePage")

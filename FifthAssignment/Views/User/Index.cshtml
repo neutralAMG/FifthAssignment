@@ -1,0 +1,65 @@
+﻿@inject FifthAssignment.Presentation.WebApp.Middelware.IUserVerification userVerification
+
+@using FifthAssignment.Core.Application.Dtos.AccountDtos
+@using FifthAssignment.Core.Application.Utils.SessionHandler
+@inject IHttpContextAccessor httpContext
+
+@{
+	var userCurrent = httpContext.HttpContext.Session.Get<AuthenticationResponse>("user");
+}
+
+@model List<FifthAssignment.Core.Application.Models.UserModel.UserModel>
+
+<div class="container mt-4">
+	<a asp-controller="Account" asp-action="RegisterUser" class="btn btn-primary mb-4">Register a new user</a>
+	<div class="table-responsive">
+		<table class="table table-bordered table-striped">
+			<thead class="thead-dark">
+				<tr>
+					<th class="text-center">Name</th>
+					<th class="text-center">Role</th>
+					<th class="text-center">State</th>
+					<th class="text-center">Edit</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var user in Model)
+				{
+					<tr>
+						<td class="text-center">@user.UserName</td>
+						<td class="text-center">@user.Roles.First()</td>
+						<td class="text-center">
+							@if (user.Id == userCurrent.Id)
+							{
+								<p class="">Activate</p>
+							}
+							@if (user.Id != userCurrent.Id)
+							{
+								@if (@user.IsActive)
+								{
+									<a href="@Url.Action("HandelUserActivationState", "User", new {operation = FifthAssignment.Presentation.WebApp.Enums.UserActivationStateOperation.Deactivate, id = user.Id})" class=" btn btn-outline-danger ">Deactivate</a>
+								}
+								@if (!@user.IsActive)
+								{
+									<a href="@Url.Action("HandelUserActivationState", "User", new {operation = FifthAssignment.Presentation.WebApp.Enums.UserActivationStateOperation.Activate, id = user.Id})" class=" btn btn-outline-success">Activate</a>
+								}
+							}
+
+						</td>
+						<td class="text-center">
+							@if (user.Id == userCurrent.Id)
+							{
+
+							}
+							@if (user.Id != userCurrent.Id)
+							{
+								<a href="@Url.Action("EditUser", "User", new { id = user.Id })" class="btn btn-info btn-sm">Edit</a>
+
+							}
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>

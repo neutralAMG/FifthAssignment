@@ -13,21 +13,9 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		private readonly IAccountService _accountService;
 
 		public AccountController(IAccountService accountService)
-        {
+		{
 			_accountService = accountService;
 		}
-        // GET: AccountController
-        public ActionResult Index()
-		{
-			return View();
-		}
-
-		// GET: AccountController/Details/5
-		public ActionResult Details(int id)
-		{
-			return View();
-		}
-
 		// GET: AccountController/Create
 		public async Task<IActionResult> LogIn()
 		{
@@ -39,7 +27,7 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		// POST: AccountController/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> LogIn(string Email, string Password )
+		public async Task<IActionResult> LogIn(string Email, string Password)
 		{
 
 			Result<AuthenticationResponse> result = new();
@@ -48,11 +36,24 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 				result = await _accountService.LoginAsync(Email, Password);
 				if (!result.IsSuccess)
 				{
-					ViewBag[MessageType.MessageError.ToString()] = result.Message;
+					ViewBag.MessageError = result.Message;
 					return View();
 				}
 
-				return RedirectToAction("Index", "Home");
+				if (TempData[MessageType.MessageError.ToString()] != null)
+				{
+					ViewBag.MessageError = TempData[MessageType.MessageError.ToString()];
+				}
+				if (TempData[MessageType.MessageSuccess.ToString()] != null)
+				{
+					ViewBag.MessageSuccess = TempData[MessageType.MessageSuccess.ToString()];
+				}
+
+				if (result.Data.Roles.Contains("Admim"))
+				{
+					return RedirectToAction("AdminHomePage", "Home");
+				}
+				return RedirectToAction("ClientHomePage", "Home");
 			}
 			catch
 			{
@@ -81,12 +82,12 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> RegisterUser(SaveUserModel saveModel)
 		{
-			Result<RegisterResponse> result = new();	
+			Result<RegisterResponse> result = new();
 			try
 			{
 				result = await _accountService.RegisterAsync(saveModel);
 
-				if (!result.IsSuccess) 
+				if (!result.IsSuccess)
 				{
 					ViewBag[MessageType.MessageError.ToString()] = result.Message;
 					return View();
@@ -100,7 +101,7 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 				return View();
 			}
 		}
-	
+
 
 	}
 }

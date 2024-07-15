@@ -12,5 +12,6 @@ namespace FifthAssignment.Core.Application.Dtos.AccountDtos
 		public bool IsActive { get; set; }
 		public bool HasError { get; set; }
 		public string ErrorMessage { get; set; }
-	}
+        public bool IsAdmin  => Roles.Contains("Admim") ? true : false;
+    }
 }

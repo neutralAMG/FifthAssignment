@@ -19,19 +19,17 @@ namespace FifthAssignment.Core.Application.Services.UserServices
 		private readonly IUserRepository _userRepository;
 		private readonly IMapper _mapper;
 		private readonly IHttpContextAccessor _httpContext;
-		private readonly IBeneficiaryService _beneficiaryService;
 
-		private UserModel _currentUser { get; set; }
+		private AuthenticationResponse _currentUser { get; set; }
 		private SessionKeys _sessionKeys { get; set; }
 
-		public UserService(IUserRepository userRepository, IMapper mapper, IHttpContextAccessor httpContext, IOptions<SessionKeys> sessionKeys, IBeneficiaryService beneficiaryService)
+		public UserService(IUserRepository userRepository, IMapper mapper, IHttpContextAccessor httpContext, IOptions<SessionKeys> sessionKeys)
 		{
 			_userRepository = userRepository;
 			_mapper = mapper;
 			_httpContext = httpContext;
-			_beneficiaryService = beneficiaryService;
 			_sessionKeys = sessionKeys.Value;
-			_currentUser = _httpContext.HttpContext.Session.Get<UserModel>(_sessionKeys.user);
+			_currentUser = _httpContext.HttpContext.Session.Get<AuthenticationResponse>(_sessionKeys.user);
 		}
 
 		public async Task<Result<List<UserModel>>> GetAllAsync()
@@ -61,6 +59,7 @@ namespace FifthAssignment.Core.Application.Services.UserServices
 				UserGetResponceDto userGeted = await _userRepository.GetByIdAsync(id);
 
 				result.Data = _mapper.Map<UserModel>(userGeted);
+
 				result.Message = "User get was succesfull";
 				return result;
 			}

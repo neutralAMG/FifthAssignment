@@ -13,10 +13,9 @@ namespace FifthAssignment.Infraestructure.Identity.Services
 		private readonly RoleManager<IdentityRole> _roleManager;
 		private readonly SignInManager<ApplicationUser> _signInManager;
 
-		public AccountService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, SignInManager<ApplicationUser> signInManager)
+		public AccountService(UserManager<ApplicationUser> userManager,  SignInManager<ApplicationUser> signInManager)
 		{
 			_userManager = userManager;
-			_roleManager = roleManager;
 			_signInManager = signInManager;
 		}
 
@@ -68,12 +67,20 @@ namespace FifthAssignment.Infraestructure.Identity.Services
 			if (UserWithSameUsername != null)
 			{
 				response.HasError = true;
-				response.ErrorMessage = $"There's already a user with the email: {request.Email}";
+				response.ErrorMessage = $"There's already a user with the name: {request.UserName}";
 				return response;
 
 			}
+            ApplicationUser UserWithSameEmail = await _userManager.FindByEmailAsync(request.Email);
 
-			ApplicationUser userToBeSave = new()
+            if (UserWithSameUsername != null)
+            {
+                response.HasError = true;
+                response.ErrorMessage = $"There's already a user with the email: {request.Email}";
+                return response;
+            }
+
+            ApplicationUser userToBeSave = new()
 			{
 				FirstName = request.FirstName,
 				LastName = request.LastName,

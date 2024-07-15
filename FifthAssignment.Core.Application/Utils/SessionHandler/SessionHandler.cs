@@ -17,9 +17,9 @@ namespace FifthAssignment.Core.Application.Utils.SessionHandler
 
 			string ValueFromSessionSaved = session.GetString(key);
 
-			TValue value = JsonConvert.DeserializeObject<TValue>(ValueFromSessionSaved);
+		return ValueFromSessionSaved == null? default : JsonConvert.DeserializeObject<TValue>(ValueFromSessionSaved);
 
-			return value == null ? default : value;
+			
 		} 
 	} 
 }
