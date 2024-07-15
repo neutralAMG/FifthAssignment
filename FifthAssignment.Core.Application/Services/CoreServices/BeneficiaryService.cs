@@ -6,6 +6,7 @@ using FifthAssignment.Core.Application.Interfaces.Contracts.User;
 using FifthAssignment.Core.Application.Interfaces.Repositories;
 using FifthAssignment.Core.Application.Models.BankAccountsModels;
 using FifthAssignment.Core.Application.Models.BeneficiaryModels;
+using FifthAssignment.Core.Application.Models.LoanModels;
 using FifthAssignment.Core.Application.Models.UserModel;
 using FifthAssignment.Core.Application.Utils.GenerateProductCodeString;
 using FifthAssignment.Core.Application.Utils.SessionHandler;
@@ -36,7 +37,7 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
             _currentUser = _httpContext.HttpContext.Session.Get<AuthenticationResponse>(_sessionkeys.user);
         }
 
-        public async Task<Result<List<BeneficiaryModel>>> GetAllWithUserIdAsync()
+        public async Task<Result<List<BeneficiaryModel>>> GetAllWithCurrentUserIdAsync()
         {
             Result<List<BeneficiaryModel>> result = new();
             try
@@ -58,7 +59,26 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
                 return result;
             }
         }
-        public virtual async Task<Result<SaveBeneficiaryModel>> SaveAsync(SaveBeneficiaryModel entity)
+		public async Task<Result<List<BeneficiaryModel>>> GetAllWithAnSpecificUserIdAsync(string Id)
+		{
+			Result<List<BeneficiaryModel>> result = new();
+			try
+			{
+				List<Beneficiary> bankAccounts = await _beneficiaryRepository.GetAllAsync(u => u.UserId == Id);
+
+				result.Data = _mapper.Map<List<BeneficiaryModel>>(bankAccounts);
+
+				result.Message = "Loans get was a success";
+				return result;
+			}
+			catch
+			{
+				result.IsSuccess = false;
+				result.Message = "Critical error getting the Loans";
+				return result;
+			}
+		}
+		public virtual async Task<Result<SaveBeneficiaryModel>> SaveAsync(SaveBeneficiaryModel entity)
         {
             entity.UserId = _currentUser.Id;
             return await base.SaveAsync(entity);

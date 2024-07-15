@@ -1,4 +1,5 @@
-﻿using FifthAssignment.Infraestructure.Identity.Entities;
+﻿using FifthAssignment.Core.Application.Interfaces.Contracts.Core;
+using FifthAssignment.Infraestructure.Identity.Entities;
 using FifthAssignment.Infraestructure.Identity.Enums;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -12,7 +13,7 @@ namespace FifthAssignment.Infraestructure.Identity.Seeds
 	public static class DefaultClientUser
 	{
 
-		public static async Task AddDefaultClientUser(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+		public static async Task AddDefaultClientUser(IBankAccountService bankAccountService,UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
 		{
 			ApplicationUser user = new()
 			{
@@ -33,6 +34,7 @@ namespace FifthAssignment.Infraestructure.Identity.Seeds
 				{
 					await userManager.CreateAsync(user, "123Test!");
 					await userManager.AddToRoleAsync(user, Roles.client.ToString());
+					await bankAccountService.SaveAsync(new Core.Application.Models.BankAccountsModels.SaveBankAccountModel { Amount = 500.72m, IdentifierNumber = "111111111", IsMain = true, UserId = user.Id });
 				}
 			}
 

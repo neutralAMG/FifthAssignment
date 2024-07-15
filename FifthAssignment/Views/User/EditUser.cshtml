@@ -1,0 +1,69 @@
+﻿@model FifthAssignment.Core.Application.Models.UserModel.UserModel;
+﻿@if (ViewBag.MessageError is not null)
+{
+    <p class="alert-danger d-block text-center">@ViewBag.MessageError</p>
+}
+@{
+    var IsAdmin = ViewBag.IsAdmin;
+}
+<div class="row">
+    <div class="col-8 offset-2">
+        <div class=" bg-dark text-light">
+            <h1 class="text-center"> Register </h1>
+        </div>
+        <div class="card shadow-sm">
+            <div class="card-body">
+
+                <section>
+                    <form method="post" enctype="multipart/form-data" asp-controller="Account" asp-action="RegisterUser">
+                        <input  type="hidden" name="id" value="@Model.Id"/>
+                        <input type="hidden" name="OldPassword" value="@Model.Password" />
+                        <input type="hidden" name="OldConfirmPassword" value="@Model.Password" />
+                        <div class="mb-3">
+                            <label for="FirstName" class="form-label"> Name</label>
+                            <input type="text" name="FirstName" value="@Model.FirstName" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="LastName" class="form-label"> Last Name</label>
+                            <input type="text" name="LastName" value="@Model.LastName" class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Cedula" class="form-label">Cedula </label>
+                            <input type="text" name="Cedula" value="@Model.Cedula" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="Email" class="form-label"> EMail Address</label>
+                            <input type="email" name="Email" value="@Model.Email" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="UserName" class="form-label"> User Name</label>
+                            <input type="text" name="UserName" value="@Model.UserName" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="Password" class="form-label"> Password </label>
+                            <input type="password" name="Password" required class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ComfirmPassword" class="form-label"> Password Confirm </label>
+                            <input type="password" name="ComfirmPassword" required class="form-control" />
+                        </div>
+
+                        @if (!IsAdmin)
+                        {
+                            <div class="mb-3">
+                                <label for="Amount" class="form-label">Amount</label>
+                                <input type="text" name="Amount" required class="form-control" />
+                            </div>
+                        }
+                        <div class="p-2">
+                            <button asp-controller="Account" asp-action="RegisterUser" class="btn btn-primary  float-end  p-2 "> Save </button>
+                            <a asp-controller="User" asp-action="Index" class="btn btn-outline-warning  float-end  p-2  mx-2"> Go Back </a>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

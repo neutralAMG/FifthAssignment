@@ -41,7 +41,7 @@ namespace FifthAssignment.Core.Application.Services.PaymentServices
 
                 Result<LoanModel> Receiver = await _loanService.GetByIdAsync(paymentDto.Receiver);
 
-                double operationResidue = Receiver.Data.Amount - paymentDto.Amount;
+                decimal operationResidue = Receiver.Data.Amount - paymentDto.Amount;
 
                 if (operationResidue >= 0)
                 {

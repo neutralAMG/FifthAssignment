@@ -150,15 +150,22 @@ namespace FifthAssignment.Infraestructure.Identity.Services
             userToBeUpdate.Cedula = user.Cedula;
             userToBeUpdate.Email = user.Email;
             userToBeUpdate.UserName = user.UserName;
-            userToBeUpdate.PasswordHash = user.PasswordHash;
+          //  userToBeUpdate.PasswordHash = user.PasswordHash;
 
             if (_userManager.FindByNameAsync(user.UserName) != null) return false;
 
 
             IdentityResult result = await _userManager.UpdateAsync(userToBeUpdate);
 
-            if (!result.Succeeded) return false;
+            if (!result.Succeeded) {
 
+                return false;
+            }
+            var passwordChange = await _userManager.ChangePasswordAsync(userToBeUpdate, userToBeUpdate.PasswordHash, user.PasswordHash);
+             if (!passwordChange.Succeeded)
+              {
+               return false;
+              }
             return false;
         }
 

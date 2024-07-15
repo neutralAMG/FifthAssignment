@@ -8,5 +8,6 @@ namespace FifthAssignment.Presentation.WebApp.Utils.GenerateAppSelectList
 		List<SelectListItem> GenerateUserBeneficiarySelectList();
 		List<SelectListItem> GenerateUserCreditCardSelectList();
 		List<SelectListItem> GenerateUserLoanSelectList();
+		List<SelectListItem> GenerateUserRolesSelectList();
 	}
 }

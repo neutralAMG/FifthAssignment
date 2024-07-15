@@ -10,7 +10,8 @@ namespace FifthAssignment.Core.Domain.Entities.PaymentContext
 		{
 			Id = Guid.NewGuid();
 		}
-		public double Amount { get; set; }
+		[Column(TypeName = "Decimal(18,2)")]
+		public decimal Amount { get; set; }
 		public Guid UserBankAccountId { get; set; }
         public Guid UserLoanId { get; set; }
 		[ForeignKey("UserBankAccountId")]

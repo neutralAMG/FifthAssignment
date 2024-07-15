@@ -22,11 +22,11 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		{
 			if (TempData[MessageType.MessageError.ToString()] != null)
 			{
-				ViewBag[MessageType.MessageError.ToString()] = TempData[MessageType.MessageError.ToString()];
+				ViewBag.MessageError = TempData[MessageType.MessageError.ToString()].ToString();
 			}
 			if (TempData[MessageType.MessageSuccess.ToString()] != null)
 			{
-				ViewBag[MessageType.MessageSuccess.ToString()] = TempData[MessageType.MessageSuccess.ToString()];
+				ViewBag.MessageSuccess = TempData[MessageType.MessageSuccess.ToString()].ToString();
 			}
 
 			return View();

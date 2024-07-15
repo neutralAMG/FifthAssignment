@@ -25,26 +25,12 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                     IsMain = table.Column<bool>(type: "bit", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Amount = table.Column<double>(type: "float", nullable: false),
+                    Amount = table.Column<decimal>(type: "Decimal(18,2)", nullable: false),
                     IdentifierNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BankAccounts", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Beneficiaries",
-                schema: "Transaction",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserBeneficiaryId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Beneficiaries", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -57,7 +43,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                     CreditLimit = table.Column<int>(type: "int", nullable: false),
                     ExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Amount = table.Column<double>(type: "float", nullable: false),
+                    Amount = table.Column<decimal>(type: "Decimal(18,2)", nullable: false),
                     IdentifierNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -73,7 +59,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Amount = table.Column<double>(type: "float", nullable: false),
+                    Amount = table.Column<decimal>(type: "Decimal(18,2)", nullable: false),
                     IdentifierNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -96,12 +82,32 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Beneficiaries",
+                schema: "Transaction",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserBeneficiaryBankAccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Beneficiaries", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Beneficiaries_BankAccounts_UserBeneficiaryBankAccountId",
+                        column: x => x.UserBeneficiaryBankAccountId,
+                        principalSchema: "Transaction",
+                        principalTable: "BankAccounts",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BeneficiaryPayments",
                 schema: "Transaction",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Amount = table.Column<double>(type: "float", nullable: false),
+                    Amount = table.Column<decimal>(type: "Decimal(18,2)", nullable: false),
                     UserBankAccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BeneficiaryBankAccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -129,7 +135,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Amount = table.Column<double>(type: "float", nullable: false),
+                    Amount = table.Column<decimal>(type: "Decimal(18,2)", nullable: false),
                     BankAccountFromId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BankAccountToId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -157,7 +163,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Amount = table.Column<double>(type: "float", nullable: false),
+                    Amount = table.Column<decimal>(type: "Decimal(18,2)", nullable: false),
                     UserAccountFromId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserAccountToId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -185,7 +191,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Amount = table.Column<double>(type: "float", nullable: false),
+                    Amount = table.Column<decimal>(type: "Decimal(18,2)", nullable: false),
                     UserBankAccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserCreditCardId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -213,7 +219,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Amount = table.Column<double>(type: "float", nullable: false),
+                    Amount = table.Column<decimal>(type: "Decimal(18,2)", nullable: false),
                     UserCreditCardId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserBankAccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -241,7 +247,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Amount = table.Column<double>(type: "float", nullable: false),
+                    Amount = table.Column<decimal>(type: "Decimal(18,2)", nullable: false),
                     UserBankAccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserLoanId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -291,7 +297,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Amount = table.Column<double>(type: "float", nullable: false),
+                    Amount = table.Column<decimal>(type: "Decimal(18,2)", nullable: false),
                     TransactionTypeId = table.Column<int>(type: "int", nullable: false),
                     TransactionDetailId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -336,10 +342,10 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                 .Annotation("SqlServer:Clustered", false);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Beneficiaries_UserBeneficiaryId",
+                name: "IX_Beneficiaries_UserBeneficiaryBankAccountId",
                 schema: "Transaction",
                 table: "Beneficiaries",
-                column: "UserBeneficiaryId")
+                column: "UserBeneficiaryBankAccountId")
                 .Annotation("SqlServer:Clustered", false);
 
             migrationBuilder.CreateIndex(

@@ -46,7 +46,7 @@ namespace FifthAssignment.Controllers
 				return View();
 			}
 		}
-		[Authorize(Roles = "Client")]
+		[Authorize(Roles = "client")]
 		public async Task<IActionResult> ClientHomePage()
 		{
 				return View();	

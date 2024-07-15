@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FifthAssignment.Infraestructure.Persistence.Migrations
 {
     [DbContext(typeof(fifthAssignmentContext))]
-    [Migration("20240712174929_createdb")]
+    [Migration("20240715195351_createdb")]
     partial class createdb
     {
         /// <inheritdoc />
@@ -32,8 +32,8 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("Decimal(18,2)");
 
                     b.Property<Guid>("BeneficiaryBankAccountId")
                         .HasColumnType("uniqueidentifier");
@@ -63,8 +63,8 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("Decimal(18,2)");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -94,8 +94,8 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("Decimal(18,2)");
 
                     b.Property<Guid>("BankAccountFromId")
                         .HasColumnType("uniqueidentifier");
@@ -125,8 +125,8 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("Decimal(18,2)");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -156,8 +156,8 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("Decimal(18,2)");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -187,8 +187,8 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("Decimal(18,2)");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -297,8 +297,8 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("Decimal(18,2)");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -328,8 +328,8 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("Decimal(18,2)");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -360,9 +360,8 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("UserBeneficiaryId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserBeneficiaryBankAccountId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -370,9 +369,9 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserBeneficiaryId");
+                    b.HasIndex("UserBeneficiaryBankAccountId");
 
-                    SqlServerIndexBuilderExtensions.IsClustered(b.HasIndex("UserBeneficiaryId"), false);
+                    SqlServerIndexBuilderExtensions.IsClustered(b.HasIndex("UserBeneficiaryBankAccountId"), false);
 
                     b.HasIndex("UserId");
 
@@ -387,8 +386,8 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("Decimal(18,2)");
 
                     b.Property<string>("CVV")
                         .IsRequired()
@@ -423,8 +422,8 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("Decimal(18,2)");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -448,7 +447,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
 
             modelBuilder.Entity("FifthAssignment.Core.Domain.Entities.PaymentContext.BeneficiaryPayment", b =>
                 {
-                    b.HasOne("FifthAssignment.Core.Domain.Entities.PersistanceContext.BankAccount", "BeneficiaryAccount")
+                    b.HasOne("FifthAssignment.Core.Domain.Entities.PersistanceContext.BankAccount", "UserBeneficiaryBankAccount")
                         .WithMany("BeneficiaryPayments")
                         .HasForeignKey("BeneficiaryBankAccountId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -460,9 +459,9 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("BeneficiaryAccount");
-
                     b.Navigation("UserBankAccount");
+
+                    b.Navigation("UserBeneficiaryBankAccount");
                 });
 
             modelBuilder.Entity("FifthAssignment.Core.Domain.Entities.PaymentContext.CreditcardPayment", b =>
@@ -588,6 +587,17 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                     b.Navigation("UserAccountTo");
                 });
 
+            modelBuilder.Entity("FifthAssignment.Core.Domain.Entities.PersistanceContext.Beneficiary", b =>
+                {
+                    b.HasOne("FifthAssignment.Core.Domain.Entities.PersistanceContext.BankAccount", "UserBeneficiaryBankAccount")
+                        .WithMany("Beneficiarys")
+                        .HasForeignKey("UserBeneficiaryBankAccountId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.Navigation("UserBeneficiaryBankAccount");
+                });
+
             modelBuilder.Entity("FifthAssignment.Core.Domain.Entities.PaymentContext.TransactionDetail", b =>
                 {
                     b.Navigation("Transaction")
@@ -604,6 +614,8 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
             modelBuilder.Entity("FifthAssignment.Core.Domain.Entities.PersistanceContext.BankAccount", b =>
                 {
                     b.Navigation("BeneficiaryPayments");
+
+                    b.Navigation("Beneficiarys");
 
                     b.Navigation("CreditCardPayments");
 

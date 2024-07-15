@@ -6,6 +6,7 @@ using FifthAssignment.Core.Application.Dtos.AccountDtos;
 using FifthAssignment.Core.Application.Interfaces.Contracts.Core;
 using FifthAssignment.Core.Application.Interfaces.Repositories;
 using FifthAssignment.Core.Application.Models.BankAccountsModels;
+using FifthAssignment.Core.Application.Models.CreditCardModels;
 using FifthAssignment.Core.Application.Models.LoanModels;
 using FifthAssignment.Core.Application.Models.UserModel;
 using FifthAssignment.Core.Application.Utils.GenerateProductCodeString;
@@ -36,7 +37,7 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
             _currentUser = _httpContext.HttpContext.Session.Get<AuthenticationResponse>(_sessionkeys.user);
         }
 
-        public async Task<Result<List<LoanModel>>> GetAllWithUserIdAsync()
+        public async Task<Result<List<LoanModel>>> GetAllWithCurrentUserIdAsync()
         {
             Result<List<LoanModel>> result = new();
             try
@@ -55,32 +56,63 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
                 return result;
             }
         }
+		public async Task<Result<List<LoanModel>>> GetAllWithAnSpecificUserIdAsync(string Id)
+		{
+			Result<List<LoanModel>> result = new();
+			try
+			{
+				List<Loan> bankAccounts = await _loanRepository.GetAllAsync(u => u.UserId == Id);
 
-        //public async Task<Result<LoanModel>> GetByNumberIdentifierAsync(string id)
-        //{
-        //    Result<LoanModel> result = new();
-        //    try
-        //    {
-        //        Loan LoanGetted = await _loanRepository.GetByNumberIdentifierAsync(b => b.IdentifierNumber == id);
+				result.Data = _mapper.Map<List<LoanModel>>(bankAccounts);
 
-        //        result.Data = _mapper.Map<LoanModel>(LoanGetted);
+				result.Message = "Loans get was a success";
+				return result;
+			}
+			catch
+			{
+				result.IsSuccess = false;
+				result.Message = "Critical error getting the Loans";
+				return result;
+			}
+		}
+		//public async Task<Result<LoanModel>> GetByNumberIdentifierAsync(string id)
+		//{
+		//    Result<LoanModel> result = new();
+		//    try
+		//    {
+		//        Loan LoanGetted = await _loanRepository.GetByNumberIdentifierAsync(b => b.IdentifierNumber == id);
 
-        //        result.Message = "Loan get was a success";
-        //        return result;
-        //    }
-        //    catch
-        //    {
-        //        result.IsSuccess = false;
-        //        result.Message = "Criitical error getting the Loan";
-        //        return result;
-        //    }
-        //}
+		//        result.Data = _mapper.Map<LoanModel>(LoanGetted);
 
-        public virtual async Task<Result<SaveLoanModel>> SaveAsync(SaveLoanModel entity)
+		//        result.Message = "Loan get was a success";
+		//        return result;
+		//    }
+		//    catch
+		//    {
+		//        result.IsSuccess = false;
+		//        result.Message = "Criitical error getting the Loan";
+		//        return result;
+		//    }
+		//}
+
+		public virtual async Task<Result<SaveLoanModel>> SaveAsync(SaveLoanModel entity)
         {
             entity.IdentifierNumber = _codeGenerator.GenerateNumberIdentifierCode();
-            entity.UserId = _currentUser.Id;
             return await base.SaveAsync(entity);
         }
-    }
+
+		public override async Task<Result<bool>> DeleteAsync(Guid id)
+		{
+			Result<bool> result = new();
+			var loan = await _loanRepository.GetByIdAsync(id);
+			if (loan.Amount > 0)
+			{
+				result.IsSuccess = false;
+				result.Message = "Cant delete a loan that is still owned";
+				result.Data = false;
+				return result;
+			}
+			return await base.DeleteAsync(id);
+		}
+	}
 }

@@ -12,7 +12,7 @@ namespace FifthAssignment.Core.Application.Models.UserModels
 		public string ComfirmPassword { get; set; }
 		public string Email { get; set; }
 		public List<string> Roles { get; set; }
-		public double Amount { get; set; }
+		public decimal Amount { get; set; }
 		public bool IsAdMin { get; set; }
 
 	}

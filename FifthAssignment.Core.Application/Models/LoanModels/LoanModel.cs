@@ -2,12 +2,12 @@
 
 namespace FifthAssignment.Core.Application.Models.LoanModels
 {
-	public class LoanModel
+	public class LoanModel : BaseProductModel
 	{
-		public Guid Id { get; set; }
-		public double Amount { get; set; }
-		public string IdentifierNumber { get; set; }
-		public string UserId { get; set; }
-		public DateTime DateCreated { get; set; }
+        public LoanModel()
+        {
+            Type = "Loan";
+        }
+        public DateTime DateCreated { get; set; }
 	}
 }

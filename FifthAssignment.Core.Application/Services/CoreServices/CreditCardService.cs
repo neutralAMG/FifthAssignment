@@ -34,7 +34,7 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
             _currentUser = _httpContext.HttpContext.Session.Get<AuthenticationResponse>(_sessionkeys.user);
         }
 
-        public async Task<Result<List<CreditCardModel>>> GetAllWithUserIdAsync()
+        public async Task<Result<List<CreditCardModel>>> GetAllWithCurrentUserIdAsync()
         {
             Result<List<CreditCardModel>> result = new();
             try
@@ -43,42 +43,60 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
 
                 result.Data = _mapper.Map<List<CreditCardModel>>(bankAccounts);
 
-                result.Message = "BankAccounts get was a success";
+                result.Message = "Credit cards get was a success";
                 return result;
             }
             catch
             {
                 result.IsSuccess = false;
-                result.Message = "Critical error getting the BankAccounts";
+                result.Message = "Critical error getting the Credit cards";
                 return result;
             }
         }
+		public async Task<Result<List<CreditCardModel>>> GetAllWithAnSpecificUserIdAsync(string Id)
+		{
+			Result<List<CreditCardModel>> result = new();
+			try
+			{
+				List<CreditCard> bankAccounts = await _creditCardRepository.GetAllAsync(u => u.UserId == Id);
 
-        //public async Task<Result<CreditCardModel>> GetByNumberIdentifierAsync(string id)
-        //{
-        //    Result<CreditCardModel> result = new();
-        //    try
-        //    {
-        //        CreditCard creditCardGetted = await _creditCardRepository.GetByNumberIdentifierAsync(b => b.IdentifierNumber == id);
+				result.Data = _mapper.Map<List<CreditCardModel>>(bankAccounts);
 
-        //        result.Data = _mapper.Map<CreditCardModel>(creditCardGetted);
+				result.Message = "Credit cards get was a success";
+				return result;
+			}
+			catch
+			{
+				result.IsSuccess = false;
+				result.Message = "Critical error getting the Credit cards";
+				return result;
+			}
+		}
 
-        //        result.Message = "CreditCard get was a success";
-        //        return result;
-        //    }
-        //    catch
-        //    {
-        //        result.IsSuccess = false;
-        //        result.Message = "Criitical error getting the CreditCard";
-        //        return result;
-        //    }
-        //}
+		//public async Task<Result<CreditCardModel>> GetByNumberIdentifierAsync(string id)
+		//{
+		//    Result<CreditCardModel> result = new();
+		//    try
+		//    {
+		//        CreditCard creditCardGetted = await _creditCardRepository.GetByNumberIdentifierAsync(b => b.IdentifierNumber == id);
 
-        public override async Task<Result<SaveCreditCardModel>> SaveAsync(SaveCreditCardModel entity)
+		//        result.Data = _mapper.Map<CreditCardModel>(creditCardGetted);
+
+		//        result.Message = "CreditCard get was a success";
+		//        return result;
+		//    }
+		//    catch
+		//    {
+		//        result.IsSuccess = false;
+		//        result.Message = "Criitical error getting the CreditCard";
+		//        return result;
+		//    }
+		//}
+
+		public override async Task<Result<SaveCreditCardModel>> SaveAsync(SaveCreditCardModel entity)
         {
             entity.IdentifierNumber = _codeGenerator.GenerateNumberIdentifierCode();
             entity.CVV = _codeGenerator.GenerateCreditCardCVVCode();
-            entity.UserId = _currentUser.Id;
             return await base.SaveAsync(entity);
         }
     }

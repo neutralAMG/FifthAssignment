@@ -4,6 +4,7 @@ using FifthAssignment.Core.Application.Interfaces.Contracts.User;
 using FifthAssignment.Core.Application.Models.UserModel;
 using FifthAssignment.Core.Application.Models.UserModels;
 using FifthAssignment.Presentation.WebApp.Enums;
+using FifthAssignment.Presentation.WebApp.Utils.GenerateAppSelectList;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FifthAssignment.Presentation.WebApp.Controllers
@@ -11,11 +12,13 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 	public class UserController : Controller
 	{
 		private readonly IUserService _userService;
+        private readonly IGenerateAppSelectList _generateAppSelectList;
 
-		public UserController(IUserService userService)
+        public UserController(IUserService userService, IGenerateAppSelectList generateAppSelectList)
 		{
 			_userService = userService;
-		}
+            _generateAppSelectList = generateAppSelectList;
+        }
 		// GET: UserController
 		public async Task<IActionResult> Index()
 		{
@@ -32,11 +35,11 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 
 				if (TempData[MessageType.MessageError.ToString()] != null)
 				{
-					ViewBag.MessageError = TempData[MessageType.MessageError.ToString()];
+					ViewBag.MessageError = TempData[MessageType.MessageError.ToString()].ToString();
 				}
 				if (TempData[MessageType.MessageSuccess.ToString()] != null)
 				{
-					ViewBag.MessageSuccess = TempData[MessageType.MessageSuccess.ToString()];
+					ViewBag.MessageSuccess = TempData[MessageType.MessageSuccess.ToString()].ToString();
 				}
 
 
@@ -109,20 +112,20 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		}
 
 		// GET: UserController/Edit/5
-		public async Task<IActionResult> EditUser(string id)
+		public async Task<IActionResult> EditUser(string id, bool IsAdmin)
 		{
 			Result<UserModel> result = new();
 			try
 			{
 				result = await _userService.GetByIdAsync(id);
 
-				if (result.IsSuccess)
+				if (!result.IsSuccess)
 				{
 			
 					TempData[MessageType.MessageError.ToString()] = result.Message;
-					return View("Index");
+					return RedirectToAction("Index", "User");
 				}
-
+				ViewBag.IsAdmin = IsAdmin;
 				return View(result.Data);
 			}
 			catch
@@ -134,15 +137,28 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		// POST: UserController/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> EditUser(SaveUserModel saveModel)
+		public async Task<IActionResult> EditUser(string OldPassword, string OldConfirmPassword, SaveUserModel saveModel)
 		{
 			Result<SaveUserModel> result = new();
 
 			try
 			{
-				Result<UserModel> resultInner = new();
+				Result<UserModel> resultInner = await _userService.GetByIdAsync(saveModel.Id);
 
-				result = await _userService.UpdateAsync(saveModel);
+           ;
+
+                if (saveModel.Password is null && saveModel.ComfirmPassword is null)
+                {
+                    saveModel.Password = OldPassword;
+                    saveModel.ComfirmPassword = OldConfirmPassword;
+                }
+                else if (saveModel.Password != saveModel.ComfirmPassword)
+                {
+                    ViewBag.MessageError = "the passwords must match";
+                    return View(resultInner.Data);
+                }
+
+                result = await _userService.UpdateAsync(saveModel);
 
 				if (result.IsSuccess)
 				{

@@ -1,0 +1,39 @@
+﻿@model FifthAssignment.Core.Application.Models.LoanModels.SaveLoanModel
+
+@if (ViewBag.MessageError is not null)
+{
+	<p class="alert-danger d-block text-center">@ViewBag.MessageError</p>
+}
+@{
+	var IsAdmin = ViewBag.IsAdmin;
+
+	var filteredRoles = ViewBag.Role;
+}
+
+<div class="row">
+	<div class="col-8 offset-2">
+		<div class="bg-dark text-light">
+			<h1 class="text-center">Register</h1>
+		</div>
+		<div class="card shadow-sm">
+			<div class="card-body">
+				<section>
+					<form method="post" enctype="multipart/form-data" asp-controller="Products" asp-action="CreateLoan">
+						<input type="hidden" name="UserId" value="@Model.UserId" />
+
+						<div class="mb-3">
+							<label for="Amount" class="form-label">Amount</label>
+							<input type="text" name="Amount" required class="form-control" />
+						</div>
+
+
+						<div class="p-2">
+							<button type="submit" class="btn btn-primary float-end p-2">Save</button>
+							<a href="@Url.Action("Index", "Products", new { id = Model.UserId })" class="btn btn-outline-info btn-sm">Go Back</a>
+						</div>
+					</form>
+				</section>
+			</div>
+		</div>
+	</div>
+</div>

@@ -43,7 +43,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Context
 			{
 				b.HasKey(b => b.Id);
 				//	b.HasOne<ApplicationUser>().WithMany( u => u.Beneficiaries).HasForeignKey(b => b.UserBeneficiaryId);
-				b.HasOne(t => t.UserBeneficiaryBankAccount).WithMany(b => b.Beneficiarys).HasForeignKey(t => t.UserBeneficiaryBankAccountId);
+				b.HasOne(t => t.UserBeneficiaryBankAccount).WithMany(b => b.Beneficiarys).HasForeignKey(t => t.UserBeneficiaryBankAccountId).OnDelete(DeleteBehavior.ClientCascade); ;
 
 				b.HasIndex(b => b.UserBeneficiaryBankAccountId).IsClustered(false);
 				b.HasIndex(b => b.UserId).IsClustered(false);
@@ -55,7 +55,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Context
 
 				//l.HasOne().WithMany(u => u.Loans).IsRequired().HasForeignKey( l => l.UserId);
 
-				l.HasMany(l => l.LoansPayments).WithOne(l => l.UserLoan).HasForeignKey(l => l.UserLoanId);
+				l.HasMany(l => l.LoansPayments).WithOne(l => l.UserLoan).HasForeignKey(l => l.UserLoanId).OnDelete(DeleteBehavior.SetNull); ;
 				l.HasIndex(l => l.UserId).IsClustered(false);
 
 				l.Property(l => l.IdentifierNumber).IsRequired();
@@ -68,8 +68,8 @@ namespace FifthAssignment.Infraestructure.Persistence.Context
 				c.HasKey(c => c.Id);
 
 				//c.HasOne().WithMany(u => u.CreditCards).IsRequired().HasForeignKey(l => l.UserId);
-				c.HasMany(c => c.CreditCardPayments).WithOne(c => c.UserCreditCard).HasForeignKey(c => c.UserCreditCardId);
-				c.HasMany(c => c.MoneyAdvances).WithOne(c => c.UserCreditCard).HasForeignKey(c => c.UserCreditCardId);
+				c.HasMany(c => c.CreditCardPayments).WithOne(c => c.UserCreditCard).HasForeignKey(c => c.UserCreditCardId).OnDelete(DeleteBehavior.SetNull); ;
+				c.HasMany(c => c.MoneyAdvances).WithOne(c => c.UserCreditCard).HasForeignKey(c => c.UserCreditCardId).OnDelete(DeleteBehavior.SetNull); ;
 
 				c.HasIndex(c => c.UserId).IsClustered(false);
 
@@ -85,18 +85,18 @@ namespace FifthAssignment.Infraestructure.Persistence.Context
 
 			//	b.HasOne().WithMany(u => u.BankAccoounts).IsRequired().HasForeignKey(l => l.UserId);
 			
-				b.HasMany(b => b.CreditCardPayments).WithOne(b => b.UserBankAccount).HasForeignKey(b => b.UserBankAccountId);
+				b.HasMany(b => b.CreditCardPayments).WithOne(b => b.UserBankAccount).HasForeignKey(b => b.UserBankAccountId).OnDelete(DeleteBehavior.SetNull); ;
 
-				b.HasMany(b => b.ExpressPaymentsFrom).WithOne(b => b.BankAccountFrom).HasForeignKey(b => b.BankAccountFromId);
-				b.HasMany(b => b.ExpressPaymentsTo).WithOne(b => b.BankAccountTo).HasForeignKey(b => b.BankAccountToId);
-				b.HasMany(b => b.LoansPayments).WithOne(b => b.UserBankAccount).HasForeignKey(b => b.UserBankAccountId);
-				b.HasMany(b => b.MoneyAdvances).WithOne(b => b.UserBankAccount).HasForeignKey(b => b.UserBankAccountId);
-				b.HasMany(b => b.TransfersFrom).WithOne(b => b.UserAccountFrom).HasForeignKey(b => b.UserAccountFromId);
-				b.HasMany(b => b.TransfersTo).WithOne(b => b.UserAccountTo).HasForeignKey(b => b.UserAccountToId);
+				b.HasMany(b => b.ExpressPaymentsFrom).WithOne(b => b.BankAccountFrom).HasForeignKey(b => b.BankAccountFromId).OnDelete(DeleteBehavior.SetNull); ;
+				b.HasMany(b => b.ExpressPaymentsTo).WithOne(b => b.BankAccountTo).HasForeignKey(b => b.BankAccountToId).OnDelete(DeleteBehavior.SetNull); ;
+				b.HasMany(b => b.LoansPayments).WithOne(b => b.UserBankAccount).HasForeignKey(b => b.UserBankAccountId).OnDelete(DeleteBehavior.SetNull); ;
+				b.HasMany(b => b.MoneyAdvances).WithOne(b => b.UserBankAccount).HasForeignKey(b => b.UserBankAccountId).OnDelete(DeleteBehavior.SetNull); ;
+				b.HasMany(b => b.TransfersFrom).WithOne(b => b.UserAccountFrom).HasForeignKey(b => b.UserAccountFromId).OnDelete(DeleteBehavior.SetNull); ;
+				b.HasMany(b => b.TransfersTo).WithOne(b => b.UserAccountTo).HasForeignKey(b => b.UserAccountToId).OnDelete(DeleteBehavior.SetNull); ;
 
-				b.HasMany(b => b.UserPayments).WithOne(b => b.UserBankAccount).HasForeignKey(b => b.UserBankAccountId).OnDelete(DeleteBehavior.ClientCascade);
-				b.HasMany(b => b.BeneficiaryPayments).WithOne(b => b.UserBeneficiaryBankAccount).HasForeignKey(b => b.BeneficiaryBankAccountId).OnDelete(DeleteBehavior.ClientCascade);
-	
+				b.HasMany(b => b.UserPayments).WithOne(b => b.UserBankAccount).HasForeignKey(b => b.UserBankAccountId).OnDelete(DeleteBehavior.SetNull); ;
+				b.HasMany(b => b.BeneficiaryPayments).WithOne(b => b.UserBeneficiaryBankAccount).HasForeignKey(b => b.BeneficiaryBankAccountId);
+
 				b.HasIndex(b => b.UserId).IsClustered(false);
 
 				b.Property(b => b.Amount).IsRequired();

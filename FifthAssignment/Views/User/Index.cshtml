@@ -10,8 +10,10 @@
 
 @model List<FifthAssignment.Core.Application.Models.UserModel.UserModel>
 
-<div class="container mt-4">
-	<a asp-controller="Account" asp-action="RegisterUser" class="btn btn-primary mb-4">Register a new user</a>
+<div class="container mt-4">							
+	<a href="@Url.Action("RegisterUser", "Account", new { IsAdmin = true })" class="btn btn-primary mb-4">Register a new admin user</a>
+	<a href="@Url.Action("RegisterUser", "Account", new { IsAdmin = false})" class="btn btn-primary mb-4">Register a new client user</a>
+
 	<div class="table-responsive">
 		<table class="table table-bordered table-striped">
 			<thead class="thead-dark">
@@ -20,6 +22,7 @@
 					<th class="text-center">Role</th>
 					<th class="text-center">State</th>
 					<th class="text-center">Edit</th>
+					<th class="text-center">Products</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -53,8 +56,18 @@
 							}
 							@if (user.Id != userCurrent.Id)
 							{
-								<a href="@Url.Action("EditUser", "User", new { id = user.Id })" class="btn btn-info btn-sm">Edit</a>
+								<a href="@Url.Action("EditUser", "User", new { id = user.Id, IsAdmin = @user.Roles.Contains("Admim") })" class="btn btn-info btn-sm">Edit</a>
 
+							}
+						</td>
+						<td class="text-center">
+							@if (@user.Roles.Contains("Admim"))
+							{
+								
+							}
+							@if (!@user.Roles.Contains("Admim"))
+							{
+								<a href="@Url.Action("Index", "Products", new { id = user.Id })" class="btn btn-outline-info btn-sm">Products</a>
 							}
 						</td>
 					</tr>

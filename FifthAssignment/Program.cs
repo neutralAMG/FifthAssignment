@@ -6,6 +6,7 @@ using FifthAssignment.Infraestructure.Persistence;
 using FifthAssignment.Core.Application;
 using FifthAssignment.Presentation.WebApp;
 using Microsoft.AspNetCore.Identity;
+using FifthAssignment.Core.Application.Interfaces.Contracts.Core;
 
 
 
@@ -52,10 +53,11 @@ using (var scope = app.Services.CreateScope())
 	{
 		var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
 		var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+		var bankAccountService = services.GetRequiredService<IBankAccountService>();
 
 		await DefaultsRoles.AddDefaultRolesAsync(userManager, roleManager);
 		await DefaultAdminUser.AddAdminUser(userManager, roleManager);
-		await DefaultClientUser.AddDefaultClientUser(userManager, roleManager);
+		await DefaultClientUser.AddDefaultClientUser(bankAccountService, userManager, roleManager);
 
 	}
 	catch

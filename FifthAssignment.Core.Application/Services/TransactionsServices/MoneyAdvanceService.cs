@@ -42,7 +42,7 @@ namespace FifthAssignment.Core.Application.Services.TransactionsServices
 				Result<BankAccountModel> Receiver = await _bankAccountService.GetByIdAsync(paymentDto.Emisor);
 
 				Receiver.Data.Amount += paymentDto.Amount;
-				Emisor.Data.Amount += paymentDto.Amount + 6.25;
+				Emisor.Data.Amount += paymentDto.Amount + 6.25m;
 			
 				await _bankAccountService.UpdateAsync(_mapper.Map<SaveBankAccountModel>(Emisor));
 

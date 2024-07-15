@@ -88,7 +88,7 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		}
 
 		// GET: BeneficiaryController/Delete/5
-		public async Task<IActionResult> Delete(Guid id)
+		public async Task<IActionResult> DeleteBeneficiary(Guid id)
 		{
 			Result<BeneficiaryModel> result = new();
 			try
@@ -111,7 +111,7 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		// POST: BeneficiaryController/Delete/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Delete(Guid id, IFormCollection collection)
+		public async Task<IActionResult> DeleteBeneficiary(Guid id, IFormCollection collection)
 		{
 			Result<bool> result = new();
 			try

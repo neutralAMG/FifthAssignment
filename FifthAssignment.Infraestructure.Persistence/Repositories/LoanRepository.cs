@@ -19,6 +19,14 @@ namespace FifthAssignment.Infraestructure.Persistence.Repositories
 	
 		public override async Task<Loan> SaveAsync(Loan entity)
 		{
+			var mainUserAcount = await _context.BankAccounts.Where(b => b.IsMain && b.UserId == entity.UserId).FirstOrDefaultAsync();
+
+			mainUserAcount.Amount += entity.Amount;
+			_context.BankAccounts.Attach(mainUserAcount);
+			_context.BankAccounts.Entry(mainUserAcount).State = EntityState.Modified;
+
+			await _context.SaveChangesAsync();
+
 			return await base.SaveAsync(entity);
 		}
 
@@ -33,6 +41,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Repositories
 		}
 		public override async Task<bool> DeleteAsync(Loan entity)
 		{
+			if (entity.Amount > 0) return false;
 			return await base.DeleteAsync(entity);
 		}
 	}

@@ -95,7 +95,7 @@ namespace FifthAssignment.Infraestructure.Identity.Services
 			if (!result.Succeeded)
 			{
 				response.HasError = true;
-				response.ErrorMessage = "Error Saving the user";
+				response.ErrorMessage = result.Errors.FirstOrDefault().Description;
 				return response;
 			}
 

@@ -41,7 +41,7 @@ namespace FifthAssignment.Core.Application.Services.PaymentServices
                 Result<CreditCardModel> Receiver = await _creditCardService.GetByIdAsync(paymentDto.Receiver);
 
 
-                double operationResidue = Receiver.Data.Amount - paymentDto.Amount;
+                decimal operationResidue = Receiver.Data.Amount - paymentDto.Amount;
 
                 if (operationResidue >= 0)
                 {

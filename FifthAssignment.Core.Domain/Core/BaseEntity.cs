@@ -1,5 +1,7 @@
 ﻿
 
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace FifthAssignment.Core.Domain.Core
 {
 	public class BaseEntity<TId>
@@ -10,7 +12,8 @@ namespace FifthAssignment.Core.Domain.Core
 	public class BaseBankProductTypeEntity<TId> : BaseEntity<TId>
 	{
 		public string UserId { get; set; }
-		public double Amount { get; set; }
+		[Column(TypeName = "Decimal(18,2)")]
+		public decimal Amount { get; set; }
 		public string IdentifierNumber { get; set; }
 
 		public DateTime DateCreated = DateTime.Now;

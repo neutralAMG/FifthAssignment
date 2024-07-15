@@ -1,0 +1,63 @@
+﻿@model List<FifthAssignment.Core.Application.Models.BaseProductModel>
+
+@if (ViewBag.MessageError is not null)
+{
+	<p class="alert-danger d-block text-center">@ViewBag.MessageError</p>
+}
+<div class="container mt-4">
+	<a href="@Url.Action("CreateBankAccount", "Products", new { userId = Model.FirstOrDefault().UserId == null ? default : Model.FirstOrDefault().UserId })" class="btn btn-primary mb-4">New Bank account</a>
+	<a href="@Url.Action("CreateCreditCard", "Products", new { userId = Model.FirstOrDefault().UserId == null ? default : Model.FirstOrDefault().UserId  })" class="btn btn-primary mb-4">New Credit card</a>
+	<a href="@Url.Action("CreateLoan", "Products", new { userId = Model.FirstOrDefault().UserId == null ? default : Model.FirstOrDefault().UserId })" class="btn btn-primary mb-4">New Loan</a>
+
+	<div class="table-responsive">
+		<table class="table table-bordered table-striped">
+			<thead class="thead-dark">
+				<tr>
+					<th class="text-center">Identifier Number</th>
+					<th class="text-center">Type</th>
+					<th class="text-center">Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var user in Model)
+				{
+					<tr>
+						<td class="text-center">@user.IdentifierNumber</td>
+						<td class="text-center">@user.Type</td>
+						<td class="text-center">
+							@if (user.Type.Equals("Bank account"))
+							{
+								<a href="@Url.Action("DeleteProduct", "Products", new { id = user.Id , operation = FifthAssignment.Presentation.WebApp.Enums.ProductToDelete.BankAccount, userId = user.UserId })" class=" btn btn-outline-danger ">Delete</a>
+							}
+
+							@if (user.Type.Equals("Credit card"))
+							{
+								@if (user.Amount == 0)
+								{
+									<a href="@Url.Action("DeleteProduct", "Products", new { id = user.Id, operation = FifthAssignment.Presentation.WebApp.Enums.ProductToDelete.CreditCard, userId = user.UserId })" class=" btn btn-outline-danger ">Delete</a>
+								}
+								@if (user.Amount != 0)
+								{
+									<p>Owns Money</p>
+								}
+							}
+							@if (user.Type.Equals("Loan"))
+							{
+								@if (user.Amount == 0)
+								{
+									<a href="@Url.Action("DeleteProduct", "Products", new {id = user.Id, operation = FifthAssignment.Presentation.WebApp.Enums.ProductToDelete.Loan , userId = user.UserId})" class=" btn btn-outline-danger ">Delete</a>
+								}
+								@if (user.Amount != 0)
+								{
+									<p>Owns Money</p>
+								}
+							}
+
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+		<a asp-controller="User" asp-action="Index" class="btn btn-outline-warning float-end p-2 mx-2">Go Back</a>
+	</div>
+</div>
