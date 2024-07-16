@@ -3,7 +3,9 @@ using FifthAssignment.Core.Application.Dtos.AccountDtos;
 using FifthAssignment.Core.Application.Interfaces.Contracts.User;
 using FifthAssignment.Core.Application.Models.UserModels;
 using FifthAssignment.Presentation.WebApp.Enums;
+using FifthAssignment.Presentation.WebApp.Middelware;
 using FifthAssignment.Presentation.WebApp.Utils.GenerateAppSelectList;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +21,8 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			_accountService = accountService;
             _generateAppSelectList = generateAppSelectList;
         }
+		
+        [ServiceFilter(typeof(LoginAuthcs))]
 		// GET: AccountController/Create
 		public async Task<IActionResult> LogIn()
 		{
@@ -26,7 +30,7 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		}
 
 
-
+		[ServiceFilter(typeof(LoginAuthcs))]
 		// POST: AccountController/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
@@ -63,15 +67,16 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 				return View();
 			}
 		}
-		// GET: AccountController/Create
-		public async Task<IActionResult> LogOut()
+
+        // GET: AccountController/Create
+        public async Task<IActionResult> LogOut()
 		{
 			await _accountService.LogoutAsync();
 
 			return View("LogIn");
 		}
 
-
+		[Authorize(Roles ="Admim")]
 		// GET: AccountController/Create
 		public async Task<IActionResult> RegisterUser(bool IsAdmin)
 		{
@@ -84,6 +89,8 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 
 
 		// POST: AccountController/Create
+
+		[Authorize(Roles = "Admim")]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> RegisterUser(SaveUserModel saveModel)

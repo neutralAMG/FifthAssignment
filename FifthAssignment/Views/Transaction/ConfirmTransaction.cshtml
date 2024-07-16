@@ -1,0 +1,16 @@
+﻿@model FifthAssignment.Core.Application.Core.SaveBasePaymentDto;
+<div>
+    <form method="post" asp-controller="Transaction" asp-action="MakeTransaction">
+
+
+        <input type="hidden" name="id" value="@Model.Id" />
+        <input type="hidden" name="Amount" value="@Model.Amount" />
+        <input type="hidden" name="Emisor" value="@Model.Emisor" />
+        <input type="hidden" name="Receiver" value="@Model.Receiver" />
+        <input type="hidden" name="TransactionType" value="@Model.TransactionType" />
+
+        <h1>Are you sure you want to make this Transaction?</h1>
+        <button type="submit" class="btn btn-primary float-end p-2">Make Transaction</button>
+        <a asp-controller="Transaction" asp-action="index" class="btn btn-outline-warning float-end p-2 mx-2">Go Back</a>
+    </form>
+</div>

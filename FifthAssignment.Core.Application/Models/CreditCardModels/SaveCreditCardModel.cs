@@ -3,8 +3,8 @@ namespace FifthAssignment.Core.Application.Models.CreditCardModels
 {
 	public class SaveCreditCardModel
 	{
-
-		public decimal Amount { get; set; }
+        public Guid Id { get; set; }
+        public decimal Amount { get; set; }
 		public string IdentifierNumber { get; set; }
 		public int CreditLimit { get; set; }
 		public string UserId { get; set; }

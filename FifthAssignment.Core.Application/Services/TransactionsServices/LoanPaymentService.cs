@@ -45,16 +45,18 @@ namespace FifthAssignment.Core.Application.Services.PaymentServices
 
                 if (operationResidue >= 0)
                 {
-                    Emisor.Data.Amount += operationResidue;
+					Emisor.Data.Amount -= paymentDto.Amount;
+					Emisor.Data.Amount += operationResidue;
                     Receiver.Data.Amount = operationResidue;
                 }
                 else if (operationResidue < 0)
                 {
+                    Emisor.Data.Amount -= paymentDto.Amount;
                     Emisor.Data.Amount += Math.Abs(operationResidue);
                     Receiver.Data.Amount = 0;
                 }
-                await _bankAccountService.UpdateAsync(_mapper.Map<SaveBankAccountModel>(Emisor));
-                await _loanService.UpdateAsync(_mapper.Map<SaveLoanModel>(Receiver));
+                await _bankAccountService.UpdateAsync(_mapper.Map<SaveBankAccountModel>(Emisor.Data));
+                await _loanService.UpdateAsync(_mapper.Map<SaveLoanModel>(Receiver.Data));
 
                 result = await base.SaveAsync(paymentDto);
 
@@ -104,7 +106,6 @@ namespace FifthAssignment.Core.Application.Services.PaymentServices
 				{
 					Amount = entity.Amount,
 					specificPaymentTosaveId = result.Data.Id,
-					TransactionTypeId = (int)TransactionTypes.LoanPayment
 				});
 			}
 			return result;

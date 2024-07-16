@@ -78,7 +78,7 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
 				return result;
 			}
 		}
-		public virtual async Task<Result<SaveBeneficiaryModel>> SaveAsync(SaveBeneficiaryModel entity)
+		public override async Task<Result<SaveBeneficiaryModel>> SaveAsync(SaveBeneficiaryModel entity)
         {
             entity.UserId = _currentUser.Id;
             return await base.SaveAsync(entity);

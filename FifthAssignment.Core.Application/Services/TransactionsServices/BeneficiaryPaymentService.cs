@@ -41,9 +41,9 @@ namespace FifthAssignment.Core.Application.Services.PaymentServices
 
                 Receiver.Data.Amount += paymentDto.Amount;
 
-                await _bankAccountService.UpdateAsync(_mapper.Map<SaveBankAccountModel>(Emisor));
+                await _bankAccountService.UpdateAsync(_mapper.Map<SaveBankAccountModel>(Emisor.Data));
 
-                await _bankAccountService.UpdateAsync(_mapper.Map<SaveBankAccountModel>(Receiver));
+                await _bankAccountService.UpdateAsync(_mapper.Map<SaveBankAccountModel>(Receiver.Data));
 
 
 
@@ -100,8 +100,7 @@ namespace FifthAssignment.Core.Application.Services.PaymentServices
             await _transactionService.SaveAsync(new SavePaymentDto
             {
                 Amount = entity.Amount,
-                specificPaymentTosaveId = result.Data.Id,
-                TransactionTypeId = (int)TransactionTypes.BeneficiaryPayment   
+                specificPaymentTosaveId = result.Data.Id, 
             });
             }
             return result;

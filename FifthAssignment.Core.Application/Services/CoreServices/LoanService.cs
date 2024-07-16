@@ -95,7 +95,7 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
 		//    }
 		//}
 
-		public virtual async Task<Result<SaveLoanModel>> SaveAsync(SaveLoanModel entity)
+		public override async Task<Result<SaveLoanModel>> SaveAsync(SaveLoanModel entity)
         {
             entity.IdentifierNumber = _codeGenerator.GenerateNumberIdentifierCode();
             return await base.SaveAsync(entity);

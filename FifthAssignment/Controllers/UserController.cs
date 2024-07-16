@@ -5,22 +5,26 @@ using FifthAssignment.Core.Application.Models.UserModel;
 using FifthAssignment.Core.Application.Models.UserModels;
 using FifthAssignment.Presentation.WebApp.Enums;
 using FifthAssignment.Presentation.WebApp.Utils.GenerateAppSelectList;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FifthAssignment.Presentation.WebApp.Controllers
 {
-	public class UserController : Controller
+    [Authorize]
+    public class UserController : Controller
 	{
 		private readonly IUserService _userService;
         private readonly IGenerateAppSelectList _generateAppSelectList;
-
+	    
         public UserController(IUserService userService, IGenerateAppSelectList generateAppSelectList)
 		{
 			_userService = userService;
             _generateAppSelectList = generateAppSelectList;
         }
-		// GET: UserController
-		public async Task<IActionResult> Index()
+     
+        [Authorize(Roles = "Admim")]
+        // GET: UserController
+        public async Task<IActionResult> Index()
 		{
 			Result<List<UserModel>> result = new();
 			try
@@ -52,14 +56,18 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 
 		}
 
-		// GET: UserController/Create
-		public async Task<IActionResult> HandelUserActivationState(string name, string id, UserActivationStateOperation operation)
+        // GET: UserController/Create
+       
+        [Authorize(Roles = "Admim")]
+        public async Task<IActionResult> HandelUserActivationState(string name, string id, UserActivationStateOperation operation)
 		{
 			ViewBag.Operation = operation;
 			ViewBag.id = id;
 			return View();
 		}
-		[HttpPost]
+
+        [Authorize(Roles = "Admim")]
+        [HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> HandelUserActivationState(string id, UserActivationStateOperation operation)
 		{
@@ -90,29 +98,11 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 				throw;
 			}
 		}
-		// GET: UserController/Create
-		public async Task<IActionResult> Create()
-		{
-			return View();
-		}
 
-		// POST: UserController/Create
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create(IFormCollection collection)
-		{
-			try
-			{
-				return RedirectToAction(nameof(Index));
-			}
-			catch
-			{
-				return View();
-			}
-		}
-
-		// GET: UserController/Edit/5
-		public async Task<IActionResult> EditUser(string id, bool IsAdmin)
+        // GET: UserController/Edit/5
+     
+        [Authorize(Roles = "Admim")]
+        public async Task<IActionResult> EditUser(string id, bool IsAdmin)
 		{
 			Result<UserModel> result = new();
 			try
@@ -134,8 +124,10 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			}
 		}
 
-		// POST: UserController/Edit/5
-		[HttpPost]
+        // POST: UserController/Edit/5
+
+        [Authorize(Roles = "Admim")]
+        [HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> EditUser(string OldPassword, string OldConfirmPassword, SaveUserModel saveModel)
 		{
@@ -155,20 +147,19 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
                 else if (saveModel.Password != saveModel.ComfirmPassword)
                 {
                     ViewBag.MessageError = "the passwords must match";
-                    return View(resultInner.Data);
+                    return RedirectToAction("EditUser", new { id = resultInner.Data.Id, IsAdmin = resultInner.Data.Roles.Contains("Admim") });
                 }
 
                 result = await _userService.UpdateAsync(saveModel);
 
-				if (result.IsSuccess)
+				if (!result.IsSuccess)
 				{
 					TempData[MessageType.MessageError.ToString()] = result.Message;
-					resultInner = await _userService.GetByIdAsync(saveModel.Id);
-					return View(resultInner.Data);
+					return RedirectToAction("EditUser", new { id = resultInner.Data.Id, IsAdmin = resultInner.Data.Roles.Contains("Admim") });
 				}
 
 				TempData[MessageType.MessageSuccess.ToString()] = result.Message;
-				return View("Index");
+				return RedirectToAction("Index");
 			}
 			catch
 			{

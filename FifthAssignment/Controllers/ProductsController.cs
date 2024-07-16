@@ -5,11 +5,14 @@ using FifthAssignment.Core.Application.Models.BankAccountsModels;
 using FifthAssignment.Core.Application.Models.CreditCardModels;
 using FifthAssignment.Core.Application.Models.LoanModels;
 using FifthAssignment.Presentation.WebApp.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace FifthAssignment.Presentation.WebApp.Controllers
 {
+    [Authorize]
+    [Authorize(Roles ="Admim")]
 	public class ProductsController : Controller
 	{
 		private readonly ICreditCardService _creditCardService;
@@ -42,12 +45,6 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			{
 				throw;
 			}
-		}
-
-		// GET: ProductsController/Details/5
-		public ActionResult Details(int id)
-		{
-			return View();
 		}
 
 		// GET: BanckAccountController/Create

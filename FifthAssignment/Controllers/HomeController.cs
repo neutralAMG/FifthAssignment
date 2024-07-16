@@ -32,7 +32,7 @@ namespace FifthAssignment.Controllers
 			}
 			return View();
 		}
-		[Authorize(Roles ="Admim")]
+		[Authorize(Roles ="Admim", Policy = "CustomPolicy")]
 		public async Task<IActionResult> AdminHomePage()
 		{
 			Result<HomeInformationGetModel> result = new();
@@ -46,10 +46,10 @@ namespace FifthAssignment.Controllers
 				return View();
 			}
 		}
-		[Authorize(Roles = "client")]
+		[Authorize(Roles = "client", Policy = "CustomPolicy")]
 		public async Task<IActionResult> ClientHomePage()
 		{
-				return View();	
+			return View();	
 		}
 
 		public IActionResult Privacy()

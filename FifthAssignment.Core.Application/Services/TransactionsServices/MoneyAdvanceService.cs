@@ -37,16 +37,16 @@ namespace FifthAssignment.Core.Application.Services.TransactionsServices
 			Result<SaveBasePaymentDto> result = new();
 			try
 			{
-				Result<CreditCardModel> Emisor = await _creditCardService.GetByIdAsync(paymentDto.Receiver);
+				Result<CreditCardModel> Emisor = await _creditCardService.GetByIdAsync(paymentDto.Emisor);
 
-				Result<BankAccountModel> Receiver = await _bankAccountService.GetByIdAsync(paymentDto.Emisor);
+				Result<BankAccountModel> Receiver = await _bankAccountService.GetByIdAsync(paymentDto.Receiver);
 
 				Receiver.Data.Amount += paymentDto.Amount;
 				Emisor.Data.Amount += paymentDto.Amount + 6.25m;
 			
-				await _bankAccountService.UpdateAsync(_mapper.Map<SaveBankAccountModel>(Emisor));
+				await _creditCardService.UpdateAsync(_mapper.Map< SaveCreditCardModel>(Emisor.Data));
 
-				await _creditCardService.UpdateAsync(_mapper.Map<SaveCreditCardModel>(Receiver));
+				await _bankAccountService.UpdateAsync(_mapper.Map<SaveBankAccountModel>(Receiver.Data));
 
 				result = await base.SaveAsync(paymentDto);
 
@@ -66,9 +66,9 @@ namespace FifthAssignment.Core.Application.Services.TransactionsServices
 			Result<bool> result = new();
 			try
 			{
-				Result<CreditCardModel> Emisor = await _creditCardService.GetByIdAsync(paymentDto.Receiver);
+				Result<CreditCardModel> Emisor = await _creditCardService.GetByIdAsync(paymentDto.Emisor);
 
-				Result<BankAccountModel> Receiver = await _bankAccountService.GetByIdAsync(paymentDto.Emisor);
+				Result<BankAccountModel> Receiver = await _bankAccountService.GetByIdAsync(paymentDto.Receiver);
 
 
 				if (Emisor.Data.CreditLimit < paymentDto.Amount)
@@ -98,7 +98,6 @@ namespace FifthAssignment.Core.Application.Services.TransactionsServices
 				{
 					Amount = entity.Amount,
 					specificPaymentTosaveId = result.Data.Id,
-					TransactionTypeId = (int)TransactionTypes.MoneyAdvance,
 				});
 			}
 			return result;

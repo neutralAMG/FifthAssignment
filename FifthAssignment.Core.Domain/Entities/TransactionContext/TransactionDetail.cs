@@ -10,10 +10,10 @@ namespace FifthAssignment.Core.Domain.Entities.PaymentContext
 		{
 			Id = Guid.NewGuid();
 		}
-		public Guid TransactionIdId { get; set; }
+		public Guid? TransactionIdId { get; set; }
 	
 		public int TransactionTypeId { get; set; }
-		public Guid SpecificTransactionDetailId { get; set; }
+		public Guid? SpecificTransactionDetailId { get; set; }
 		[ForeignKey("TransactionIdId")]
 		public Transaction Transaction { get; set; }
 		[ForeignKey("TransactionTypeId")]

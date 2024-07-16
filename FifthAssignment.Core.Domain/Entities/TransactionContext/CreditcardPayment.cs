@@ -12,8 +12,8 @@ namespace FifthAssignment.Core.Domain.Entities.PaymentContext
 		}
 		[Column(TypeName = "Decimal(18,2)")]
 		public decimal Amount { get; set; }
-		public Guid UserBankAccountId { get; set; }
-        public Guid UserCreditCardId { get; set; }
+		public Guid? UserBankAccountId { get; set; }
+        public Guid? UserCreditCardId { get; set; }
         public BankAccount UserBankAccount { get; set; }
         public CreditCard UserCreditCard { get; set; }
 

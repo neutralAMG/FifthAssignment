@@ -4,11 +4,13 @@ using FifthAssignment.Core.Application.Models.BankAccountsModels;
 using FifthAssignment.Core.Application.Models.BeneficiaryModels;
 using FifthAssignment.Core.Application.Models.CreditCardModels;
 using FifthAssignment.Presentation.WebApp.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FifthAssignment.Presentation.WebApp.Controllers
 {
+	[Authorize(Roles = "client")]
 	public class BeneficiaryController : Controller
 	{
 		private readonly IBeneficiaryService _beneficiaryService;

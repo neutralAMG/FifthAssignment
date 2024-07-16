@@ -120,7 +120,7 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
 		//          }
 		//      }
 
-		public virtual async Task<Result<SaveBankAccountModel>> SaveAsync(SaveBankAccountModel entity)
+		public override async Task<Result<SaveBankAccountModel>> SaveAsync(SaveBankAccountModel entity)
 		{
 			entity.IdentifierNumber = _codeGenerator.GenerateNumberIdentifierCode();
 			//	entity.UserId = _currentUser.Id;

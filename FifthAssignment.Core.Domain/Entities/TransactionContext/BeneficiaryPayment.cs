@@ -12,8 +12,8 @@ namespace FifthAssignment.Core.Domain.Entities.PaymentContext
 		}
 		[Column(TypeName = "Decimal(18,2)")]
 		public decimal Amount { get; set; }
-		public Guid UserBankAccountId { get; set; }
-        public Guid BeneficiaryBankAccountId { get; set; }
+		public Guid? UserBankAccountId { get; set; }
+        public Guid? BeneficiaryBankAccountId { get; set; }
 		[ForeignKey("UserBankAccountId")]
 		public BankAccount UserBankAccount { get; set; }
 		[ForeignKey("BeneficiaryBankAccountId")]

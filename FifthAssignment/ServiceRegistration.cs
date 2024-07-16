@@ -8,14 +8,10 @@ namespace FifthAssignment.Presentation.WebApp
 		public static void AddPresentationLayer(this IServiceCollection services)
 		{
 			services.AddTransient<IGenerateAppSelectList, GenerateAppSelectList>();
-
-			services.ConfigureApplicationCookie(options =>
-			{
-				options.LoginPath = "/Account/LogIn";
-				options.AccessDeniedPath = "";
-			});
-
+			services.AddScoped<LoginAuthcs>();
+			services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 			services.AddSingleton<IUserVerification, UserVerification>();
+
 		}
 	}
 }
