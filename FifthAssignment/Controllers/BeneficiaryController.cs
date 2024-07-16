@@ -14,10 +14,12 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 	public class BeneficiaryController : Controller
 	{
 		private readonly IBeneficiaryService _beneficiaryService;
+		private readonly IBankAccountService _bankAccountService;
 
-		public BeneficiaryController(IBeneficiaryService beneficiaryService)
+		public BeneficiaryController(IBeneficiaryService beneficiaryService, IBankAccountService bankAccountService)
         {
 			_beneficiaryService = beneficiaryService;
+			_bankAccountService = bankAccountService;
 		}
         // GET: BeneficiaryController
         public async Task<IActionResult> Index()
@@ -25,7 +27,7 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			Result<List<BeneficiaryModel>> result = new();
 			try
 			{
-				result = await _beneficiaryService.GetAllAsync();
+				result = await _beneficiaryService.GetAllWithCurrentUserIdAsync();
 
 				if (!result.IsSuccess)
 				{
@@ -36,12 +38,12 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 
 				if (TempData[MessageType.MessageError.ToString()] != null)
 				{
-					ViewBag[MessageType.MessageError.ToString()] = TempData[MessageType.MessageError.ToString()];
+					ViewBag.MessageError = TempData[MessageType.MessageError.ToString()].ToString();
 				}
 
 				if (TempData[MessageType.MessageSuccess.ToString()] != null)
 				{
-					ViewBag[MessageType.MessageSuccess.ToString()] = TempData[MessageType.MessageSuccess.ToString()];
+					ViewBag.MessageSuccess = TempData[MessageType.MessageSuccess.ToString()].ToString();
 				}
 
 				return View(result.Data);
@@ -61,7 +63,20 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		// GET: BeneficiaryController/Create
 		public async Task<IActionResult> CreateBeneficiary(string identifierNumber)
 		{
-			return View();
+
+			Result<BankAccountModel> result = new();
+			try
+			{
+				result = await _bankAccountService.GetByNumberIdentifierAsync(identifierNumber);
+				if (!result.IsSuccess) { 
+				}
+                return View(result.Data);
+			}
+			catch
+			{
+				throw;
+			}
+			
 		}
 
 		// POST: BeneficiaryController/Create
@@ -72,6 +87,7 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			Result<SaveBeneficiaryModel> result = new();
 			try
 			{
+				
 				result = await _beneficiaryService.SaveAsync(saveModel);
 
 				if (!result.IsSuccess)

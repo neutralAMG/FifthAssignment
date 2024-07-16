@@ -18,7 +18,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Repositories
         }
 
 
-        public virtual async Task<List<BankAccount>> GetAllAsync()
+        public override async Task<List<BankAccount>> GetAllAsync()
         {
             return await _context.BankAccounts.Where(b => b.IsDelete == false).ToListAsync();
         }
@@ -26,7 +26,7 @@ namespace FifthAssignment.Infraestructure.Persistence.Repositories
         {
             return await Task.FromResult(_context.BankAccounts.Where(filter).ToList());
         }
-        public virtual async Task<BankAccount> GetByIdAsync(Guid id)
+        public override async Task<BankAccount> GetByIdAsync(Guid id)
         {
             return await _context.BankAccounts.Where(b => b.IsDelete == false && b.Id == id).FirstOrDefaultAsync();
         }
