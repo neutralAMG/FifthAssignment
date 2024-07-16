@@ -71,5 +71,10 @@ namespace FifthAssignment.Infraestructure.Persistence.Repositories
 
             return beneficiaryBankAccount;
         }
-    }
+
+		public async Task<BankAccount> GetByNumberIdentifierAsync(string Id)
+		{
+            return await _context.BankAccounts.Where(b => b.IsDelete == false && b.IdentifierNumber == Id).FirstOrDefaultAsync();
+		}
+	}
 }

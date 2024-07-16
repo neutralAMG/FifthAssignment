@@ -94,31 +94,31 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
 			}
 		}
 
-		//public async Task<Result<BankAccountModel>> GetByNumberIdentifierAsync(string id)
-		//      {
-		//          Result<BankAccountModel> result = new();
-		//          try
-		//          {
-		//              if (!await _bankAccountRepository.Exits(b => b.IdentifierNumber == id))
-		//              {
-		//                  result.IsSuccess = false;
-		//                  result.Message = $"there's no banck account with this number: {id}";
-		//                  return result;
-		//              }
-		//              BankAccount entityGetted = await _bankAccountRepository.GetByNumberIdentifierAsync(b => b.IdentifierNumber == id);
+		public async Task<Result<BankAccountModel>> GetByNumberIdentifierAsync(string id)
+		{
+			Result<BankAccountModel> result = new();
+			try
+			{
+				if (!await _bankAccountRepository.Exits(b => b.IdentifierNumber == id))
+				{
+					result.IsSuccess = false;
+					result.Message = $"there's no banck account with this number: {id}";
+					return result;
+				}
+				BankAccount entityGetted = await _bankAccountRepository.GetByNumberIdentifierAsync(id);
 
-		//              result.Data = _mapper.Map<BankAccountModel>(entityGetted);
+				result.Data = _mapper.Map<BankAccountModel>(entityGetted);
 
-		//              result.Message = "BankAccount get was a success";
-		//              return result;
-		//          }
-		//          catch
-		//          {
-		//              result.IsSuccess = false;
-		//              result.Message = "Criitical error getting the BankAccount";
-		//              return result;
-		//          }
-		//      }
+				result.Message = "BankAccount get was a success";
+				return result;
+			}
+			catch
+			{
+				result.IsSuccess = false;
+				result.Message = "Criitical error getting the BankAccount";
+				return result;
+			}
+		}
 
 		public override async Task<Result<SaveBankAccountModel>> SaveAsync(SaveBankAccountModel entity)
 		{

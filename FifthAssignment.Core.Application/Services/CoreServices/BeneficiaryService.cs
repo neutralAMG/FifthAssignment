@@ -68,6 +68,8 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
 
 				result.Data = _mapper.Map<List<BeneficiaryModel>>(bankAccounts);
 
+				result.Data.ForEach(b => b.UserBeneficiary = _userService.GetUserBeneficiarieAsync(b.UserBeneficiaryBankAccount.UserId).Result.Data);
+
 				result.Message = "Loans get was a success";
 				return result;
 			}

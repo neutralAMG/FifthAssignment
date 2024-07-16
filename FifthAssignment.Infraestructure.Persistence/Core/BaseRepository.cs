@@ -26,17 +26,17 @@ namespace FifthAssignment.Infraestructure.Persistence.Core
 		{
 			return await _entities.ToListAsync();
 		}
-        public async Task<List<TEntity>> GetAllAsync(Func<TEntity, bool> filter)
+		public async Task<List<TEntity>> GetAllAsync(Func<TEntity, bool> filter)
 		{
-			return await Task.FromResult( _entities.Where(filter).ToList());
+			return await Task.FromResult(_entities.Where(filter).ToList());
 		}
 		public virtual async Task<TEntity> GetByIdAsync(Guid id)
 		{
 			return await _entities.FindAsync(id);
 		}
-	 //    public async Task<TEntity> GetByNumberIdentifierAsync(Func<TEntity, bool> filter)
+		//public async Task<TEntity> GetByNumberIdentifierAsync(Func<TEntity, bool> filter)
 		//{
-		//	return await Task.FromResult( _entities.Where(filter).FirstOrDefault());
+		//	return await Task.FromResult(_entities.Where(filter).FirstOrDefault());
 		//}
 		public virtual async Task<TEntity> SaveAsync(TEntity entity)
 		{
@@ -73,16 +73,17 @@ namespace FifthAssignment.Infraestructure.Persistence.Core
 		{
 			try
 			{
-                _entities.Attach(entity);
-                _entities.Entry(entity).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-                return true;
+				_entities.Attach(entity);
+				_entities.Entry(entity).State = EntityState.Modified;
+				await _context.SaveChangesAsync();
+				return true;
 			}
-			catch { 
-			return false;
+			catch
+			{
+				return false;
 			}
 		}
 
-	
+
 	}
 }

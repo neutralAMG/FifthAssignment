@@ -1,0 +1,33 @@
+﻿@inject FifthAssignment.Presentation.WebApp.Middelware.IUserVerification userVerification
+
+@using FifthAssignment.Core.Application.Dtos.AccountDtos
+@using FifthAssignment.Core.Application.Utils.SessionHandler
+@inject IHttpContextAccessor httpContext
+
+@{
+	var user = httpContext.HttpContext.Session.Get<AuthenticationResponse>("user");
+}
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-8 offset-md-2">
+			<div class="card mt-5">
+				<div class="card-body">
+					<h2 class="card-title text-center">Access Denied</h2>
+					<p class="card-text text-center">You are not authorize to view this resource </p>
+					<div class="text-center">
+						@if (user.Roles.Any( r => r.Equals("Admim")))
+						{
+							<a asp-action="AdminHomePage" asp-controller="Home" class="btn btn-primary">Go to Home</a>
+						}
+						@if (user.Roles.Any(r=> r.Equals("client")))
+						{
+							<a asp-action="ClientHomePage" asp-controller="Home" class="btn btn-primary">Go to Home</a>
+						}
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
