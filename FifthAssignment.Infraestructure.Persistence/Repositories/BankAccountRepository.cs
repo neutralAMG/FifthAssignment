@@ -8,49 +8,68 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FifthAssignment.Infraestructure.Persistence.Repositories
 {
-	public class BankAccountRepository : BaseRepository<BankAccount>, IBankAccountRepository
-	{
-		private readonly fifthAssignmentContext _context;
+    public class BankAccountRepository : BaseRepository<BankAccount>, IBankAccountRepository
+    {
+        private readonly fifthAssignmentContext _context;
 
-		public BankAccountRepository(fifthAssignmentContext context) : base(context)
-		{
-			_context = context;
-		}
+        public BankAccountRepository(fifthAssignmentContext context) : base(context)
+        {
+            _context = context;
+        }
 
 
+        public virtual async Task<List<BankAccount>> GetAllAsync()
+        {
+            return await _context.BankAccounts.Where(b => b.IsDelete == false).ToListAsync();
+        }
+        public async Task<List<BankAccount>> GetAllAsync(Func<BankAccount, bool> filter)
+        {
+            return await Task.FromResult(_context.BankAccounts.Where(filter).ToList());
+        }
+        public virtual async Task<BankAccount> GetByIdAsync(Guid id)
+        {
+            return await _context.BankAccounts.Where(b => b.IsDelete == false && b.Id == id).FirstOrDefaultAsync();
+        }
 
-		public override async Task<BankAccount> SaveAsync(BankAccount entity)
-		{
-			return await base.SaveAsync(entity);
-		}
 
-		public virtual async Task<bool> UpdateAsync(BankAccount entity)
-		{
-			BankAccount bankAccountToUpdate = await GetByIdAsync(entity.Id);
+        public override async Task<BankAccount> SaveAsync(BankAccount entity)
+        {
+            return await base.SaveAsync(entity);
+        }
 
-			bankAccountToUpdate.Amount = entity.Amount;
+        public virtual async Task<bool> UpdateAsync(BankAccount entity)
+        {
+            BankAccount bankAccountToUpdate = await GetByIdAsync(entity.Id);
 
-			return await base.UpdateAsync(bankAccountToUpdate);
+            bankAccountToUpdate.Amount = entity.Amount;
 
-		}
-		public override async Task<bool> DeleteAsync(BankAccount entity)
-		{
-			if (entity.IsMain == true) return false;
+            return await base.UpdateAsync(bankAccountToUpdate);
 
-			BankAccount MainBankAccount = await _context.BankAccounts.Where(b => b.UserId == entity.UserId && b.IsMain == true).FirstOrDefaultAsync();
+        }
+        public override async Task<bool> DeleteAsync(BankAccount entity)
+        {
+            if (entity.IsMain == true) return false;
 
-			MainBankAccount.Amount += entity.Amount;
+            BankAccount MainBankAccount = await _context.BankAccounts.Where(b => b.UserId == entity.UserId && b.IsMain == true).FirstOrDefaultAsync();
 
-		    await UpdateAsync(MainBankAccount);
+            MainBankAccount.Amount += entity.Amount;
 
-			return await base.DeleteAsync(entity);
-		}
+            await UpdateAsync(MainBankAccount);
 
-		public async Task<BankAccount> GetBeneficiaryMainBankAccountAsync(string Id)
-		{
-			BankAccount beneficiaryBankAccount = await _context.BankAccounts.Where(b => b.IsMain == true && b.UserId == Id).FirstOrDefaultAsync();
+            BankAccount BankAccountToDelete = await GetByIdAsync(entity.Id);
 
-			return beneficiaryBankAccount;
-		}
-	}
+            BankAccountToDelete.IsDelete = true;
+
+            BankAccountToDelete.Amount = 0;
+
+            return await base.DeleteAsync(entity);;
+        }
+
+        public async Task<BankAccount> GetBeneficiaryMainBankAccountAsync(string Id)
+        {
+            BankAccount beneficiaryBankAccount = await _context.BankAccounts.Where(b => b.IsMain == true && b.UserId == Id && b.IsDelete == false).FirstOrDefaultAsync();
+
+            return beneficiaryBankAccount;
+        }
+    }
 }

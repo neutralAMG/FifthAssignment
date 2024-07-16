@@ -32,13 +32,13 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("Decimal(18,2)");
 
-                    b.Property<Guid>("BeneficiaryBankAccountId")
+                    b.Property<Guid?>("BeneficiaryBankAccountId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserBankAccountId")
+                    b.Property<Guid?>("UserBankAccountId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -66,10 +66,10 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserBankAccountId")
+                    b.Property<Guid?>("UserBankAccountId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserCreditCardId")
+                    b.Property<Guid?>("UserCreditCardId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -94,10 +94,10 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("Decimal(18,2)");
 
-                    b.Property<Guid>("BankAccountFromId")
+                    b.Property<Guid?>("BankAccountFromId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("BankAccountToId")
+                    b.Property<Guid?>("BankAccountToId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateCreated")
@@ -128,10 +128,10 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserBankAccountId")
+                    b.Property<Guid?>("UserBankAccountId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserLoanId")
+                    b.Property<Guid?>("UserLoanId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -159,10 +159,10 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserBankAccountId")
+                    b.Property<Guid?>("UserBankAccountId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserCreditCardId")
+                    b.Property<Guid?>("UserCreditCardId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -217,10 +217,11 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("SpecificTransactionDetailId")
+                    b.Property<Guid?>("SpecificTransactionDetailId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("TransactionIdId")
+                    b.Property<Guid?>("TransactionIdId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("TransactionTypeId")
@@ -300,10 +301,10 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserAccountFromId")
+                    b.Property<Guid?>("UserAccountFromId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserAccountToId")
+                    b.Property<Guid?>("UserAccountToId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -334,6 +335,9 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                     b.Property<string>("IdentifierNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsMain")
                         .HasColumnType("bit");
@@ -400,6 +404,9 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -429,6 +436,9 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -446,15 +456,12 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                 {
                     b.HasOne("FifthAssignment.Core.Domain.Entities.PersistanceContext.BankAccount", "UserBeneficiaryBankAccount")
                         .WithMany("BeneficiaryPayments")
-                        .HasForeignKey("BeneficiaryBankAccountId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("BeneficiaryBankAccountId");
 
                     b.HasOne("FifthAssignment.Core.Domain.Entities.PersistanceContext.BankAccount", "UserBankAccount")
                         .WithMany("UserPayments")
                         .HasForeignKey("UserBankAccountId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("UserBankAccount");
 
@@ -466,14 +473,12 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                     b.HasOne("FifthAssignment.Core.Domain.Entities.PersistanceContext.BankAccount", "UserBankAccount")
                         .WithMany("CreditCardPayments")
                         .HasForeignKey("UserBankAccountId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("FifthAssignment.Core.Domain.Entities.PersistanceContext.CreditCard", "UserCreditCard")
                         .WithMany("CreditCardPayments")
                         .HasForeignKey("UserCreditCardId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("UserBankAccount");
 
@@ -485,14 +490,12 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                     b.HasOne("FifthAssignment.Core.Domain.Entities.PersistanceContext.BankAccount", "BankAccountFrom")
                         .WithMany("ExpressPaymentsFrom")
                         .HasForeignKey("BankAccountFromId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("FifthAssignment.Core.Domain.Entities.PersistanceContext.BankAccount", "BankAccountTo")
                         .WithMany("ExpressPaymentsTo")
                         .HasForeignKey("BankAccountToId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("BankAccountFrom");
 
@@ -504,14 +507,12 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                     b.HasOne("FifthAssignment.Core.Domain.Entities.PersistanceContext.BankAccount", "UserBankAccount")
                         .WithMany("LoansPayments")
                         .HasForeignKey("UserBankAccountId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("FifthAssignment.Core.Domain.Entities.PersistanceContext.Loan", "UserLoan")
                         .WithMany("LoansPayments")
                         .HasForeignKey("UserLoanId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("UserBankAccount");
 
@@ -523,14 +524,12 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                     b.HasOne("FifthAssignment.Core.Domain.Entities.PersistanceContext.BankAccount", "UserBankAccount")
                         .WithMany("MoneyAdvances")
                         .HasForeignKey("UserBankAccountId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("FifthAssignment.Core.Domain.Entities.PersistanceContext.CreditCard", "UserCreditCard")
                         .WithMany("MoneyAdvances")
                         .HasForeignKey("UserCreditCardId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("UserBankAccount");
 
@@ -570,14 +569,12 @@ namespace FifthAssignment.Infraestructure.Persistence.Migrations
                     b.HasOne("FifthAssignment.Core.Domain.Entities.PersistanceContext.BankAccount", "UserAccountFrom")
                         .WithMany("TransfersFrom")
                         .HasForeignKey("UserAccountFromId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("FifthAssignment.Core.Domain.Entities.PersistanceContext.BankAccount", "UserAccountTo")
                         .WithMany("TransfersTo")
                         .HasForeignKey("UserAccountToId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("UserAccountFrom");
 

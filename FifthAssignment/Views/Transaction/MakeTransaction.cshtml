@@ -5,36 +5,42 @@
 }
 
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-    <div class="row">
+    <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
-            <h2 class="text-center mb-4">Validate Transaction</h2>
-            <form asp-action="ValidateTransaction" asp-controller="Transaction" method="post">
-                <input type="hidden" name="TransactionType" value="@Model.TransactionType" />
-                <div class="form-group mb-3">
-                    <label asp-for="Emisor" class="form-label">Source Account</label>
-                    <select asp-for="Emisor" class="form-control" asp-items="ViewBag.Emisor" name="Emisor">
-                        <option value="">Select from where to make the transaction</option>
-                    </select>
-                </div>
-                
-                <div class="form-group mb-3">
-                    <label asp-for="Receiver" class="form-label">Destination Account</label>
-                    <select asp-for="Receiver" class="form-control" asp-items="ViewBag.Receiver">
-                        <option value="">Select to where the transaction will go</option>
-                    </select>
-                    <span asp-validation-for="Receiver" class="text-danger"></span>
-                </div>
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h2 class="text-center mb-4">Validate Transaction</h2>
+                    <form asp-action="ValidateTransaction" asp-controller="Transaction" method="post">
+                        <input type="hidden" name="TransactionType" value="@Model.TransactionType" />
 
-                <div class="form-group mb-3">
-                    <label asp-for="Amount" class="form-label">Amount</label>
-                    <input asp-for="Amount" class="form-control" />
-                    <span asp-validation-for="Amount" class="text-danger"></span>
-                </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="Emisor" class="form-label">Source Account</label>
+                            <select asp-for="Emisor" class="form-control" asp-items="ViewBag.Emisor" name="Emisor">
+                                <option value="">Select from where to make the transaction</option>
+                            </select>
+                            <span asp-validation-for="Emisor" class="text-danger"></span>
+                        </div>
 
-                <div class="form-group text-center">
-                    <button type="submit" class="btn btn-primary">Validate Transaction</button>
+                        <div class="form-group mb-3">
+                            <label asp-for="Receiver" class="form-label">Destination Account</label>
+                            <select asp-for="Receiver" class="form-control" asp-items="ViewBag.Receiver">
+                                <option value="">Select to where the transaction will go</option>
+                            </select>
+                            <span asp-validation-for="Receiver" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Amount" class="form-label">Amount</label>
+                            <input asp-for="Amount" class="form-control" />
+                            <span asp-validation-for="Amount" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary btn-lg">Validate Transaction</button>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>

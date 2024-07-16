@@ -73,9 +73,10 @@ namespace FifthAssignment.Infraestructure.Persistence.Core
 		{
 			try
 			{
-				_entities.Remove(entity);
-				await _context.SaveChangesAsync();
-				return true;
+                _entities.Attach(entity);
+                _entities.Entry(entity).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                return true;
 			}
 			catch { 
 			return false;

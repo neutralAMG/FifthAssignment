@@ -16,8 +16,21 @@ namespace FifthAssignment.Infraestructure.Persistence.Repositories
 		{
 			_context = context;
 		}
-	
-		public override async Task<Loan> SaveAsync(Loan entity)
+        public virtual async Task<List<Loan>> GetAllAsync()
+        {
+            return await _context.Loans.Where(b => b.IsDelete == false).ToListAsync();
+        }
+        public async Task<List<Loan>> GetAllAsync(Func<Loan, bool> filter)
+        {
+            return await Task.FromResult(_context.Loans.Where(filter).ToList());
+        }
+        public virtual async Task<Loan> GetByIdAsync(Guid id)
+        {
+            return await _context.Loans.Where(b => b.IsDelete == false && b.Id == id).FirstOrDefaultAsync();
+        }
+
+
+        public override async Task<Loan> SaveAsync(Loan entity)
 		{
 			var mainUserAcount = await _context.BankAccounts.Where(b => b.IsMain && b.UserId == entity.UserId).FirstOrDefaultAsync();
 
@@ -42,7 +55,11 @@ namespace FifthAssignment.Infraestructure.Persistence.Repositories
 		public override async Task<bool> DeleteAsync(Loan entity)
 		{
 			if (entity.Amount > 0) return false;
-			return await base.DeleteAsync(entity);
+
+            Loan LoanToDelete = await GetByIdAsync(entity.Id);
+
+            LoanToDelete.IsDelete = true;
+            return await base.DeleteAsync(LoanToDelete);
 		}
 	}
 }

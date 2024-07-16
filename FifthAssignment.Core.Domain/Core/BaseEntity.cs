@@ -17,6 +17,7 @@ namespace FifthAssignment.Core.Domain.Core
 		public string IdentifierNumber { get; set; }
 
 		public DateTime DateCreated = DateTime.Now;
+		public bool IsDelete { get; set; }	
 	}
 
 	public class BaseDateCreatedEntity<TId> : BaseEntity<TId>

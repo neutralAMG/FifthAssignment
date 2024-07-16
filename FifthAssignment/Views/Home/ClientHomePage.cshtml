@@ -1,5 +1,47 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model List<FifthAssignment.Core.Application.Models.BaseProductModel>
+
+@if (ViewBag.MessageError is not null)
+{
+	<p class="alert-danger d-block text-center">@ViewBag.MessageError</p>
 }
+<div class="container mt-4">
+<h1 class="text-center">Products</h1>
+	<div class="table-responsive">
+		<table class="table table-bordered table-striped">
+			<thead class="thead-dark">
+				<tr>
+					<th class="text-center">Identifier Number</th>
+					<th class="text-center">Type</th>
+					<th class="text-center">Amount</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var product in Model)
+				{
+					<tr>
+						<td class="text-center">@product.IdentifierNumber</td>
+						<td class="text-center">@product.Type</td>
+						<td class="text-center">
+							@if (product.Type.Equals("Bank account"))
+							{
+								<p>Balance: @product.Amount$</p>
+							}
+
+							@if (product.Type.Equals("Credit card"))
+							{
+
+								<p>Owns: @product.Amount$</p>
+
+							}
+							@if (product.Type.Equals("Loan"))
+							{
+								<p>Owns: @product.Amount$</p>
+							}
+
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>

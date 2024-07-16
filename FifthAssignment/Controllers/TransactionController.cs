@@ -2,12 +2,17 @@
 using FifthAssignment.Core.Application.Enums;
 using FifthAssignment.Core.Application.Interfaces.Contracts.Transactions;
 using FifthAssignment.Presentation.WebApp.Enums;
+using FifthAssignment.Presentation.WebApp.Middelware.Filters;
 using FifthAssignment.Presentation.WebApp.Utils.GenerateAppSelectList;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FifthAssignment.Presentation.WebApp.Controllers
 {
+	[ServiceFilter(typeof(UserIsLogIn))]
+	[ServiceFilter(typeof(IsUserActive))]
+	[Authorize(Roles ="client")]
 	public class TransactionController : Controller
 	{
 		private readonly ITransactionStrategy _transactionStrategy;
@@ -19,6 +24,9 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			_generateAppSelectList = generateAppSelectList;
 		}
 		// GET: TransactionController
+		[ServiceFilter(typeof(UserIsLogIn))]
+		[ServiceFilter(typeof(IsUserActive))]
+		[Authorize(Roles = "client")]
 		public ActionResult Index()
 		{
 			if (TempData[MessageType.MessageError.ToString()] != null)
@@ -35,6 +43,9 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 
 
 		// GET: TransactionController/Create
+		[ServiceFilter(typeof(UserIsLogIn))]
+		[ServiceFilter(typeof(IsUserActive))]
+		[Authorize(Roles = "client")]
 		public async Task<IActionResult> MakeTransaction(TransactionTypes type)
 		{
 			Dictionary<int, List<SelectListItem>> list = GetSelectLists(type);
@@ -80,6 +91,9 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			return selectList;
 		}
 		// POST: TransactionController/Create
+		[ServiceFilter(typeof(UserIsLogIn))]
+		[ServiceFilter(typeof(IsUserActive))]
+		[Authorize(Roles = "client")]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> MakeTransaction(SaveBasePaymentDto saveModel)
@@ -103,12 +117,18 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		}
 
 		// GET: TransactionController/Edit/5
+		[ServiceFilter(typeof(UserIsLogIn))]
+		[ServiceFilter(typeof(IsUserActive))]
+		[Authorize(Roles = "client")]
 		public async Task<IActionResult> ConfirmTransaction(SaveBasePaymentDto saveModel)
 		{
 			return View(saveModel);
 		}
 
 		// POST: TransactionController/Edit/5
+		[ServiceFilter(typeof(UserIsLogIn))]
+		[ServiceFilter(typeof(IsUserActive))]
+		[Authorize(Roles = "client")]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> ValidateTransaction(SaveBasePaymentDto saveModel)

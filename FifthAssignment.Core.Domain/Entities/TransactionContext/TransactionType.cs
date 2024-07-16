@@ -7,6 +7,6 @@ namespace FifthAssignment.Core.Domain.Entities.PaymentContext
         public string Name { get; set; }
 
         public IList<Transaction> Transactions { get; set; }
-        public IList<TransactionDetail> TransactionDetails { get; set; }
+        public IList<TransactionDetail>? TransactionDetails { get; set; }
     }
 }

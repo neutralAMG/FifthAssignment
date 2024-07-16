@@ -10,6 +10,6 @@ namespace FifthAssignment.Core.Domain.Entities.PersistanceContext
 			Id = Guid.NewGuid();
 		}
 		// public User user { get; set; }
-		public IList<LoanPayment> LoansPayments { get; set; }
+		public IList<LoanPayment>? LoansPayments { get; set; }
 	}
 }

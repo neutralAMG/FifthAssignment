@@ -4,5 +4,6 @@
     {
         bool UserRoleIsAdminVerification();
         bool IsLogIn();
+        bool IsUserActive();
     }
 }

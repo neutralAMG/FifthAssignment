@@ -42,7 +42,7 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
             Result<List<LoanModel>> result = new();
             try
             {
-                List<Loan> bankAccounts = await _loanRepository.GetAllAsync(u => u.UserId == _currentUser.Id);
+                List<Loan> bankAccounts = await _loanRepository.GetAllAsync(u => u.UserId == _currentUser.Id && u.IsDelete == false);
 
                 result.Data = _mapper.Map<List<LoanModel>>(bankAccounts);
 
@@ -61,7 +61,7 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
 			Result<List<LoanModel>> result = new();
 			try
 			{
-				List<Loan> bankAccounts = await _loanRepository.GetAllAsync(u => u.UserId == Id);
+				List<Loan> bankAccounts = await _loanRepository.GetAllAsync(u => u.UserId == Id && u.IsDelete == false);
 
 				result.Data = _mapper.Map<List<LoanModel>>(bankAccounts);
 

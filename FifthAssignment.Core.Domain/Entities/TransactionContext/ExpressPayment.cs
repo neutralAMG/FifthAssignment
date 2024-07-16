@@ -16,9 +16,9 @@ namespace FifthAssignment.Core.Domain.Entities.PaymentContext
 		public Guid? BankAccountFromId { get; set; }
         public Guid? BankAccountToId { get; set; }
 		[ForeignKey("BankAccountFromId")]
-		public BankAccount BankAccountFrom { get; set; }
+		public BankAccount? BankAccountFrom { get; set; }
 		[ForeignKey("BankAccountToId")]
-		public BankAccount BankAccountTo { get; set; }
+		public BankAccount? BankAccountTo { get; set; }
 
     }
 }

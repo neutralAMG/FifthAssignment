@@ -47,7 +47,7 @@ namespace FifthAssignment.Core.Application.Services.PaymentServices
 
 
 
-                result = await base.SaveAsync(paymentDto);
+                result = await SaveAsync(paymentDto);
 
                 if (!result.IsSuccess)
                 {
@@ -100,8 +100,9 @@ namespace FifthAssignment.Core.Application.Services.PaymentServices
             await _transactionService.SaveAsync(new SavePaymentDto
             {
                 Amount = entity.Amount,
-                specificPaymentTosaveId = result.Data.Id, 
-            });
+                specificPaymentTosaveId = result.Data.Id,
+				TransactionTypeId = entity.TransactionType,
+			});
             }
             return result;
         }

@@ -39,7 +39,7 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
             Result<List<CreditCardModel>> result = new();
             try
             {
-                List<CreditCard> bankAccounts = await _creditCardRepository.GetAllAsync(u => u.UserId == _currentUser.Id);
+                List<CreditCard> bankAccounts = await _creditCardRepository.GetAllAsync(u => u.UserId == _currentUser.Id && u.IsDelete == false);
 
                 result.Data = _mapper.Map<List<CreditCardModel>>(bankAccounts);
 
@@ -58,7 +58,7 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
 			Result<List<CreditCardModel>> result = new();
 			try
 			{
-				List<CreditCard> bankAccounts = await _creditCardRepository.GetAllAsync(u => u.UserId == Id);
+				List<CreditCard> bankAccounts = await _creditCardRepository.GetAllAsync(u => u.UserId == Id && u.IsDelete == false);
 
 				result.Data = _mapper.Map<List<CreditCardModel>>(bankAccounts);
 

@@ -40,7 +40,7 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
 			try
 			{
 				_currentUser = _httpContext.HttpContext.Session.Get<AuthenticationResponse>(_sessionkeys.user);
-				List<BankAccount> bankAccounts = await _bankAccountRepository.GetAllAsync(u => u.UserId == _currentUser.Id);
+				List<BankAccount> bankAccounts = await _bankAccountRepository.GetAllAsync(u => u.UserId == _currentUser.Id && u.IsDelete == false);
 
 				result.Data = _mapper.Map<List<BankAccountModel>>(bankAccounts);
 
@@ -59,7 +59,7 @@ namespace FifthAssignment.Core.Application.Services.CoreServices
 			Result<List<BankAccountModel>> result = new();
 			try
 			{
-				List<BankAccount> bankAccounts = await _bankAccountRepository.GetAllAsync(u => u.UserId == Id);
+				List<BankAccount> bankAccounts = await _bankAccountRepository.GetAllAsync(u => u.UserId == Id && u.IsDelete == false);
 
 				result.Data = _mapper.Map<List<BankAccountModel>>(bankAccounts);
 

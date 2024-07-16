@@ -5,14 +5,14 @@ using FifthAssignment.Core.Application.Models.BankAccountsModels;
 using FifthAssignment.Core.Application.Models.CreditCardModels;
 using FifthAssignment.Core.Application.Models.LoanModels;
 using FifthAssignment.Presentation.WebApp.Enums;
+using FifthAssignment.Presentation.WebApp.Middelware.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace FifthAssignment.Presentation.WebApp.Controllers
 {
-    [Authorize]
-    [Authorize(Roles ="Admim")]
+
 	public class ProductsController : Controller
 	{
 		private readonly ICreditCardService _creditCardService;
@@ -25,6 +25,9 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			_bankAccountService = bankAccountService;
 			_loanService = loanService;
 		}
+		[ServiceFilter(typeof(UserIsLogIn))]
+		[ServiceFilter(typeof(IsUserActive))]
+		[Authorize(Roles = "Admim")]
 		// GET: ProductsController
 		public async Task<IActionResult> Index(string id)
 		{
@@ -46,7 +49,9 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 				throw;
 			}
 		}
-
+		[ServiceFilter(typeof(UserIsLogIn))]
+		[ServiceFilter(typeof(IsUserActive))]
+		[Authorize(Roles = "Admim")]
 		// GET: BanckAccountController/Create
 		public async Task<IActionResult> CreateBankAccount(string userId)
 		{
@@ -55,6 +60,9 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		}
 
 		// POST: BanckAccountController/Create
+		[ServiceFilter(typeof(UserIsLogIn))]
+		[ServiceFilter(typeof(IsUserActive))]
+		[Authorize(Roles = "Admim")]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> CreateBankAccount(SaveBankAccountModel saveModel)
@@ -79,12 +87,18 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			}
 		}
 		// GET: LoanController/Create
+		[ServiceFilter(typeof(UserIsLogIn))]
+		[ServiceFilter(typeof(IsUserActive))]
+		[Authorize(Roles = "Admim")]
 		public async Task<IActionResult> CreateLoan(string userId)
 		{
 			return View(new SaveLoanModel { UserId = userId });
 		}
 
 		// POST: LoanController/Create
+		[ServiceFilter(typeof(UserIsLogIn))]
+		[ServiceFilter(typeof(IsUserActive))]
+		[Authorize(Roles = "Admim")]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> CreateLoan(SaveLoanModel saveModel)
@@ -110,12 +124,18 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		}
 
 		// GET: CreditCardController/Create
+		[ServiceFilter(typeof(UserIsLogIn))]
+		[ServiceFilter(typeof(IsUserActive))]
+		[Authorize(Roles = "Admim")]
 		public async Task<IActionResult> CreateCreditCard(string userId)
 		{
 			return View(new SaveCreditCardModel { UserId = userId });
 		}
 
 		// POST: CreditCardController/Create
+		[ServiceFilter(typeof(UserIsLogIn))]
+		[ServiceFilter(typeof(IsUserActive))]
+		[Authorize(Roles = "Admim")]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> CreateCreditCard(SaveCreditCardModel saveModel)
@@ -142,6 +162,9 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 
 
 		// GET: CreditCardController/Delete/5
+		[ServiceFilter(typeof(UserIsLogIn))]
+		[ServiceFilter(typeof(IsUserActive))]
+		[Authorize(Roles = "Admim")]
 		public async Task<IActionResult> DeleteProduct(string name, string userId, Guid id, ProductToDelete operation)
 		{
 			Result<CreditCardModel> result = new();
@@ -162,6 +185,9 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		}
 
 		// POST: CreditCardController/Delete/5
+		[ServiceFilter(typeof(UserIsLogIn))]
+		[ServiceFilter(typeof(IsUserActive))]
+		[Authorize(Roles = "Admim")]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteProduct(string userId, Guid id, ProductToDelete operation)

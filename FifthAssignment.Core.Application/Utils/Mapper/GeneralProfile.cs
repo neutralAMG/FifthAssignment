@@ -3,6 +3,7 @@
 using AutoMapper;
 using FifthAssignment.Core.Application.Core;
 using FifthAssignment.Core.Application.Dtos.AccountDtos;
+using FifthAssignment.Core.Application.Dtos.Payments;
 using FifthAssignment.Core.Application.Models;
 using FifthAssignment.Core.Application.Models.BankAccountsModels;
 using FifthAssignment.Core.Application.Models.BeneficiaryModels;
@@ -176,6 +177,14 @@ namespace FifthAssignment.Core.Application.Utils.Mapper
 				  .ReverseMap()
 				  		.ForMember(dest => dest.Amount, opt => opt.MapFrom(ot => ot.Amount))
 				  .ForMember(dest => dest.TransactionTypeId, opt => opt.MapFrom(ot => ot.TransactionType));
+
+			CreateMap<Transaction, SavePaymentDto>()
+	          .ForMember(dest => dest.Amount, opt => opt.MapFrom(ot => ot.Amount))
+	          .ForMember(dest => dest.TransactionTypeId, opt => opt.MapFrom(ot => ot.TransactionTypeId))
+	          .ForMember(dest => dest.TransactionTypeId, opt => opt.MapFrom(ot => ot.TransactionTypeId))
+	           .ReverseMap()
+			  .ForMember(dest => dest.Amount, opt => opt.MapFrom(ot => ot.Amount))
+	          .ForMember(dest => dest.TransactionTypeId, opt => opt.MapFrom(ot => ot.TransactionTypeId));
 			#endregion
 		}
 	}

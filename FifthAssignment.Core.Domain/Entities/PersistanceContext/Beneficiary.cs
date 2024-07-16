@@ -14,7 +14,7 @@ namespace FifthAssignment.Core.Domain.Entities.PersistanceContext
         public string UserId { get; set; }
 		public Guid  UserBeneficiaryBankAccountId { get; set; }
 		[ForeignKey("UserBeneficiaryBankAccountId")]
-		public BankAccount UserBeneficiaryBankAccount { get; set; }
+		public BankAccount? UserBeneficiaryBankAccount { get; set; }
 	//	public IList<BeneficiaryPayment> BeneficiaryPayments { get; set; }
 
 	}

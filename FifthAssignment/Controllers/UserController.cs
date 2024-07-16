@@ -4,14 +4,17 @@ using FifthAssignment.Core.Application.Interfaces.Contracts.User;
 using FifthAssignment.Core.Application.Models.UserModel;
 using FifthAssignment.Core.Application.Models.UserModels;
 using FifthAssignment.Presentation.WebApp.Enums;
+using FifthAssignment.Presentation.WebApp.Middelware.Filters;
 using FifthAssignment.Presentation.WebApp.Utils.GenerateAppSelectList;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FifthAssignment.Presentation.WebApp.Controllers
 {
-    [Authorize]
-    public class UserController : Controller
+	[ServiceFilter(typeof(UserIsLogIn))]
+	[ServiceFilter(typeof(IsUserActive))]
+	[Authorize(Roles = "Admim")]
+	public class UserController : Controller
 	{
 		private readonly IUserService _userService;
         private readonly IGenerateAppSelectList _generateAppSelectList;
@@ -22,7 +25,7 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
             _generateAppSelectList = generateAppSelectList;
         }
      
-        [Authorize(Roles = "Admim")]
+
         // GET: UserController
         public async Task<IActionResult> Index()
 		{
@@ -58,7 +61,7 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 
         // GET: UserController/Create
        
-        [Authorize(Roles = "Admim")]
+
         public async Task<IActionResult> HandelUserActivationState(string name, string id, UserActivationStateOperation operation)
 		{
 			ViewBag.Operation = operation;
@@ -66,7 +69,7 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			return View();
 		}
 
-        [Authorize(Roles = "Admim")]
+
         [HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> HandelUserActivationState(string id, UserActivationStateOperation operation)
@@ -100,8 +103,7 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		}
 
         // GET: UserController/Edit/5
-     
-        [Authorize(Roles = "Admim")]
+
         public async Task<IActionResult> EditUser(string id, bool IsAdmin)
 		{
 			Result<UserModel> result = new();
@@ -126,7 +128,6 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 
         // POST: UserController/Edit/5
 
-        [Authorize(Roles = "Admim")]
         [HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> EditUser(string OldPassword, string OldConfirmPassword, SaveUserModel saveModel)

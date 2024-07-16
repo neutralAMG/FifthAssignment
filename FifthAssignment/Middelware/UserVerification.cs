@@ -23,5 +23,11 @@ namespace FifthAssignment.Presentation.WebApp.Middelware
 		{
 			return _httpContextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user") is null ? false : true;
 		}
+
+		public bool IsUserActive()
+		{
+			if (_httpContextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user") is null) return false;
+		 return	_httpContextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user").IsActive == true;
+		}
 	}
 }

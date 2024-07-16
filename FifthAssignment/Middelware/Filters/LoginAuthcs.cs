@@ -1,7 +1,7 @@
 ﻿using FifthAssignment.Presentation.WebApp.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace FifthAssignment.Presentation.WebApp.Middelware
+namespace FifthAssignment.Presentation.WebApp.Middelware.Filters
 {
     public class LoginAuthcs : IAsyncActionFilter
     {
@@ -13,12 +13,12 @@ namespace FifthAssignment.Presentation.WebApp.Middelware
         }
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-           if (_userVerification.IsLogIn())
+            if (_userVerification.IsLogIn())
             {
                 if (_userVerification.UserRoleIsAdminVerification())
                 {
-             var controller = (AccountController)context.Controller;
-                context.Result = controller.RedirectToAction("AdminHomePage", "Home");
+                    var controller = (AccountController)context.Controller;
+                    context.Result = controller.RedirectToAction("AdminHomePage", "Home");
                 }
                 if (!_userVerification.UserRoleIsAdminVerification())
                 {

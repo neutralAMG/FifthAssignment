@@ -58,7 +58,7 @@ namespace FifthAssignment.Core.Application.Services.PaymentServices
                 await _bankAccountService.UpdateAsync(_mapper.Map<SaveBankAccountModel>(Emisor.Data));
                 await _loanService.UpdateAsync(_mapper.Map<SaveLoanModel>(Receiver.Data));
 
-                result = await base.SaveAsync(paymentDto);
+                result = await SaveAsync(paymentDto);
 
                 result.Message = "Payment successfull";
                 return result;
@@ -106,6 +106,7 @@ namespace FifthAssignment.Core.Application.Services.PaymentServices
 				{
 					Amount = entity.Amount,
 					specificPaymentTosaveId = result.Data.Id,
+					TransactionTypeId = entity.TransactionType,
 				});
 			}
 			return result;

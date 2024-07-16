@@ -20,11 +20,11 @@ namespace FifthAssignment.Infraestructure.Persistence.Repositories
 			homeInformation.AmountOfTransactionAllTime = _context.Transactions.Count();
 			homeInformation.AmountOfTransactionToday = _context.Transactions.Where(t => t.DateCreated.Date == DateTime.UtcNow.Date).Count();
 			
-			homeInformation.AmountOfPaymentsAllTime = _context.Transactions.Where(t => t.TransactionTypeId < 4 && t.TransactionTypeId > 0).Count();
-			homeInformation.AmountOfPaymentsAllTime = _context.Transactions.Where(t => t.TransactionTypeId < 4 && t.TransactionTypeId > 0 && t.DateCreated.Date == DateTime.UtcNow.Date).Count();
-			var amountCreditCad = _context.CreditCards.Count();
-			var amountBanckAcount = _context.BankAccounts.Count();
-			var amountLoan = _context.Loans.Count();
+			homeInformation.AmountOfPaymentsAllTime = _context.Transactions.Where(t => t.TransactionTypeId < 5 && t.TransactionTypeId > 0).Count();
+			homeInformation.AmountOfPaymentsToday = _context.Transactions.Where(t => t.TransactionTypeId < 5 && t.TransactionTypeId > 0 && t.DateCreated.Date == DateTime.UtcNow.Date).Count();
+			var amountCreditCad = _context.CreditCards.Where(c => c.IsDelete == false).Count();
+			var amountBanckAcount = _context.BankAccounts.Where(b => b.IsDelete == false).Count();
+			var amountLoan = _context.Loans.Where(l => l.IsDelete == false).Count();
 		    homeInformation.AmountOfProducts = amountCreditCad + amountBanckAcount + amountLoan;
 
 			return homeInformation;

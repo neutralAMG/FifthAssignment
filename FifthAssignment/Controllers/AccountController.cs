@@ -3,7 +3,7 @@ using FifthAssignment.Core.Application.Dtos.AccountDtos;
 using FifthAssignment.Core.Application.Interfaces.Contracts.User;
 using FifthAssignment.Core.Application.Models.UserModels;
 using FifthAssignment.Presentation.WebApp.Enums;
-using FifthAssignment.Presentation.WebApp.Middelware;
+using FifthAssignment.Presentation.WebApp.Middelware.Filters;
 using FifthAssignment.Presentation.WebApp.Utils.GenerateAppSelectList;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -14,15 +14,15 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 	public class AccountController : Controller
 	{
 		private readonly IAccountService _accountService;
-        private readonly IGenerateAppSelectList _generateAppSelectList;
+		private readonly IGenerateAppSelectList _generateAppSelectList;
 
-        public AccountController(IAccountService accountService, IGenerateAppSelectList generateAppSelectList)
+		public AccountController(IAccountService accountService, IGenerateAppSelectList generateAppSelectList)
 		{
 			_accountService = accountService;
-            _generateAppSelectList = generateAppSelectList;
-        }
-		
-        [ServiceFilter(typeof(LoginAuthcs))]
+			_generateAppSelectList = generateAppSelectList;
+		}
+
+		[ServiceFilter(typeof(LoginAuthcs))]
 		// GET: AccountController/Create
 		public async Task<IActionResult> LogIn()
 		{
@@ -68,28 +68,29 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			}
 		}
 
-        // GET: AccountController/Create
-        public async Task<IActionResult> LogOut()
+		// GET: AccountController/Create
+		public async Task<IActionResult> LogOut()
 		{
 			await _accountService.LogoutAsync();
 
-			return View("LogIn");
+			return RedirectToAction("LogIn");
 		}
-
-		[Authorize(Roles ="Admim")]
+		[ServiceFilter(typeof(UserIsLogIn))]
+		[ServiceFilter(typeof(IsUserActive))]
+		[Authorize(Roles = "Admim")]
 		// GET: AccountController/Create
 		public async Task<IActionResult> RegisterUser(bool IsAdmin)
 		{
 			var select = _generateAppSelectList.GenerateUserRolesSelectList();
 			ViewBag.IsAdmin = IsAdmin;
-			ViewBag.role = IsAdmin ? select.Where(r => r.Value == 1.ToString()) : select.Where(r => r.Value == 2.ToString()); 
-			return View(new	SaveUserModel());
+			ViewBag.role = IsAdmin ? select.Where(r => r.Value == 1.ToString()) : select.Where(r => r.Value == 2.ToString());
+			return View(new SaveUserModel());
 		}
 
 
-
+		[ServiceFilter(typeof(UserIsLogIn))]
 		// POST: AccountController/Create
-
+		[ServiceFilter(typeof(IsUserActive))]
 		[Authorize(Roles = "Admim")]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
