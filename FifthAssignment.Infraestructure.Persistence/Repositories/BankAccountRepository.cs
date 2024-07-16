@@ -62,7 +62,15 @@ namespace FifthAssignment.Infraestructure.Persistence.Repositories
 
             BankAccountToDelete.Amount = 0;
 
-            return await base.DeleteAsync(entity);;
+            bool Operation = await base.DeleteAsync(entity);
+
+            if (Operation) {
+                IEnumerable<Beneficiary> BenefiiciariesToDelete =  _context.Beneficiaries.Where(b => b.UserBeneficiaryBankAccountId == entity.Id);
+                _context.Beneficiaries.RemoveRange(BenefiiciariesToDelete);
+               await _context.SaveChangesAsync();    
+
+            }
+            return Operation;
         }
 
         public async Task<BankAccount> GetBeneficiaryMainBankAccountAsync(string Id)
