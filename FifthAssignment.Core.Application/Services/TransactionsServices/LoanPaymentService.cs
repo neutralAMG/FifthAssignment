@@ -46,19 +46,20 @@ namespace FifthAssignment.Core.Application.Services.PaymentServices
                 if (operationResidue >= 0)
                 {
 					Emisor.Data.Amount -= paymentDto.Amount;
-					Emisor.Data.Amount += operationResidue;
                     Receiver.Data.Amount = operationResidue;
                 }
                 else if (operationResidue < 0)
                 {
                     Emisor.Data.Amount -= paymentDto.Amount;
                     Emisor.Data.Amount += Math.Abs(operationResidue);
-                    Receiver.Data.Amount = 0;
+                    Receiver.Data.Amount = 0;				
+                    paymentDto.Amount = Math.Abs(Math.Abs(operationResidue) - paymentDto.Amount);
+
                 }
                 await _bankAccountService.UpdateAsync(_mapper.Map<SaveBankAccountModel>(Emisor.Data));
                 await _loanService.UpdateAsync(_mapper.Map<SaveLoanModel>(Receiver.Data));
 
-                result = await SaveAsync(paymentDto);
+				result = await SaveAsync(paymentDto);
 
                 result.Message = "Payment successfull";
                 return result;
@@ -80,6 +81,12 @@ namespace FifthAssignment.Core.Application.Services.PaymentServices
 
                 Result<LoanModel> Receiver = await _loanService.GetByIdAsync(paymentDto.Receiver);
 
+                if (Receiver.Data.Amount == 0)
+                {
+                    result.IsSuccess = false;
+                    result.Message = "You dont owe nothing to this loan";
+                    return result;
+                }
                 if (Emisor.Data.Amount < paymentDto.Amount)
                 {
                     result.IsSuccess = false;

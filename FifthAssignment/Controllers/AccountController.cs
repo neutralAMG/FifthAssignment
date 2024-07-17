@@ -84,7 +84,7 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			var select = _generateAppSelectList.GenerateUserRolesSelectList();
 			ViewBag.IsAdmin = IsAdmin;
 			ViewBag.role = IsAdmin ? select.Where(r => r.Value == 1.ToString()) : select.Where(r => r.Value == 2.ToString());
-			return View(new SaveUserModel());
+			return View(new SaveUserModel() { IsAdMin = IsAdmin });
 		}
 
 
@@ -94,23 +94,32 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		[Authorize(Roles = "Admim")]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> RegisterUser(SaveUserModel saveModel)
+		public async Task<IActionResult> RegisterUser(string IsAdminUser, SaveUserModel saveModel)
 		{
 			Result<RegisterResponse> result = new();
 			try
 			{
-				saveModel.IsAdMin = saveModel.Amount <= 0 ? true : false;
 
-				result = await _accountService.RegisterAsync(saveModel);
+				saveModel.IsAdMin = IsAdminUser.Equals("Admin") ? true : false;
+				if (!ModelState.IsValid)
+				{
+					ViewBag.MessageError = ModelState.Values.SelectMany(v => v.Errors).First().ErrorMessage;
+					var select = _generateAppSelectList.GenerateUserRolesSelectList();
+					ViewBag.IsAdmin = saveModel.IsAdMin;
+					ViewBag.role = saveModel.IsAdMin ? select.Where(r => r.Value == 1.ToString()) : select.Where(r => r.Value == 2.ToString()); ;
+					return View("RegisterUser",saveModel);
+				}
 
 				if (saveModel.Password != saveModel.ComfirmPassword)
 				{
 					var select = _generateAppSelectList.GenerateUserRolesSelectList();
 					ViewBag.IsAdmin = saveModel.IsAdMin;
 					ViewBag.role = saveModel.IsAdMin ? select.Where(r => r.Value == 1.ToString()) : select.Where(r => r.Value == 2.ToString()); ;
-					ViewBag.MessageError = result.Message;
-					return View(saveModel);
+					return View("RegisterUser",saveModel);
 				}
+
+				result = await _accountService.RegisterAsync(saveModel);
+
 
 				if (!result.IsSuccess)
 				{
@@ -118,7 +127,7 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 					ViewBag.IsAdmin = saveModel.IsAdMin;
 					ViewBag.role = saveModel.IsAdMin ? select.Where(r => r.Value == 1.ToString()) : select.Where(r => r.Value == 2.ToString()); ;
 					ViewBag.MessageError = result.Message;
-					return View(saveModel);
+					return View("RegisterUser",saveModel);
 				}
 				ViewBag.MessageSuccess = "User was created succesfully";
 

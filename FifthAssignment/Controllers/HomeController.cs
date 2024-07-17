@@ -84,11 +84,13 @@ namespace FifthAssignment.Controllers
           
 
 		}
-		public IActionResult UnActivateAccount()
+        [ServiceFilter(typeof(UserIsLogIn))]
+        public IActionResult UnActivateAccount()
 		{
 			return View();
 		}
-		public IActionResult AccessDenied()
+        [ServiceFilter(typeof(UserIsLogIn))]
+        public IActionResult AccessDenied()
 		{
 			return View();
 		}

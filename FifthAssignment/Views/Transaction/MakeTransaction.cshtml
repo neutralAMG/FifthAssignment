@@ -1,19 +1,29 @@
 ﻿@model FifthAssignment.Core.Application.Core.SaveBasePaymentDto;
 
+
 @{
     ViewData["Title"] = "Validate Transaction";
 }
 
-<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+@if (ViewBag.MessageError is not null)
+{
+    <p class="alert alert-danger d-block text-center">@ViewBag.MessageError</p>
+}
+@if (ViewBag.MessageSuccess is not null)
+{
+    <p class="alert alert-success d-block text-center" role="alert">@ViewBag.MessageSuccess</p>
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
     <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6">
+        <div class="col-md-12 col-lg-10">
             <div class="card shadow-lg">
-                <div class="card-body">
+                <div class="card-body p-8">
                     <h2 class="text-center mb-4">Validate Transaction</h2>
                     <form asp-action="ValidateTransaction" asp-controller="Transaction" method="post">
                         <input type="hidden" name="TransactionType" value="@Model.TransactionType" />
 
-                        <div class="form-group mb-3">
+                        <div class="form-group mb-1 p-2">
                             <label asp-for="Emisor" class="form-label">Source Account</label>
                             <select asp-for="Emisor" class="form-control" asp-items="ViewBag.Emisor" name="Emisor">
                                 <option value="">Select from where to make the transaction</option>
@@ -21,7 +31,7 @@
                             <span asp-validation-for="Emisor" class="text-danger"></span>
                         </div>
 
-                        <div class="form-group mb-3">
+                        <div class="form-group mb-1 p-2">
                             <label asp-for="Receiver" class="form-label">Destination Account</label>
                             <select asp-for="Receiver" class="form-control" asp-items="ViewBag.Receiver">
                                 <option value="">Select to where the transaction will go</option>
@@ -29,9 +39,9 @@
                             <span asp-validation-for="Receiver" class="text-danger"></span>
                         </div>
 
-                        <div class="form-group mb-3">
+                        <div class="form-group mb-2 p-2">
                             <label asp-for="Amount" class="form-label">Amount</label>
-                            <input asp-for="Amount" class="form-control" />
+                            <input asp-for="Amount" class="form-control form-control-lg" />
                             <span asp-validation-for="Amount" class="text-danger"></span>
                         </div>
 

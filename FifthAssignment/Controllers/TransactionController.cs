@@ -29,14 +29,6 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		[Authorize(Roles = "client")]
 		public ActionResult Index()
 		{
-			if (TempData[MessageType.MessageError.ToString()] != null)
-			{
-				ViewBag.MessageError = TempData[MessageType.MessageError.ToString()].ToString();
-			}
-			if (TempData[MessageType.MessageSuccess.ToString()] != null)
-			{
-				ViewBag.MessageSuccess = TempData[MessageType.MessageSuccess.ToString()].ToString();
-			}
 
 			return View();
 		}
@@ -101,14 +93,19 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			Result<SaveBasePaymentDto> result = new();
 			try
 			{
-				result = await _transactionStrategy.MakeTransaction(saveModel);
+             
+
+                result = await _transactionStrategy.MakeTransaction(saveModel);
 				if (!result.IsSuccess)
 				{
-					TempData[MessageType.MessageError.ToString()] = result.Message;
-					return View(result);
+					ViewBag.MessageError = result.Message;
+					return View("Index");
 
 				}
-				return RedirectToAction("Index");
+
+				ViewBag.MessageSuccess = result.Message;
+
+                return View("Index");
 			}
 			catch
 			{
@@ -136,15 +133,46 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			Result<bool> result = new();
 			try
 			{
-				result = await _transactionStrategy.MakeValidation(saveModel);
+             
+                if (saveModel.Emisor == default)
+				{
+					ViewBag.MessageError = "The emisor fild can not be empty";
+                    return View("Index");
+                }
+
+                if (saveModel.Receiver == default)
+                {
+					ViewBag.MessageError = "The reciver fild can not be empty";
+                    return View("Index");
+                }
+                if (saveModel.Amount == default)
+                {
+                    ViewBag.MessageError = "The amount fild can not be empty";
+                    return View("Index");
+                }   
+				
+				if (saveModel.Emisor == saveModel.Receiver)
+                {
+                    ViewBag.MessageError = "The emisor cant make a transaction to itself";
+                    return View("Index");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.MessageError = ModelState.Values.SelectMany(v => v.Errors).First().ErrorMessage;
+                    return View("Index");
+                }
+                result = await _transactionStrategy.MakeValidation(saveModel);
 
 				if (!result.IsSuccess)
 				{
-					TempData[MessageType.MessageError.ToString()] = result.Message;
+					ViewBag.MessageError = result.Message;
 					return View("Index");
 
 				}
-				return View("ConfirmTransaction", saveModel);
+				ViewBag.MessageSuccess = result.Message;
+
+                return View("ConfirmTransaction", saveModel);
 			}
 			catch
 			{

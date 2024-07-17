@@ -46,19 +46,20 @@ namespace FifthAssignment.Core.Application.Services.PaymentServices
                 if (operationResidue >= 0)
                 {
 					Emisor.Data.Amount -= paymentDto.Amount;
-					Emisor.Data.Amount += operationResidue;
                     Receiver.Data.Amount = operationResidue;
                 }
                 else if (operationResidue < 0)
                 {
 					Emisor.Data.Amount -= paymentDto.Amount;
 					Emisor.Data.Amount += Math.Abs(operationResidue);
-                    Receiver.Data.Amount = 0;
+                    Receiver.Data.Amount = 0;		
+                    paymentDto.Amount = Math.Abs( Math.Abs(operationResidue) - paymentDto.Amount);
                 }
                 await _bankAccountService.UpdateAsync(_mapper.Map<SaveBankAccountModel>(Emisor.Data));
                 await _creditCardService.UpdateAsync(_mapper.Map<SaveCreditCardModel>(Receiver.Data));
 
-                result = await SaveAsync(paymentDto);
+		
+				result = await SaveAsync(paymentDto);
 
                 result.Message = "Payment successfull";
                 return result;
@@ -78,14 +79,20 @@ namespace FifthAssignment.Core.Application.Services.PaymentServices
             {
                 Result<BankAccountModel> Emisor = await _bankAccountService.GetByIdAsync(paymentDto.Emisor);
 
-                //	Result<BankAccountModel> Receiver = await _bankAccountService.GetByNumberIdentifierAsync(paymentDto.Receiver);
-
+               	Result<CreditCardModel> Receiver = await _creditCardService.GetByIdAsync(paymentDto.Receiver);
+                if (Receiver.Data.Amount == 0)
+                {
+                    result.IsSuccess = false;
+                    result.Message = "You dont owe nothing to this credit card";
+                    return result;
+                }
                 if (Emisor.Data.Amount < paymentDto.Amount)
                 {
                     result.IsSuccess = false;
                     result.Message = "You have not enough money on your account to do this transaction";
                     return result;
                 }
+
                 result.Message = "transaction authorized";
                 return result;
             }

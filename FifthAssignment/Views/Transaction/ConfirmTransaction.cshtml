@@ -1,4 +1,12 @@
 ﻿@model FifthAssignment.Core.Application.Core.SaveBasePaymentDto;
+@if (ViewBag.MessageError is not null)
+{
+    <p class="alert-danger d-block text-center">@ViewBag.MessageError</p>
+}
+@if (ViewBag.MessageSuccess is not null)
+{
+    <p class=" alert alert-success d-block text-center" role="alert">@ViewBag.MessageSuccess</p>
+}
 <div>
     <form method="post" asp-controller="Transaction" asp-action="MakeTransaction">
 

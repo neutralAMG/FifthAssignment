@@ -151,6 +151,12 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
                     return RedirectToAction("EditUser", new { id = resultInner.Data.Id, IsAdmin = resultInner.Data.Roles.Contains("Admim") });
                 }
 
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.MessageError = ModelState.Values.SelectMany(v => v.Errors).First().ErrorMessage;
+                    return RedirectToAction("EditUser", new { id = resultInner.Data.Id, IsAdmin = resultInner.Data.Roles.Contains("Admim") });
+                }
+
                 result = await _userService.UpdateAsync(saveModel);
 
 				if (!result.IsSuccess)

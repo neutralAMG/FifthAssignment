@@ -71,7 +71,8 @@ namespace FifthAssignment.Core.Application.Services.TransactionsServices
 				Result<BankAccountModel> Receiver = await _bankAccountService.GetByIdAsync(paymentDto.Receiver);
 
 
-				if (Emisor.Data.CreditLimit < paymentDto.Amount)
+			
+				if (Emisor.Data.Amount  > Emisor.Data.CreditLimit)
 				{
 					result.IsSuccess = false;
 					result.Message = $"The amount that you what supases your credit card's limit remember that it is: {Emisor.Data.CreditLimit}";

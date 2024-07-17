@@ -1,15 +1,25 @@
-﻿
+﻿@if (ViewBag.MessageError is not null)
+{
+    <p class="alert alert-danger text-center">@ViewBag.MessageError</p>
+}
+@if (ViewBag.MessageSuccess is not null)
+{
+    <p class="alert alert-success text-center" role="alert">@ViewBag.MessageSuccess</p>
+}
 
-<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
     <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-4">
+        <div class="col-md-8 col-lg-6">
             <div class="card shadow-lg">
-                <div class="card-body">
+                <div class="card-body p-4">
                     <h2 class="text-center mb-4">Transaction Options</h2>
-                    <a href="@Url.Action("MakeTransaction", "Transaction", new { type = FifthAssignment.Core.Application.Enums.TransactionTypes.ExpressPayment })" class="btn btn-primary btn-block mb-3">Express Payment</a>
-                    <a href="@Url.Action("MakeTransaction", "Transaction", new { type = FifthAssignment.Core.Application.Enums.TransactionTypes.CreditCardPayment })" class="btn btn-secondary btn-block mb-3">Credit Card Payment</a>
-                    <a href="@Url.Action("MakeTransaction", "Transaction", new { type = FifthAssignment.Core.Application.Enums.TransactionTypes.LoanPayment })" class="btn btn-success btn-block mb-3">Loan Payment</a>
-                    <a href="@Url.Action("MakeTransaction", "Transaction", new { type = FifthAssignment.Core.Application.Enums.TransactionTypes.BeneficiaryPayment })" class="btn btn-danger btn-block mb-3">Beneficiary Payment</a>
+                    <div class="text-center">
+						<a href="@Url.Action("MakeTransaction", "Transaction", new { type = FifthAssignment.Core.Application.Enums.TransactionTypes.ExpressPayment })" class="btn btn-primary btn-lg btn-block mb-3">Express Payment</a>
+						<a href="@Url.Action("MakeTransaction", "Transaction", new { type = FifthAssignment.Core.Application.Enums.TransactionTypes.CreditCardPayment })" class="btn btn-secondary btn-lg btn-block mb-3">Credit Card Payment</a>
+						<a href="@Url.Action("MakeTransaction", "Transaction", new { type = FifthAssignment.Core.Application.Enums.TransactionTypes.LoanPayment })" class="btn btn-success btn-lg btn-block mb-3">Loan Payment</a>
+						<a href="@Url.Action("MakeTransaction", "Transaction", new { type = FifthAssignment.Core.Application.Enums.TransactionTypes.BeneficiaryPayment })" class="btn btn-danger btn-lg btn-block mb-3">Beneficiary Payment</a>
+                    </div>
+
                 </div>
             </div>
         </div>
