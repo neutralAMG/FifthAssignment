@@ -14,7 +14,7 @@
                 <div class="card-body p-4">
                     <h2 class="text-center mb-4">Transaction Options</h2>
                     <div class="text-center">
-						<a href="@Url.Action("MakeTransaction", "Transaction", new { type = FifthAssignment.Core.Application.Enums.TransactionTypes.ExpressPayment })" class="btn btn-primary btn-lg btn-block mb-3">Express Payment</a>
+						<a href="@Url.Action("MakeExpressTransaction", "Transaction")" class="btn btn-primary btn-lg btn-block mb-3">Express Payment</a>
 						<a href="@Url.Action("MakeTransaction", "Transaction", new { type = FifthAssignment.Core.Application.Enums.TransactionTypes.CreditCardPayment })" class="btn btn-secondary btn-lg btn-block mb-3">Credit Card Payment</a>
 						<a href="@Url.Action("MakeTransaction", "Transaction", new { type = FifthAssignment.Core.Application.Enums.TransactionTypes.LoanPayment })" class="btn btn-success btn-lg btn-block mb-3">Loan Payment</a>
 						<a href="@Url.Action("MakeTransaction", "Transaction", new { type = FifthAssignment.Core.Application.Enums.TransactionTypes.BeneficiaryPayment })" class="btn btn-danger btn-lg btn-block mb-3">Beneficiary Payment</a>

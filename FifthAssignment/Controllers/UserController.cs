@@ -40,15 +40,6 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 					return RedirectToAction("Index", "Home");
 				}
 
-				if (TempData[MessageType.MessageError.ToString()] != null)
-				{
-					ViewBag.MessageError = TempData[MessageType.MessageError.ToString()].ToString();
-				}
-				if (TempData[MessageType.MessageSuccess.ToString()] != null)
-				{
-					ViewBag.MessageSuccess = TempData[MessageType.MessageSuccess.ToString()].ToString();
-				}
-
 
 				return View(result.Data);
 			}

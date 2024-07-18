@@ -1,6 +1,5 @@
 ﻿@model FifthAssignment.Core.Application.Core.SaveBasePaymentDto;
 
-
 @{
     ViewData["Title"] = "Validate Transaction";
 }
@@ -32,11 +31,9 @@
                         </div>
 
                         <div class="form-group mb-1 p-2">
-                            <label asp-for="Receiver" class="form-label">Destination </label>
-                            <select asp-for="Receiver" class="form-control" asp-items="ViewBag.Receiver">
-                                <option value="">Select to where the transaction will go</option>
-                            </select>
-                            <span asp-validation-for="Receiver" class="text-danger"></span>
+                            <label for="numberIdentifier" class="form-label">Destination</label>
+                            <input type="text" Name="numberIdentifier" class="form-control" /> 
+                         
                         </div>
 
                         <div class="form-group mb-2 p-2">

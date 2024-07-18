@@ -33,6 +33,10 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 		{
 			try
 			{
+				if (id == default)
+				{
+                    return RedirectToAction("Index", "User");
+                }
 				List<BaseProductModel> Products = new();
 				Result<List<LoanModel>> userLoans = await _loanService.GetAllWithAnSpecificUserIdAsync(id);
 				Result<List<BankAccountModel>> userBankAccount = await _bankAccountService.GetAllWithAnSpecificUserIdAsync(id);
@@ -46,8 +50,8 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			}
 			catch
 			{
-				throw;
-			}
+                return RedirectToAction("Index", "User");
+            }
 		}
 		[ServiceFilter(typeof(UserIsLogIn))]
 		[ServiceFilter(typeof(IsUserActive))]
@@ -83,8 +87,8 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			}
 			catch
 			{
-				throw;
-			}
+                return RedirectToAction("Index", "User");
+            }
 		}
 		// GET: LoanController/Create
 		[ServiceFilter(typeof(UserIsLogIn))]
@@ -119,8 +123,8 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			}
 			catch
 			{
-				throw;
-			}
+                return RedirectToAction("Index", "User");
+            }
 		}
 
 		// GET: CreditCardController/Create
@@ -156,8 +160,8 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			}
 			catch
 			{
-				throw;
-			}
+                return RedirectToAction("Index", "User");
+            }
 		}
 
 
@@ -179,7 +183,7 @@ namespace FifthAssignment.Presentation.WebApp.Controllers
 			}
 			catch
 			{
-				throw;
+				return RedirectToAction("Index", "User");
 			}
 
 		}

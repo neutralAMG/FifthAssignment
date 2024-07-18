@@ -4,6 +4,7 @@ using FifthAssignment.Core.Application.Models.BankAccountsModels;
 using FifthAssignment.Core.Application.Models.BeneficiaryModels;
 using FifthAssignment.Core.Application.Models.CreditCardModels;
 using FifthAssignment.Core.Application.Models.LoanModels;
+using FifthAssignment.Core.Application.Services.UserServices;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 
@@ -41,12 +42,17 @@ namespace FifthAssignment.Presentation.WebApp.Utils.GenerateAppSelectList
         {
             List<BeneficiaryModel> beneficiaries = _beneficiaryService.GetAllWithCurrentUserIdAsync().Result.Data;
 
-            return beneficiaries.Select(b => new SelectListItem
-            {
-                Selected = false,
-                Text = _userService.GetUserBeneficiarieAsync(b.UserBeneficiaryBankAccount.UserId).Result.Data.UserName,
-                Value = b.UserBeneficiaryBankAccountId.ToString()
-            }).ToList();
+            return beneficiaries.Select(b => {
+                var userBeneficiary = _userService.GetUserBeneficiarieAsync(b.UserBeneficiaryBankAccount.UserId).Result.Data;
+                return new SelectListItem
+                {
+
+                    Selected = false,
+                    Text = userBeneficiary.FirstName + " " + userBeneficiary.LastName,
+                    Value = b.UserBeneficiaryBankAccountId.ToString()
+                };
+                
+                }).ToList();
         }
 
         public List<SelectListItem> GenerateUserCreditCardSelectList()
